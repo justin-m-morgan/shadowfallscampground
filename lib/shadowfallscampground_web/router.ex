@@ -1,6 +1,8 @@
 defmodule ShadowfallscampgroundWeb.Router do
   use ShadowfallscampgroundWeb, :router
 
+  import Surface.Catalogue.Router
+
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
@@ -17,7 +19,8 @@ defmodule ShadowfallscampgroundWeb.Router do
   scope "/", ShadowfallscampgroundWeb do
     pipe_through :browser
 
-    get "/", PageController, :index
+    live "/", PageLive
+    live "/demo", Demo
   end
 
   # Other scopes may use custom stacks.
@@ -50,6 +53,13 @@ defmodule ShadowfallscampgroundWeb.Router do
       pipe_through :browser
 
       forward "/mailbox", Plug.Swoosh.MailboxPreview
+    end
+  end
+
+  if Mix.env() == :dev do
+    scope "/" do
+      pipe_through :browser
+      surface_catalogue "/catalogue"
     end
   end
 end

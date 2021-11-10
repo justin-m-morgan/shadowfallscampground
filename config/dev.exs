@@ -59,12 +59,14 @@ config :shadowfallscampground, ShadowfallscampgroundWeb.Endpoint,
 
 # Watch static and templates for browser reloading.
 config :shadowfallscampground, ShadowfallscampgroundWeb.Endpoint,
+  reloadable_compilers: [:gettext, :elixir, :surface],
   live_reload: [
     patterns: [
       ~r"priv/static/.*(js|css|png|jpeg|jpg|gif|svg)$",
       ~r"priv/gettext/.*(po)$",
-      ~r"lib/shadowfallscampground_web/(live|views)/.*(ex)$",
-      ~r"lib/shadowfallscampground_web/templates/.*(eex)$"
+      ~r"lib/shadowfallscampground_web/(live|views|components)/.*(ex|sface|js)$",
+      ~r"lib/shadowfallscampground_web/templates/.*(eex)$",
+      ~r"priv/catalogue/.*(ex)$"
     ]
   ]
 

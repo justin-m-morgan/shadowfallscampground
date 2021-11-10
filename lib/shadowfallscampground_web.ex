@@ -39,12 +39,13 @@ defmodule ShadowfallscampgroundWeb do
 
       # Include shared imports and aliases for views
       unquote(view_helpers())
+      import Surface
     end
   end
 
   def live_view do
     quote do
-      use Phoenix.LiveView,
+      use Surface.LiveView,
         layout: {ShadowfallscampgroundWeb.LayoutView, "live.html"}
 
       unquote(view_helpers())
@@ -54,6 +55,14 @@ defmodule ShadowfallscampgroundWeb do
   def live_component do
     quote do
       use Phoenix.LiveComponent
+
+      unquote(view_helpers())
+    end
+  end
+
+  def component do
+    quote do
+      use Phoenix.Component
 
       unquote(view_helpers())
     end
@@ -90,6 +99,7 @@ defmodule ShadowfallscampgroundWeb do
       import ShadowfallscampgroundWeb.ErrorHelpers
       import ShadowfallscampgroundWeb.Gettext
       alias ShadowfallscampgroundWeb.Router.Helpers, as: Routes
+
     end
   end
 
