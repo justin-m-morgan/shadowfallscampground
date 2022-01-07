@@ -1,0 +1,59 @@
+:root {
+    --logo-animation-duration: 0.2s;
+    --logo-animation-delay: calc(var(--logo-animation-duration) / 9);
+}
+
+
+
+g[class^="logo__wing"] {
+    animation-name: logo-animate;
+    animation-direction: forward;
+    animation-iteration-count: infinite;
+    animation-duration: var(--logo-animation-duration);
+}
+
+
+g[class^="logo__wing"]:nth-of-type(1)  { 
+    animation-delay: calc(1 * var(--logo-animation-delay));
+}
+g[class^="logo__wing"]:nth-of-type(2)  { 
+    animation-delay: calc(2 * var(--logo-animation-delay));
+}
+
+g[class^="logo__wing"]:nth-of-type(3)  { 
+    animation-delay: calc(3 * var(--logo-animation-delay));
+}
+
+g[class^="logo__wing"]:nth-of-type(4)  { 
+    animation-delay: calc(4 * var(--logo-animation-delay));
+}
+
+g[class^="logo__wing"]:nth-of-type(5) { 
+    animation-delay: calc(5 * var(--logo-animation-delay));
+}
+
+g[class^="logo__wing"]:nth-of-type(6) { 
+    animation-delay: calc(6 * var(--logo-animation-delay));
+}
+
+
+
+
+
+@keyframes logo-animate {
+    0% {
+        opacity: 0;
+    } 
+    
+    20% {
+        opacity: 1;
+    }
+
+    40% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
