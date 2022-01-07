@@ -10,6 +10,7 @@ defmodule Shadowfallscampground.MixProject do
       compilers: [:gettext] ++ Mix.compilers() ++ [:surface],
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
+      test_paths: ["lib"],
       deps: deps()
     ]
   end
@@ -52,7 +53,9 @@ defmodule Shadowfallscampground.MixProject do
       {:plug_cowboy, "~> 2.5"},
       {:surface, "~> 0.6.1"},
       {:surface_formatter, "~> 0.6.0"},
-      {:surface_catalogue, "~> 0.2.0"}
+      {:surface_catalogue, "~> 0.2.0"},
+      {:money, "~> 1.4"},
+      {:timex, "~> 3.7"}
     ]
   end
 
