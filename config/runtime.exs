@@ -69,3 +69,14 @@ if config_env() == :prod do
   #
   # See https://hexdocs.pm/swoosh/Swoosh.html#module-installation for details.
 end
+
+google_maps_api_key =
+  System.get_env("GOOGLE_MAPS_API_KEY") ||
+    raise """
+    environment variable GOOGLE_MAPS_API_KEY is missing.
+    Remeber to set this in your runtime's environment variables/secrets
+    """
+
+
+config :shadowfallscampground,
+    google_maps_api_key: google_maps_api_key
