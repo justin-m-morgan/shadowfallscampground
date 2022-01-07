@@ -64,7 +64,7 @@ config :shadowfallscampground, ShadowfallscampgroundWeb.Endpoint,
     patterns: [
       ~r"priv/static/.*(js|css|png|jpeg|jpg|gif|svg)$",
       ~r"priv/gettext/.*(po)$",
-      ~r"lib/shadowfallscampground_web/(live|views|components)/.*(ex|sface|js)$",
+      ~r"lib/shadowfallscampground_web/(live|views|components|sections|svg)/.*(ex|sface|js)$",
       ~r"lib/shadowfallscampground_web/templates/.*(eex)$",
       ~r"priv/catalogue/.*(ex)$"
     ]
@@ -79,3 +79,8 @@ config :phoenix, :stacktrace_depth, 20
 
 # Initialize plugs at runtime for faster development compilation
 config :phoenix, :plug_init_mode, :runtime
+
+# config :gen_surface_component,
+#   base_path: "lib/shadowfallscampground_web/components",
+#   module_path: "ShadowfallscampgroundWeb.Components",
+#   project_name: "Shadowfallscampground"
