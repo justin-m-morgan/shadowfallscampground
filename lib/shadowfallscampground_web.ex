@@ -48,13 +48,19 @@ defmodule ShadowfallscampgroundWeb do
       use Surface.LiveView,
         layout: {ShadowfallscampgroundWeb.LayoutView, "live.html"}
 
+      alias ShadowfallscampgroundWeb.Components
+      alias ShadowfallscampgroundWeb.Svg
+
       unquote(view_helpers())
     end
   end
 
   def live_component do
     quote do
-      use Phoenix.LiveComponent
+      use Surface.LiveComponent
+
+      alias ShadowfallscampgroundWeb.Components
+      alias ShadowfallscampgroundWeb.Svg
 
       unquote(view_helpers())
     end
@@ -62,7 +68,10 @@ defmodule ShadowfallscampgroundWeb do
 
   def component do
     quote do
-      use Phoenix.Component
+      use Surface.Component
+
+      alias ShadowfallscampgroundWeb.Components
+      alias ShadowfallscampgroundWeb.Svg
 
       unquote(view_helpers())
     end
@@ -99,7 +108,6 @@ defmodule ShadowfallscampgroundWeb do
       import ShadowfallscampgroundWeb.ErrorHelpers
       import ShadowfallscampgroundWeb.Gettext
       alias ShadowfallscampgroundWeb.Router.Helpers, as: Routes
-
     end
   end
 
