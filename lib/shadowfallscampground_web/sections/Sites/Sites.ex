@@ -22,7 +22,7 @@ defmodule ShadowfallscampgroundWeb.Sections.Sites do
         ]}
         <Components.Card label={label} padding={:lg}>
           <Svg.IconSymbol name={icon} size={:md} />
-          <p class="py-3">{copy}</p>
+          <p class="py-3 lg:text-xl">{copy}</p>
           <ul>
             {#for {amount, p_label} <- prices}
               <li class="flex flex-col items-center"><strong class="text-3xl">{Money.parse!(amount, :CAD)}</strong> <span>{p_label}</span></li>

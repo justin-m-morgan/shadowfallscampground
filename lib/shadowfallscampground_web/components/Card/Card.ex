@@ -32,7 +32,7 @@ defmodule ShadowfallscampgroundWeb.Components.Card do
       <div class="flex justify-center">
         <#slot name="icon" />
       </div>
-      <h3 :if={@label} class="text-xl font-black">{@label}</h3>
+      <h3 :if={@label} class="text-xl lg:text-3xl font-black">{@label}</h3>
       <#slot />
     </div>
     """

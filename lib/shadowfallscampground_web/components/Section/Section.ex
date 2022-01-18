@@ -8,7 +8,7 @@ defmodule ShadowfallscampgroundWeb.Components.Section do
 
   def render(assigns) do
     ~F"""
-    <section class="py-8">
+    <section class="container mx-auto py-8 lg:py-24">
       <#slot />
     </section>
     """

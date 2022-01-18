@@ -17,9 +17,9 @@ defmodule ShadowfallscampgroundWeb.Sections.Calendar do
           <div class="flex flex-col items-center space-y-2">
             <div class="">
               <p class="">{theme}</p>
-              <p class="font-light text-lg pt-4">{Timex.format!(date, "{WDshort}, {Mshort} {D}, {kitchen}")}</p>
+              <p class="font-light text-lg lg:text-xl pt-4">{Timex.format!(date, "{WDshort}, {Mshort} {D}, {kitchen}")}</p>
             </div>
-            {!-- <p class="text-center">{description}</p> --}
+            <p class="text-center lg:text-xl">{description}</p>
           </div>
         </Components.Card>
       {/for}

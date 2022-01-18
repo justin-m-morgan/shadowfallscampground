@@ -61,7 +61,7 @@ defmodule ShadowfallscampgroundWeb.Svg.IconSymbol do
 
   defp icon_size(:xs), do: "h-4 w-4"
   defp icon_size(:sm), do: "h-8 w-8"
-  defp icon_size(:md), do: "h-16 w-16"
+  defp icon_size(:md), do: "h-16 w-16 lg:h-32 lg:w-32"
   defp icon_size(:lg), do: "h-32 w-32"
   defp icon_size(:xl), do: "h-64 w-64"
   defp icon_size(:xxl), do: "h-96 w-96"

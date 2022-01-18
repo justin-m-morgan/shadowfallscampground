@@ -12,9 +12,9 @@ defmodule ShadowfallscampgroundWeb.Sections.Services do
     ~F"""
     <div class="grid md:grid-cols-3 gap-8">
       {#for %{icon: icon, label: label, description: description} <- services()}
-        <Components.Card label={label} padding={:md}>
+        <Components.Card label={label} padding={:xl}>
           <Svg.IconSymbol name={icon} size={:md} />
-          <p>{description}</p>
+          <p class="lg:text-xl lg:py-4">{description}</p>
         </Components.Card>
       {/for}
     </div>

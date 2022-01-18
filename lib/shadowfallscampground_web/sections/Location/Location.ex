@@ -20,14 +20,14 @@ defmodule ShadowfallscampgroundWeb.Sections.Location do
           "px-2 py-4 md:p-8",
           "z-20"
         }>
-          <div class="prose">
+          <div class="prose lg:text-3xl lg:px-4 lg:py-6">
             {#for para <- location_description()}
               <p>{para}</p>
             {/for}
           </div>
         </div>
         <div class="col-span-4 row-start-1 col-start-3 rounded-lg overflow-hidden">
-          <Image src="shadowfalls.jpg" alt="Shadow Falls waterfall" class="object-cover" />
+          <Image src="shadowfalls_gxoye4.jpg" alt="Shadow Falls waterfall" class="object-cover" />
         </div>
       </div>
       <div class="relative overflow-hidden p-32 md:p-48 lg:p-64 rounded-lg">
