@@ -5,7 +5,7 @@ defmodule ShadowfallscampgroundWeb.Components.ImageBanner.Playground do
     body: [style: "padding: 1.5rem; background-color: #DDDDDD;"]
 
   data props, :map, default: %{
-
+    images: [1,2,3,4]
   }
 
   def render(assigns) do
@@ -14,4 +14,3 @@ defmodule ShadowfallscampgroundWeb.Components.ImageBanner.Playground do
     """
   end
 end
-

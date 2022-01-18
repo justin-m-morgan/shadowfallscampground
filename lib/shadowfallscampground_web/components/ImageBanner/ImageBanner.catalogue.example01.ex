@@ -13,8 +13,7 @@ defmodule ShadowfallscampgroundWeb.Components.ImageBanner.Example01 do
 
   def render(assigns) do
     ~F"""
-    <ImageBanner />
+    <ImageBanner images={[1,2,3,4]} />
     """
   end
 end
-
