@@ -3,9 +3,7 @@ const typography = require("@tailwindcss/typography");
 const forms = require("@tailwindcss/forms");
 
 module.exports = {
-  mode: "jit",
-  purge: ["./js/**/*.js", "../lib/*_web/**/*.*ex", "../lib/*_web/**/*.sface"],
-  darkMode: false, // or 'media' or 'class'
+  content: ["./js/**/*.js", "../lib/*_web/**/*.*ex", "../lib/*_web/**/*.sface"],
   theme: {
     extend: {
       colors: {
