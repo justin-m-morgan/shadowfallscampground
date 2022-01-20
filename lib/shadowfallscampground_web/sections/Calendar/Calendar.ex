@@ -14,12 +14,11 @@ defmodule ShadowfallscampgroundWeb.Sections.Calendar do
       {#for %{name: name, theme: theme, date: date, description: description, icon: icon, icon_classes: icon_classes} <- events_listing()}
         <Components.Card label={name} padding={:lg} >
           <Svg.IconSymbol name={icon} class={icon_classes} size={:md}/>
-          <div class="flex flex-col items-center space-y-2">
+
             <div class="">
               <p class="">{theme}</p>
               <p class="font-light text-lg lg:text-xl pt-4">{Timex.format!(date, "{WDshort}, {Mshort} {D}, {kitchen}")}</p>
-            </div>
-            <p class="text-center lg:text-xl">{description}</p>
+              <p class="text-center lg:text-xl border">{description}</p>
           </div>
         </Components.Card>
       {/for}

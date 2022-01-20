@@ -23,16 +23,17 @@ defmodule ShadowfallscampgroundWeb.Components.Card do
     ~F"""
     <div class={
       "bg-gray-50/90 filter backdrop-blur-lg border-bg-gray-200/40 shadow-xl rounded",
-      "flex flex-col justify-between",
+      "flex flex-col",
       "text-center",
       text_color(@text_color),
       padding(@padding),
       @class
     }>
-      <div class="flex justify-center">
+      <div class="flex flex-col items-center justify-between">
         <#slot name="icon" />
+        <h3 :if={@label} class="text-xl lg:text-3xl font-black">{@label}</h3>
       </div>
-      <h3 :if={@label} class="text-xl lg:text-3xl font-black">{@label}</h3>
+
       <#slot />
     </div>
     """
