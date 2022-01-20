@@ -31,8 +31,16 @@ defmodule ShadowfallscampgroundWeb.Components.ImageBanner do
       hammocks_on_bluff_c5gmgn.jpg
       valley_from_rockbluff_lsleuc.jpg
       unicorn_on_grass_tmzzdz.jpg
-      tents_in_two_three_ncszbw.jpg
+      grotto_at_water_level_vfrwj6.jpg
       drag_on_deck_p5342h.jpg
+      bear_pond_sign_qzxxrp.jpg
+      banquet_people_soczfw.jpg
+      banquet_in_clubhouse_l1kuqc.jpg
+      central_fire_l4aype.jpg
+      disco_dance_fz9yhg.jpg
+      bear_welcome_statue_vhcewc.jpg
+      palm_tree_rv_zktvne.jpg
+      small_gathering_on_deck_sghjrg.jpg
       /
     |> Enum.chunk_every(chunk_size)
     |> Enum.at(banner_number - 1)
