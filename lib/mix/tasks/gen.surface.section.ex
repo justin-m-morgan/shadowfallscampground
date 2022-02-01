@@ -46,7 +46,7 @@ defmodule Mix.Tasks.Gen.Surface.Section do
   defp test(base_path, component_name, project_name) do
     """
     defmodule #{base_path}.#{component_name}Test do
-      use #{project_name}.ConnCase, async: true
+      use #{project_name}Web.ConnCase, async: true
 
       alias #{base_path}.#{component_name}
 
