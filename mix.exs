@@ -10,7 +10,7 @@ defmodule Shadowfallscampground.MixProject do
       compilers: [:gettext] ++ Mix.compilers() ++ [:surface],
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
-      test_paths: ["lib"],
+      test_paths: ["lib", "test"],
       deps: deps()
     ]
   end
@@ -42,21 +42,31 @@ defmodule Shadowfallscampground.MixProject do
       {:phoenix_html, "~> 3.2"},
       {:phoenix_live_reload, "~> 1.3", only: :dev},
       {:phoenix_live_view, "~> 0.17"},
-      {:floki, ">= 0.32.0", only: :test},
       {:phoenix_live_dashboard, "~> 0.6"},
       {:esbuild, "~> 0.4", runtime: Mix.env() == :dev},
-      {:swoosh, "~> 1.6"},
       {:telemetry_metrics, "~> 0.6"},
       {:telemetry_poller, "~> 1.0"},
       {:gettext, "~> 0.19"},
       {:jason, "~> 1.3"},
       {:plug_cowboy, "~> 2.5"},
+      # Data
+      {:money, "~> 1.9"},
+      {:timex, "~> 3.7"},
+      # UI
       {:surface, "~> 0.7"},
       {:surface_formatter, "~> 0.7"},
       {:surface_catalogue, "~> 0.3"},
-      {:money, "~> 1.9"},
-      {:timex, "~> 3.7"},
-      {:tailwind, "~> 0.1", runtime: Mix.env() == :dev}
+      {:tailwind, "~> 0.1", runtime: Mix.env() == :dev},
+      {:petal_components, "~> 0.9.0"},
+      # Email
+      {:swoosh, "~> 1.6"},
+      # Testing
+      {:mix_test_interactive, "~> 1.1", only: :dev, runtime: false},
+      {:floki, ">= 0.32.0", only: :test},
+      {:ex_machina, "~> 2.7", only: :test},
+      {:faker, "~> 0.17", only: :test},
+      {:stream_data, "~> 0.5", only: :test},
+      {:credo, "~> 1.6", only: :dev}
     ]
   end
 
