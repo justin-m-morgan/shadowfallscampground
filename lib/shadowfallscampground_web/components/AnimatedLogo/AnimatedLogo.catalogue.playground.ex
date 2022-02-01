@@ -1,4 +1,5 @@
 defmodule ShadowfallscampgroundWeb.Components.AnimatedLogo.Playground do
+  @moduledoc false
   use Surface.Catalogue.Playground,
     subject: ShadowfallscampgroundWeb.Components.AnimatedLogo,
     height: "250px",

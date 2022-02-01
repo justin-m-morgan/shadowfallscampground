@@ -1,4 +1,5 @@
 defmodule ShadowfallscampgroundWeb.Components.CallToAction.Playground do
+  @moduledoc false
   use Surface.Catalogue.Playground,
     subject: ShadowfallscampgroundWeb.Components.CallToAction,
     height: "250px",

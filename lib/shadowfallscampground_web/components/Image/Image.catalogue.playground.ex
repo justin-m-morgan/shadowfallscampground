@@ -1,4 +1,5 @@
 defmodule ShadowfallscampgroundWeb.Components.Image.Playground do
+  @moduledoc false
   use Surface.Catalogue.Playground,
     subject: ShadowfallscampgroundWeb.Components.Image,
     height: "600px",

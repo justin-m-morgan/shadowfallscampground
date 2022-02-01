@@ -1,4 +1,5 @@
 defmodule ShadowfallscampgroundWeb.Components.Card.Playground do
+  @moduledoc false
   use Surface.Catalogue.Playground,
     subject: ShadowfallscampgroundWeb.Components.Card,
     height: "500px",

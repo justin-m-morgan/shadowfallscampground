@@ -1,5 +1,5 @@
 defmodule ShadowfallscampgroundWeb.Components.CardTest do
-  use Shadowfallscampground.ConnCase, async: true
+  use ShadowfallscampgroundWeb.ConnCase, async: true
 
   alias ShadowfallscampgroundWeb.Components.Card
 
@@ -7,12 +7,12 @@ defmodule ShadowfallscampgroundWeb.Components.CardTest do
     html =
       render_surface do
         ~F"""
-        <Card />
+        <Card>
+          <p>Card Content</p>
+        </Card>
         """
       end
 
-    assert html =~ """
-           #  Has Some Quality
-           """
+    assert html =~ "Card Content"
   end
 end

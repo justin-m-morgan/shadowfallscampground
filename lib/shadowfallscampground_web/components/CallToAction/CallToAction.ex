@@ -4,14 +4,13 @@ defmodule ShadowfallscampgroundWeb.Components.CallToAction do
   """
   use Surface.Component
 
-  alias Surface.Components.Link.Button
-  alias Surface.Components.LivePatch
+  alias Surface.Components.{LivePatch, LiveRedirect}
 
   @doc "The page to link to"
   prop to, :string
 
-  @doc "Patch rather than link"
-  prop patch, :boolean, default: false
+  @doc "Type of link"
+  prop type, :string, values: ["button", "submit", "patch", "redirect"], default: "button"
 
   @doc "A click event"
   prop click, :event
@@ -28,8 +27,6 @@ defmodule ShadowfallscampgroundWeb.Components.CallToAction do
   @doc "Button variant"
   prop variant, :atom, default: :solid, values: [:solid, :outline, :ghost]
 
-  prop type, :string, values: ["submit", "button"]
-
   @doc "Additional attributes to add onto the generated element"
   prop opts, :keyword, default: []
 
@@ -38,36 +35,45 @@ defmodule ShadowfallscampgroundWeb.Components.CallToAction do
 
   slot default, required: true
 
-  def render(%{type: _} = assigns) do
+  def render(%{type: "patch"} = assigns) do
+    ~F"""
+    <LivePatch to={@to} class={classes(@size, @variant), @class} opts={@opts}>
+      <#slot />
+    </LivePatch>
+    """
+  end
+
+  def render(%{type: "redirect"} = assigns) do
+    ~F"""
+    <LiveRedirect to={@to} class={classes(@size, @variant), @class} opts={@opts}>
+      <#slot />
+    </LiveRedirect>
+    """
+  end
+
+  def render(assigns) do
     ~F"""
     <button
       :on-click={@click}
       phx_disable_with={@disable_with}
       type={@type}
       class={classes(@size, @variant), @class}
+      data-test="call-to-action"
     >
       <#slot />
     </button>
     """
   end
 
-  def render(%{patch: true} = assigns) do
-    ~F"""
-    <LivePatch to={@to} class={classes(@size, @variant), @class}>
-      opts={@opts}>
-      <#slot />
-    </LivePatch>
-    """
-  end
+  # def render(assigns) do
+  #   ~F"""
+  #   <Button to={@to} method={@method} class={classes(@size, @variant), @class}>
+  #     opts={@opts}>
+  #     <#slot />
 
-  def render(assigns) do
-    ~F"""
-    <Button to={@to} method={@method} class={classes(@size, @variant), @class}>
-      opts={@opts}>
-      <#slot />
-    </Button>
-    """
-  end
+  #   </Button>
+  #   """
+  # end
 
   defp size(:xs), do: ["py-2 px-2 text-sm"]
   defp size(:sm), do: ["py-2 px-3"]

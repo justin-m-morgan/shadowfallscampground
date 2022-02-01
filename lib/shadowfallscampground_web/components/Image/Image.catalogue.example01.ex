@@ -1,7 +1,5 @@
 defmodule ShadowfallscampgroundWeb.Components.Image.Example01 do
-  @moduledoc """
-
-  """
+  @moduledoc false
 
   use Surface.Catalogue.Example,
     subject: ShadowfallscampgroundWeb.Components.Image,

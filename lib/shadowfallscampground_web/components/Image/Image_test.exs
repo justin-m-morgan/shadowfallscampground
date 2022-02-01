@@ -1,5 +1,6 @@
 defmodule ShadowfallscampgroundWeb.Components.ImageTest do
-  use Shadowfallscampground.ConnCase, async: true
+  @moduledoc false
+  use ShadowfallscampgroundWeb.ConnCase, async: true
 
   alias ShadowfallscampgroundWeb.Components.Image
 
@@ -7,12 +8,10 @@ defmodule ShadowfallscampgroundWeb.Components.ImageTest do
     html =
       render_surface do
         ~F"""
-        <Image />
+        <Image  src="https://fakeimg.pl/250x100/" alt="fake image"/>
         """
       end
 
-    assert html =~ """
-           #  Has Some Quality
-           """
+    assert html =~ "<img"
   end
 end

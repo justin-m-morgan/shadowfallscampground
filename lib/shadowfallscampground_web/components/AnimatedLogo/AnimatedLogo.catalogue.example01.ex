@@ -1,7 +1,5 @@
 defmodule ShadowfallscampgroundWeb.Components.AnimatedLogo.Example01 do
-  @moduledoc """
-
-  """
+  @moduledoc false
 
   use Surface.Catalogue.Example,
     subject: ShadowfallscampgroundWeb.Components.AnimatedLogo,

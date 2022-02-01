@@ -1,7 +1,5 @@
 defmodule ShadowfallscampgroundWeb.Components.ImageBanner.Example01 do
-  @moduledoc """
-
-  """
+  @moduledoc false
 
   use Surface.Catalogue.Example,
     subject: ShadowfallscampgroundWeb.Components.ImageBanner,
@@ -13,7 +11,7 @@ defmodule ShadowfallscampgroundWeb.Components.ImageBanner.Example01 do
 
   def render(assigns) do
     ~F"""
-    <ImageBanner images={[1,2,3,4]} />
+    <ImageBanner images={[1, 2, 3, 4]} />
     """
   end
 end

@@ -1,5 +1,5 @@
 defmodule ShadowfallscampgroundWeb.Components.ImageBannerTest do
-  use Shadowfallscampground.ConnCase, async: true
+  use ShadowfallscampgroundWeb.ConnCase, async: true
 
   alias ShadowfallscampgroundWeb.Components.ImageBanner
 
@@ -11,9 +11,6 @@ defmodule ShadowfallscampgroundWeb.Components.ImageBannerTest do
         """
       end
 
-    assert html =~ """
-          #  Has Some Quality
-           """
+    assert html =~ ~s/data-test="image-banner"/
   end
 end
-

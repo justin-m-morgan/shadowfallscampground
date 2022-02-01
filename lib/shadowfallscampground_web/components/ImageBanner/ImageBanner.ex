@@ -1,6 +1,6 @@
 defmodule ShadowfallscampgroundWeb.Components.ImageBanner do
   @moduledoc """
-
+  Container component for displaying multiple images
   """
   use ShadowfallscampgroundWeb, :component
 
@@ -15,8 +15,8 @@ defmodule ShadowfallscampgroundWeb.Components.ImageBanner do
 
   def render(assigns) do
     ~F"""
-    <div class="min-h-96 grid md:grid-cols-2 xl:grid-cols-4">
-      {#for filename <- @images || banners(@banner_number, @chunk_size) }
+    <div class="min-h-96 grid md:grid-cols-2 xl:grid-cols-4" data-test="image-banner">
+      {#for filename <- @images || banners(@banner_number, @chunk_size)}
         <Components.Image src={filename} alt={filename} />
       {/for}
     </div>
@@ -44,6 +44,5 @@ defmodule ShadowfallscampgroundWeb.Components.ImageBanner do
       /
     |> Enum.chunk_every(chunk_size)
     |> Enum.at(banner_number - 1)
-
   end
 end

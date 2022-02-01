@@ -11,10 +11,11 @@ defmodule ShadowfallscampgroundWeb.Components.Image do
   prop src, :string, required: true
 
   @doc "srcset image sizes. Intrinsic width (ex 450w) or dpi formats (ex 2x) acceptable"
-  prop srcset, :list, default: [
-    {450, "450w"},
-    {600, "600w"},
-  ]
+  prop srcset, :list,
+    default: [
+      {450, "450w"},
+      {600, "600w"}
+    ]
 
   @doc "Alt-text for image"
   prop alt, :string, required: true
@@ -40,6 +41,7 @@ defmodule ShadowfallscampgroundWeb.Components.Image do
 
   defp remote_image(filename, dimension) when is_integer(dimension),
     do: remote_image(filename, {dimension, dimension})
+
   defp remote_image(filename, dimension) do
     [
       @cloudinary_base,
@@ -51,7 +53,7 @@ defmodule ShadowfallscampgroundWeb.Components.Image do
     |> Enum.join("/")
   end
 
-
+  # credo:disable-for-next-line
   defp cloudinary_fill_scale({width, height}), do: "c_fill,g_center,w_#{width},h_#{height}"
 
   defp cloudinary_auto_format(), do: "f_auto"
@@ -59,11 +61,8 @@ defmodule ShadowfallscampgroundWeb.Components.Image do
   defp source_formatter("#"), do: "/images/dummy_image.svg"
   defp source_formatter(src), do: remote_image(src, 300)
 
-
   def srcset(src, srcset) do
     srcset
-    |> Enum.map(fn {dimension, i_width} -> "#{remote_image(src, dimension)} #{i_width}" end)
-    |> Enum.join(", ")
+    |> Enum.map_join(", ", fn {dimension, i_width} -> "#{remote_image(src, dimension)} #{i_width}" end)
   end
-
 end

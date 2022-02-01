@@ -1,5 +1,5 @@
 defmodule ShadowfallscampgroundWeb.Components.AnimatedLogoTest do
-  use Shadowfallscampground.ConnCase, async: true
+  use ShadowfallscampgroundWeb.ConnCase, async: true
 
   alias ShadowfallscampgroundWeb.Components.AnimatedLogo
 
@@ -11,8 +11,6 @@ defmodule ShadowfallscampgroundWeb.Components.AnimatedLogoTest do
         """
       end
 
-    assert html =~ """
-           #  Has Some Quality
-           """
+    assert html =~ "<svg"
   end
 end

@@ -1,5 +1,5 @@
 defmodule ShadowfallscampgroundWeb.Components.CallToActionTest do
-  use Shadowfallscampground.ConnCase, async: true
+  use ShadowfallscampgroundWeb.ConnCase, async: true
 
   alias ShadowfallscampgroundWeb.Components.CallToAction
 
@@ -7,12 +7,13 @@ defmodule ShadowfallscampgroundWeb.Components.CallToActionTest do
     html =
       render_surface do
         ~F"""
-        <CallToAction />
+        <CallToAction>
+          Test Button
+        </CallToAction>
         """
       end
 
-    assert html =~ """
-           #  Has Some Quality
-           """
+    assert html =~ ~s/data-test="call-to-action"/
+    assert html =~ ~s/Test Button/
   end
 end
