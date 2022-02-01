@@ -9,6 +9,12 @@
     }
 }
 
+@layer base {
+  input, select {
+    border: 0;
+  }
+}
+
 /* Logo Animation */
 
 :root {
