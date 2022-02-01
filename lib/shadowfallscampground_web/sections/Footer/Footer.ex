@@ -1,12 +1,15 @@
 defmodule ShadowfallscampgroundWeb.Sections.Footer do
   @moduledoc """
-
+  Static content (Footer) for use in multiple locations in site.
   """
   use ShadowfallscampgroundWeb, :component
 
   def render(assigns) do
     ~F"""
-    <footer class="bg-accent-800 py-16 text-gray-50 text-lg flex justify-center">
+    <footer
+      class="bg-accent-800 py-16 text-gray-50 text-lg flex justify-center"
+      data-test="section__footer"
+    >
       <div class="grid md:grid-cols-2 gap-16 max-w-6xl">
         <div class="">
           <h2 class="font-bold text-3xl">Shadow Falls</h2>

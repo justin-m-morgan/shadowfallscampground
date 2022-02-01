@@ -1,7 +1,6 @@
 defmodule ShadowfallscampgroundWeb.Sections.Services do
-  @moduledoc """
+  @moduledoc false
 
-  """
   use ShadowfallscampgroundWeb, :component
 
   alias Shadowfallscampground.Data.Prices
@@ -10,7 +9,7 @@ defmodule ShadowfallscampgroundWeb.Sections.Services do
 
   def render(assigns) do
     ~F"""
-    <div class="grid md:grid-cols-3 gap-8">
+    <div class="grid md:grid-cols-3 gap-8" data-test="section__services">
       {#for %{icon: icon, label: label, description: description} <- services()}
         <Components.Card label={label} padding={:xl}>
           <Svg.IconSymbol name={icon} size={:md} />
@@ -26,8 +25,7 @@ defmodule ShadowfallscampgroundWeb.Sections.Services do
       %__MODULE__{
         icon: "wifi",
         label: "WiFi",
-        description:
-          "We have a shared rural connection, but it will let you stay connected."
+        description: "We have a shared rural connection, but it will let you stay connected."
       },
       %__MODULE__{
         icon: "washrooms",

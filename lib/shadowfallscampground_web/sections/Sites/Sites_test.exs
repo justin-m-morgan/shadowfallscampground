@@ -1,5 +1,5 @@
 defmodule ShadowfallscampgroundWeb.Sections.SitesTest do
-  use Shadowfallscampground.ConnCase, async: true
+  use ShadowfallscampgroundWeb.ConnCase, async: true
 
   alias ShadowfallscampgroundWeb.Sections.Sites
 
@@ -11,8 +11,6 @@ defmodule ShadowfallscampgroundWeb.Sections.SitesTest do
         """
       end
 
-    assert html =~ """
-           #  Has Some Quality
-           """
+    assert html =~ ~s/data-test="section__sites"/
   end
 end

@@ -1,6 +1,6 @@
 defmodule ShadowfallscampgroundWeb.Sections.Location do
   @moduledoc """
-
+  Static section (Location) of the index page
   """
   use Surface.Component
 
@@ -12,7 +12,7 @@ defmodule ShadowfallscampgroundWeb.Sections.Location do
 
   def render(assigns) do
     ~F"""
-    <div>
+    <div data-test="section__location">
       <div class="grid md:grid-cols-6 items-center justify-center pb-8">
         <div class={
           "col-span-3 col-start-1 row-start-1 ",

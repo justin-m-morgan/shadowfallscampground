@@ -4,16 +4,20 @@ defmodule ShadowfallscampgroundWeb.Sections.MainHero do
   """
   use ShadowfallscampgroundWeb, :component
 
+  alias ShadowfallscampgroundWeb.Endpoint
   alias ShadowfallscampgroundWeb.Components.{AnimatedLogo, CallToAction}
 
   def render(assigns) do
     ~F"""
-    <section class="flex flex-col justify-center items-center lg:py-64">
+    <section
+      class="flex flex-col justify-center items-center lg:py-64"
+      data-test="section__main-hero"
+    >
       <div class={
         "px-12 lg:px-48 py-8 lg:py-12",
         "text-center text-primary-900",
-        "bg-primary-50 bg-circle"}
-        >
+        "bg-primary-50 bg-circle"
+      }>
         <AnimatedLogo class="h-48 lg:h-64" />
         <div class="px-24">
           <h1 class="text-5xl font-bold">Shadow Falls</h1>
@@ -22,7 +26,7 @@ defmodule ShadowfallscampgroundWeb.Sections.MainHero do
         </div>
       </div>
       <div class="space-x-4 space-y-4">
-        <CallToAction to="#" size={:lg}>
+        <CallToAction type="redirect" to={Routes.reserve_path(Endpoint, :new)} size={:lg}>
           Book Now!
         </CallToAction>
         <CallToAction to="#" size={:lg}>

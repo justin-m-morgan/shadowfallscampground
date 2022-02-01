@@ -1,5 +1,5 @@
 defmodule ShadowfallscampgroundWeb.Sections.MainHeroTest do
-  use Shadowfallscampground.ConnCase, async: true
+  use ShadowfallscampgroundWeb.ConnCase, async: true
 
   alias ShadowfallscampgroundWeb.Sections.MainHero
 
@@ -11,8 +11,6 @@ defmodule ShadowfallscampgroundWeb.Sections.MainHeroTest do
         """
       end
 
-    assert html =~ """
-           #  Has Some Quality
-           """
+    assert html =~ "section__main-hero"
   end
 end

@@ -1,4 +1,5 @@
 defmodule ShadowfallscampgroundWeb.Sections.Footer.Playground do
+  @moduledoc false
   alias ShadowfallscampgroundWeb.Svg
 
   use Surface.Catalogue.Playground,

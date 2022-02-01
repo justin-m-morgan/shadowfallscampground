@@ -1,4 +1,5 @@
 defmodule ShadowfallscampgroundWeb.Sections.Location.Playground do
+  @moduledoc false
   use Surface.Catalogue.Playground,
     subject: ShadowfallscampgroundWeb.Sections.Location,
     height: "1000px",

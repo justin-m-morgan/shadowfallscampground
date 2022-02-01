@@ -1,5 +1,5 @@
 defmodule ShadowfallscampgroundWeb.Sections.FooterTest do
-  use Shadowfallscampground.ConnCase, async: true
+  use ShadowfallscampgroundWeb.ConnCase, async: true
 
   alias ShadowfallscampgroundWeb.Sections.Footer
 
@@ -11,8 +11,6 @@ defmodule ShadowfallscampgroundWeb.Sections.FooterTest do
         """
       end
 
-    assert html =~ """
-           #  Has Some Quality
-           """
+    assert html =~ "section__footer"
   end
 end

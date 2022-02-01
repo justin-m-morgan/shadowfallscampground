@@ -1,7 +1,5 @@
 defmodule ShadowfallscampgroundWeb.Sections.Calendar.Example01 do
-  @moduledoc """
-
-  """
+  @moduledoc false
 
   use Surface.Catalogue.Example,
     subject: ShadowfallscampgroundWeb.Sections.Calendar,
@@ -17,4 +15,3 @@ defmodule ShadowfallscampgroundWeb.Sections.Calendar.Example01 do
     """
   end
 end
-

@@ -1,7 +1,5 @@
 defmodule ShadowfallscampgroundWeb.Sections.MainHero.Example01 do
-  @moduledoc """
-
-  """
+  @moduledoc false
 
   use Surface.Catalogue.Example,
     subject: ShadowfallscampgroundWeb.Sections.MainHero,

@@ -1,7 +1,5 @@
 defmodule ShadowfallscampgroundWeb.Sections.Services.Example01 do
-  @moduledoc """
-
-  """
+  @moduledoc false
 
   use Surface.Catalogue.Example,
     subject: ShadowfallscampgroundWeb.Sections.Services,

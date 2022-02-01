@@ -1,4 +1,5 @@
 defmodule ShadowfallscampgroundWeb.Sections.Calendar.Playground do
+  @moduledoc false
   alias ShadowfallscampgroundWeb.Svg
 
   use Surface.Catalogue.Playground,
@@ -6,15 +7,13 @@ defmodule ShadowfallscampgroundWeb.Sections.Calendar.Playground do
     height: "600px",
     body: []
 
-  data props, :map, default: %{
-
-  }
+  data props, :map, default: %{}
 
   def render(assigns) do
     ~F"""
     <Svg.IconSet />
     <div class="bg-primary-900 p-4">
-    <Calendar {...@props} />
+      <Calendar {...@props} />
     </div>
     """
   end

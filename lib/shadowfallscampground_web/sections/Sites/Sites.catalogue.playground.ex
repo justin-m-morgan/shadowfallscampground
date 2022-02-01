@@ -1,5 +1,5 @@
 defmodule ShadowfallscampgroundWeb.Sections.Sites.Playground do
-
+  @moduledoc false
   alias ShadowfallscampgroundWeb.Svg.IconSet
 
   use Surface.Catalogue.Playground,

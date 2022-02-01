@@ -1,5 +1,5 @@
 defmodule ShadowfallscampgroundWeb.Sections.LocationTest do
-  use Shadowfallscampground.ConnCase, async: true
+  use ShadowfallscampgroundWeb.ConnCase, async: true
 
   alias ShadowfallscampgroundWeb.Sections.Location
 
@@ -11,8 +11,6 @@ defmodule ShadowfallscampgroundWeb.Sections.LocationTest do
         """
       end
 
-    assert html =~ """
-           #  Has Some Quality
-           """
+    assert html =~ "section__location"
   end
 end

@@ -1,6 +1,6 @@
 defmodule ShadowfallscampgroundWeb.Sections.Sites do
   @moduledoc """
-
+  Static content for the Sites section of the index page
   """
   use ShadowfallscampgroundWeb, :component
 
@@ -9,12 +9,11 @@ defmodule ShadowfallscampgroundWeb.Sections.Sites do
 
   alias Shadowfallscampground.Data.Prices
 
-
   defstruct [:label, :copy, :prices, :icon]
 
   def render(assigns) do
     ~F"""
-    <div class="grid md:grid-cols-3 gap-8">
+    <div class="grid md:grid-cols-3 gap-8" data-test="section__sites">
       {#for %__MODULE__{icon: icon, label: label, copy: copy, prices: prices} <- [
           rv_copy(),
           tent_copy(),

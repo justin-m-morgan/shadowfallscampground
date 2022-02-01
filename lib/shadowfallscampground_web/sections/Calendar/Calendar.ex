@@ -1,6 +1,6 @@
 defmodule ShadowfallscampgroundWeb.Sections.Calendar do
   @moduledoc """
-
+  Static content (event calendar)
   """
   use ShadowfallscampgroundWeb, :component
 
@@ -10,15 +10,22 @@ defmodule ShadowfallscampgroundWeb.Sections.Calendar do
 
   def render(assigns) do
     ~F"""
-    <div class="grid md:grid-cols-3 gap-8">
-      {#for %{name: name, theme: theme, date: date, description: description, icon: icon, icon_classes: icon_classes} <- events_listing()}
-        <Components.Card label={name} padding={:lg} >
-          <Svg.IconSymbol name={icon} class={icon_classes} size={:md}/>
+    <div class="grid md:grid-cols-3 gap-8" data-test="section__event-calendar">
+      {#for %{
+          name: name,
+          theme: theme,
+          date: date,
+          description: description,
+          icon: icon,
+          icon_classes: icon_classes
+        } <- events_listing()}
+        <Components.Card label={name} padding={:lg}>
+          <Svg.IconSymbol name={icon} class={icon_classes} size={:md} />
 
-            <div class="">
-              <p class="">{theme}</p>
-              <p class="font-light text-lg lg:text-xl pt-4">{Timex.format!(date, "{WDshort}, {Mshort} {D}, {kitchen}")}</p>
-              <p class="text-center lg:text-xl border">{description}</p>
+          <div class="">
+            <p class="">{theme}</p>
+            <p class="font-light text-lg lg:text-xl pt-4">{Timex.format!(date, "{WDshort}, {Mshort} {D}, {kitchen}")}</p>
+            <p class="text-center lg:text-xl border">{description}</p>
           </div>
         </Components.Card>
       {/for}

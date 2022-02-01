@@ -1,5 +1,5 @@
 defmodule ShadowfallscampgroundWeb.Sections.CalendarTest do
-  use Shadowfallscampground.ConnCase, async: true
+  use ShadowfallscampgroundWeb.ConnCase, async: true
 
   alias ShadowfallscampgroundWeb.Sections.Calendar
 
@@ -11,9 +11,6 @@ defmodule ShadowfallscampgroundWeb.Sections.CalendarTest do
         """
       end
 
-    assert html =~ """
-          #  Has Some Quality
-           """
+    assert html =~ ~s/section__event-calendar/
   end
 end
-

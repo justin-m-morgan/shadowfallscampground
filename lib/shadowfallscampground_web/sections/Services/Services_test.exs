@@ -1,5 +1,5 @@
 defmodule ShadowfallscampgroundWeb.Sections.ServicesTest do
-  use Shadowfallscampground.ConnCase, async: true
+  use ShadowfallscampgroundWeb.ConnCase, async: true
 
   alias ShadowfallscampgroundWeb.Sections.Services
 
@@ -11,8 +11,6 @@ defmodule ShadowfallscampgroundWeb.Sections.ServicesTest do
         """
       end
 
-    assert html =~ """
-           #  Has Some Quality
-           """
+    assert html =~ "section__services"
   end
 end

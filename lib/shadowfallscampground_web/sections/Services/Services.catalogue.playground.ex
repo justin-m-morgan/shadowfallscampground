@@ -1,5 +1,5 @@
 defmodule ShadowfallscampgroundWeb.Sections.Services.Playground do
-
+  @moduledoc false
   alias ShadowfallscampgroundWeb.Svg
 
   use Surface.Catalogue.Playground,
