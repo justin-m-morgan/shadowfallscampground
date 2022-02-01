@@ -1,4 +1,7 @@
 defmodule Shadowfallscampground.Data.Prices do
+  @moduledoc """
+  Functions for dealing with currency numbers
+  """
   def person_night(), do: 17.5
   def tent_night(), do: person_night()
   def tent_power(), do: 5

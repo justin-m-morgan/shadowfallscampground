@@ -1,4 +1,7 @@
 defmodule Shadowfallscampground.Data.Events do
+  @moduledoc """
+  Functions and struct definition for events
+  """
   defstruct name: "", theme: "", date: "", description: "", icon: "information", icon_classes: ""
 
   def events_listing() do
