@@ -18,6 +18,7 @@ defmodule Shadowfallscampground.DataCase do
 
   using do
     quote do
+      use ExUnitProperties
       alias Shadowfallscampground.Repo
 
       import Ecto
@@ -49,5 +50,24 @@ defmodule Shadowfallscampground.DataCase do
         opts |> Keyword.get(String.to_existing_atom(key), key) |> to_string()
       end)
     end)
+  end
+
+  @doc """
+  Checks whether all of the keys/values in the first argument are in the second.
+  """
+  def is_subset(subset, total)
+  def is_subset(subset, total) when is_struct(total) do
+    is_subset(subset, Map.from_struct(total))
+  end
+
+  def is_subset(subset, total) do
+    total
+    |> Map.split(Map.keys(subset))
+    |> elem(0)
+    |> Kernel.==(subset)
+  end
+
+  def report_args(args) do
+    Enum.each(args, fn {key, value} -> IO.inspect(value, label: key) end)
   end
 end

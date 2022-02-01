@@ -24,6 +24,9 @@ defmodule ShadowfallscampgroundWeb.ConnCase do
       import Phoenix.ConnTest
       import ShadowfallscampgroundWeb.ConnCase
 
+      # Import Surface testing utilities
+      use Surface.LiveViewTest
+
       alias ShadowfallscampgroundWeb.Router.Helpers, as: Routes
 
       # The default endpoint for testing
