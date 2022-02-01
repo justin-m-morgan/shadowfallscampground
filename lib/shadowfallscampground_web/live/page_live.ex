@@ -1,4 +1,7 @@
 defmodule ShadowfallscampgroundWeb.PageLive do
+  @moduledoc """
+  LiveView for static pages
+  """
   use ShadowfallscampgroundWeb, :live_view
 
   alias ShadowfallscampgroundWeb.Pages

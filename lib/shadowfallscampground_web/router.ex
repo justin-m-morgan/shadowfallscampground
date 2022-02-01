@@ -20,7 +20,15 @@ defmodule ShadowfallscampgroundWeb.Router do
     pipe_through :browser
 
     live "/", PageLive
+    live "/reserve", ReserveLive, :new
     live "/demo", Demo
+
+    # live "/reservations", ReservationLive.Index, :index
+    # live "/reservations/new", ReservationLive.Index, :new
+    # live "/reservations/:id/edit", ReservationLive.Index, :edit
+
+    # live "/reservations/:id", ReservationLive.Show, :show
+    # live "/reservations/:id/show/edit", ReservationLive.Show, :edit
   end
 
   # Other scopes may use custom stacks.

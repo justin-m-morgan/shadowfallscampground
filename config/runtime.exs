@@ -77,6 +77,5 @@ google_maps_api_key =
     Remeber to set this in your runtime's environment variables/secrets
     """
 
-
 config :shadowfallscampground,
-    google_maps_api_key: google_maps_api_key
+  google_maps_api_key: google_maps_api_key
