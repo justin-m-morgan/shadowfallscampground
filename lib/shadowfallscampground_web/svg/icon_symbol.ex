@@ -48,7 +48,7 @@ defmodule ShadowfallscampgroundWeb.Svg.IconSymbol do
       "fifthwheel",
       "trailer",
       "tent",
-      "day_visit",
+      "day_visit"
     ]
 
   def render(assigns) do

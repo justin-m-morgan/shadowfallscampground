@@ -1,5 +1,5 @@
 defmodule ShadowfallscampgroundWeb.Pages.IndexTest do
-  use Shadowfallscampground.ConnCase, async: true
+  use ShadowfallscampgroundWeb.ConnCase, async: true
 
   alias ShadowfallscampgroundWeb.Pages.Index
 
@@ -11,9 +11,6 @@ defmodule ShadowfallscampgroundWeb.Pages.IndexTest do
         """
       end
 
-    assert html =~ """
-          #  Has Some Quality
-           """
+    assert html =~ ~s/data-test="page__index"/
   end
 end
-

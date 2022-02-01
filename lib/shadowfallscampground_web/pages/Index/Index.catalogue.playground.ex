@@ -1,5 +1,5 @@
 defmodule ShadowfallscampgroundWeb.Pages.Index.Playground do
-
+  @moduledoc false
   alias ShadowfallscampgroundWeb.Svg
 
   use Surface.Catalogue.Playground,
@@ -7,9 +7,7 @@ defmodule ShadowfallscampgroundWeb.Pages.Index.Playground do
     height: "600px",
     body: [style: ""]
 
-  data props, :map, default: %{
-
-  }
+  data props, :map, default: %{}
 
   def render(assigns) do
     ~F"""
