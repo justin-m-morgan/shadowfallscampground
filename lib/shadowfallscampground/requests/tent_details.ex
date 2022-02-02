@@ -17,5 +17,4 @@ defmodule Shadowfallscampground.Requests.TentDetails do
     |> cast(attrs, [:number_of_people, :number_of_tents, :power_requested])
     |> validate_required([:number_of_people, :number_of_tents])
   end
-
 end

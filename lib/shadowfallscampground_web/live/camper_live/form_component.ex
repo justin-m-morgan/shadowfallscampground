@@ -4,9 +4,9 @@ defmodule ShadowfallscampgroundWeb.CamperLive.FormComponent do
   """
   use ShadowfallscampgroundWeb, :live_component
 
-  alias Surface.Components.Form
   alias Shadowfallscampground.Identities
   alias ShadowfallscampgroundWeb.Forms
+  alias ShadowfallscampgroundWeb.ReservationLive.ReservationContainer
 
   @doc "Display title for the form"
   prop title, :string, default: "Contact Details"
@@ -77,16 +77,12 @@ defmodule ShadowfallscampgroundWeb.CamperLive.FormComponent do
     save_camper(socket, socket.assigns.action, camper_params)
   end
 
-  defp save_camper(socket, :new, camper_params) do
-    case Identities.create_camper(camper_params) do
-      {:ok, _camper} ->
-        {:noreply,
-         socket
-         |> put_flash(:info, "Camper created successfully")
-         |> push_redirect(to: socket.assigns.return_to)}
+  defp save_camper(socket, :new, _camper_params) do
+    send_update(ReservationContainer,
+      id: "reservation-container",
+      camper_changeset: socket.assigns.changeset
+    )
 
-      {:error, %Ecto.Changeset{} = changeset} ->
-        {:noreply, assign(socket, changeset: changeset)}
-    end
+    {:noreply, socket}
   end
 end

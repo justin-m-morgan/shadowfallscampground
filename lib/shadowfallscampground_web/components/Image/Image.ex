@@ -63,6 +63,8 @@ defmodule ShadowfallscampgroundWeb.Components.Image do
 
   def srcset(src, srcset) do
     srcset
-    |> Enum.map_join(", ", fn {dimension, i_width} -> "#{remote_image(src, dimension)} #{i_width}" end)
+    |> Enum.map_join(", ", fn {dimension, i_width} ->
+      "#{remote_image(src, dimension)} #{i_width}"
+    end)
   end
 end

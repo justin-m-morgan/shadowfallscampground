@@ -13,14 +13,20 @@ defmodule ShadowfallscampgroundWeb.Forms.RadioInput do
   @doc "Fieldset Label text"
   prop label, :string, required: true
 
-  @doc "Keyword mappings of value/label"
-  prop mappings, :keyword, required: true
+  @doc "Mappings for options"
+  prop mappings, :keyword, default: nil
+
+  @doc "Module enum mappings are declared in"
+  prop schema_module, :atom, required: true
+
+  @doc "Toggle for displaying icons"
+  prop display_icon, :boolean, default: true
 
   def render(assigns) do
     ~F"""
     <FormInput name={@name} label={@label}>
       <div class="flex w-full">
-        {#for {value, label} <- @mappings}
+        {#for {value, label} <- @mappings || humanized_options(@schema_module, @name)}
           <div class={
             "overflow-hidden",
             "first:rounded-l-lg last:rounded-r-lg",
@@ -31,20 +37,27 @@ defmodule ShadowfallscampgroundWeb.Forms.RadioInput do
             <label
               for={"#{@name}-#{value}"}
               class={
+                "flex flex-col items-center justify-center flex-grow",
                 "bg-accent-500 text-gray-50 font-bold text-center",
-                "inline-block flex-grow",
                 "py-3 px-4",
                 "hover:bg-accent-600",
                 "cursor-pointer",
                 "peer-checked:bg-accent-800"
               }
             >
-              {label}
+              <Svg.IconSymbol :if={@display_icon} size={:sm} name={Atom.to_string(value)} />
+              <span>{label}</span>
             </label>
           </div>
         {/for}
       </div>
     </FormInput>
     """
+  end
+
+  defp humanized_options(module, key) do
+    module
+    |> Ecto.Enum.mappings(key)
+    |> Enum.map(fn {key, value} -> {key, Phoenix.Naming.humanize(value)} end)
   end
 end

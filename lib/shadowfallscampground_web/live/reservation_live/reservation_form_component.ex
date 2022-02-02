@@ -1,11 +1,12 @@
-defmodule ShadowfallscampgroundWeb.ReservationLive.FormComponent do
+defmodule ShadowfallscampgroundWeb.ReservationLive.ReservationFormComponent do
   @moduledoc """
-  An isolated LiveComponent for managing the state of the reservation form.
+  An isolated LiveComponent for managing the basic details portion of the reservation form.
   """
   use ShadowfallscampgroundWeb, :live_component
 
   alias Shadowfallscampground.Requests
   alias ShadowfallscampgroundWeb.Forms
+  alias ShadowfallscampgroundWeb.ReservationLive.ReservationContainer
 
   @doc "Display title for the form"
   prop title, :string, default: "Make a Reservation"
@@ -24,7 +25,13 @@ defmodule ShadowfallscampgroundWeb.ReservationLive.FormComponent do
 
   def render(assigns) do
     ~F"""
-    <Forms.Form title="Reservation Basics" changeset={@changeset} change="validate" submit="save" data_test="reservation-form">
+    <Forms.Form
+      title="Reservation Basics"
+      changeset={@changeset}
+      change="validate"
+      submit="save"
+      data_test="reservation-form"
+    >
       <Surface.Components.Context get={Surface.Components.Form, form: form}>
         <Forms.DateRangeInput
           id="reservation-date-range-picker"
@@ -41,7 +48,7 @@ defmodule ShadowfallscampgroundWeb.ReservationLive.FormComponent do
       <Forms.RadioInput
         name={:type_of_request}
         label="Type of Request"
-        mappings={Ecto.Enum.mappings(Requests.Reservation, :type_of_request)}
+        schema_module={Requests.Reservation}
       />
 
       {#if length(@changeset.errors) > 0}
@@ -86,17 +93,18 @@ defmodule ShadowfallscampgroundWeb.ReservationLive.FormComponent do
     save_reservation(socket, socket.assigns.action, reservation_params)
   end
 
-  defp save_reservation(socket, :new, reservation_params) do
-    case Requests.create_reservation(reservation_params) do
-      {:ok, _reservation} ->
-        {:noreply,
-         socket
-         |> put_flash(:info, "Reservation created successfully")
-         |> push_redirect(to: socket.assigns.return_to)}
+  defp save_reservation(socket, :new, _reservation_params) do
+    send_update(ReservationContainer,
+      id: "reservation-container",
+      reservation_changeset: socket.assigns.changeset
+    )
 
-      {:error, %Ecto.Changeset{} = changeset} ->
-        {:noreply, assign(socket, changeset: changeset)}
-    end
+    # send_update(ShadowfallscampgroundWeb.Pages.Reserve,
+    #   id: "reservation-page",
+    #   type_of_request: Ecto.Changeset.get_change(socket.assigns.changeset, :type_of_request)
+    # )
+
+    {:noreply, socket}
   end
 
   defp update_focused_date(changeset, key) do

@@ -8,7 +8,7 @@ defmodule ShadowfallscampgroundWeb.Components.ImageTest do
     html =
       render_surface do
         ~F"""
-        <Image  src="https://fakeimg.pl/250x100/" alt="fake image"/>
+        <Image src="https://fakeimg.pl/250x100/" alt="fake image" />
         """
       end
 

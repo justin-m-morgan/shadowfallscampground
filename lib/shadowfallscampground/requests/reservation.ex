@@ -11,7 +11,7 @@ defmodule Shadowfallscampground.Requests.Reservation do
   schema "reservations" do
     field :arrival, :date
     field :departure, :date
-    field :type_of_request, Ecto.Enum, values: [:tenting, :rv]
+    field :type_of_request, Ecto.Enum, values: [:tent, :rv]
     embeds_one :rv_details, RvDetails
     embeds_one :tent_details, TentDetails
 
@@ -29,13 +29,14 @@ defmodule Shadowfallscampground.Requests.Reservation do
     |> cast_details()
   end
 
-
-  defp cast_details(%{changes: %{type_of_request: :tenting}} = changeset) do
+  defp cast_details(%{changes: %{type_of_request: :tent}} = changeset) do
     cast_embed(changeset, :tent_details)
   end
+
   defp cast_details(%{changes: %{type_of_request: :rv}} = changeset) do
     cast_embed(changeset, :rv_details)
   end
+
   defp cast_details(changeset), do: changeset
 
   defp validate_type_of_request(changeset) do

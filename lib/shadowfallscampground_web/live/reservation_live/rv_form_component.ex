@@ -6,6 +6,7 @@ defmodule ShadowfallscampgroundWeb.ReservationLive.RvFormComponent do
 
   alias Shadowfallscampground.Requests
   alias ShadowfallscampgroundWeb.Forms
+  alias ShadowfallscampgroundWeb.ReservationLive.ReservationContainer
 
   @doc "Display title for the form"
   prop title, :string, default: "Details about your Rving Request"
@@ -24,7 +25,18 @@ defmodule ShadowfallscampgroundWeb.ReservationLive.RvFormComponent do
 
   def render(assigns) do
     ~F"""
-    <Forms.Form title={@title} changeset={@changeset} change="validate" submit="save" data_test="rv-details-form">
+    <Forms.Form
+      title={@title}
+      changeset={@changeset}
+      change="validate"
+      submit="save"
+      data_test="rv-details-form"
+    >
+      <Forms.RadioInput label="Type of Unit" name={:type_of_unit} schema_module={Requests.RvDetails} />
+
+      <Forms.NumberInput name={:length_of_unit} />
+
+      <Forms.NumberInput name={:number_of_people} />
 
       {#if length(@changeset.errors) > 0}
         <Forms.ErrorSummary
@@ -65,7 +77,11 @@ defmodule ShadowfallscampgroundWeb.ReservationLive.RvFormComponent do
   end
 
   def handle_event("save", _, socket) do
+    send_update(ReservationContainer,
+      id: "reservation-container",
+      rv_details_changeset: socket.assigns.changeset
+    )
+
     {:noreply, socket}
   end
-
 end

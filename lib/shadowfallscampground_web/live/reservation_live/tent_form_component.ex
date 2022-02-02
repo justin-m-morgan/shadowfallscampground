@@ -7,6 +7,7 @@ defmodule ShadowfallscampgroundWeb.ReservationLive.TentFormComponent do
 
   alias Shadowfallscampground.Requests
   alias ShadowfallscampgroundWeb.Forms
+  alias ShadowfallscampgroundWeb.ReservationLive.ReservationContainer
 
   @doc "Display title for the form"
   prop title, :string, default: "Details about your Tenting Request"
@@ -25,8 +26,13 @@ defmodule ShadowfallscampgroundWeb.ReservationLive.TentFormComponent do
 
   def render(assigns) do
     ~F"""
-    <Forms.Form title={@title} changeset={@changeset} change="validate" submit="save" data_test="tent-details-form">
-
+    <Forms.Form
+      title={@title}
+      changeset={@changeset}
+      change="validate"
+      submit="save"
+      data_test="tent-details-form"
+    >
       <Forms.NumberInput name={:number_of_people} />
       <Forms.NumberInput name={:number_of_tents} />
 
@@ -68,7 +74,11 @@ defmodule ShadowfallscampgroundWeb.ReservationLive.TentFormComponent do
   end
 
   def handle_event("save", _, socket) do
+    send_update(ReservationContainer,
+      id: "reservation-container",
+      tenting_details_changeset: socket.assigns.changeset
+    )
+
     {:noreply, socket}
   end
-
 end

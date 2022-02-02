@@ -6,7 +6,6 @@ defmodule Shadowfallscampground.RvDetailsTest do
   alias Shadowfallscampground.Requests.RvDetails
 
   describe "valid rv_details data - " do
-
   end
 
   property "should be a valid changeset" do
@@ -27,5 +26,4 @@ defmodule Shadowfallscampground.RvDetailsTest do
       assert changeset.valid?
     end
   end
-
 end

@@ -26,8 +26,11 @@ defmodule Shadowfallscampground.ReservationTest do
     end
 
     test "should accept tenting details" do
-      tent_details =  build(:tent_details)
-      reservation_attrs = build(:reservation_params, type_of_request: "tenting", tent_details: tent_details)
+      tent_details = build(:tent_details)
+
+      reservation_attrs =
+        build(:reservation_params, type_of_request: "tenting", tent_details: tent_details)
+
       changeset = Reservation.changeset(%Reservation{}, reservation_attrs)
       tent_details_changeset = Ecto.Changeset.get_change(changeset, :tent_details)
 
@@ -36,8 +39,11 @@ defmodule Shadowfallscampground.ReservationTest do
     end
 
     test "should accept rv details" do
-      rv_details =  build(:rv_details)
-      reservation_attrs = build(:reservation_params, type_of_request: "rv", rv_details: rv_details)
+      rv_details = build(:rv_details)
+
+      reservation_attrs =
+        build(:reservation_params, type_of_request: "rv", rv_details: rv_details)
+
       changeset = Reservation.changeset(%Reservation{}, reservation_attrs)
       rv_details_changeset = Ecto.Changeset.get_change(changeset, :rv_details)
 
@@ -60,10 +66,7 @@ defmodule Shadowfallscampground.ReservationTest do
       changeset = Reservation.changeset(%Reservation{}, attrs)
       assert changeset.valid?
     end
-
   end
-
-
 
   defp date_generator() do
     map({integer(2020..2025), integer(1..12), integer(1..28)}, fn {y, m, d} ->

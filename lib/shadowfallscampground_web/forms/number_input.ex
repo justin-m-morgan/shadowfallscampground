@@ -16,7 +16,7 @@ defmodule ShadowfallscampgroundWeb.Forms.NumberInput do
   def render(assigns) do
     ~F"""
     <FormInput name={@name} label={@label}>
-      <Form.TextInput class="w-full rounded-md" opts={[input_mode: "numeric", pattern: "[0-9]*"]}/>
+      <Form.TextInput class="w-full rounded-md" opts={[input_mode: "numeric", pattern: "[0-9]*"]} />
     </FormInput>
     """
   end

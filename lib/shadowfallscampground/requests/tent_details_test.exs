@@ -6,7 +6,6 @@ defmodule Shadowfallscampground.TentDetailsTest do
   alias Shadowfallscampground.Requests.TentDetails
 
   describe "valid tent_details data - " do
-
   end
 
   property "should be a valid changeset" do
@@ -25,5 +24,4 @@ defmodule Shadowfallscampground.TentDetailsTest do
       assert changeset.valid?
     end
   end
-
 end

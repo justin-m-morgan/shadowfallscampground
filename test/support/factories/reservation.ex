@@ -4,7 +4,6 @@ defmodule Shadowfallscampground.ReservationFactory do
     quote do
       alias Shadowfallscampground.Requests.{Reservation, RvDetails, TentDetails}
 
-
       def reservation_factory do
         arrival_date = Faker.Date.between(~D[2022-05-15], ~D[2022-09-15])
         departure_date = Date.add(arrival_date, Enum.random(1..30))

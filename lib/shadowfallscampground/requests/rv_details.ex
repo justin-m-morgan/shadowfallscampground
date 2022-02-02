@@ -9,7 +9,7 @@ defmodule Shadowfallscampground.Requests.RvDetails do
   embedded_schema do
     field :number_of_people, :integer
     field :length_of_unit, :integer
-    field :type_of_unit, Ecto.Enum, values: [:camper, :rv, :trailer, :fifth_wheel]
+    field :type_of_unit, Ecto.Enum, values: [:rv, :trailer, :fifth_wheel]
     field :sewer_required, :boolean, default: false
   end
 
@@ -19,5 +19,4 @@ defmodule Shadowfallscampground.Requests.RvDetails do
     |> cast(attrs, [:number_of_people, :length_of_unit, :type_of_unit, :sewer_required])
     |> validate_required([:number_of_people, :length_of_unit, :type_of_unit])
   end
-
 end
