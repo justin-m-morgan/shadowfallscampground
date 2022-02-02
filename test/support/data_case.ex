@@ -56,6 +56,7 @@ defmodule Shadowfallscampground.DataCase do
   Checks whether all of the keys/values in the first argument are in the second.
   """
   def is_subset(subset, total)
+
   def is_subset(subset, total) when is_struct(total) do
     is_subset(subset, Map.from_struct(total))
   end
