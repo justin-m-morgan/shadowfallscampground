@@ -6,7 +6,7 @@ defmodule ShadowfallscampgroundWeb.ReservationLive.ReservationFormComponent do
 
   alias Shadowfallscampground.Requests
   alias ShadowfallscampgroundWeb.Forms
-  alias ShadowfallscampgroundWeb.ReservationLive.ReservationContainer
+  alias ShadowfallscampgroundWeb.ReservationLive.{ReservationContainer, Wizard}
 
   @doc "Display title for the form"
   prop title, :string, default: "Make a Reservation"
@@ -19,6 +19,9 @@ defmodule ShadowfallscampgroundWeb.ReservationLive.ReservationFormComponent do
 
   @doc "Route to redirect to after form submission"
   prop return_to, :string, required: true
+
+  @doc "External changeset to prepopulate form"
+  prop reservation_changeset, :any
 
   @doc "Form changeset"
   data changeset, :map
@@ -62,7 +65,7 @@ defmodule ShadowfallscampgroundWeb.ReservationLive.ReservationFormComponent do
         />
       {#else}
         <Components.CallToAction type="submit" opts={phx_disable_with: "Saving..."}>
-          Submit Request
+          Continue
         </Components.CallToAction>
       {/if}
     </Forms.Form>
@@ -70,14 +73,20 @@ defmodule ShadowfallscampgroundWeb.ReservationLive.ReservationFormComponent do
   end
 
   @impl true
-  def update(%{reservation: reservation} = assigns, socket) do
-    changeset = Requests.change_reservation(reservation)
+  def update(
+        %{reservation: reservation, reservation_changeset: reservation_changeset} = assigns,
+        socket
+      ) do
+    changeset = maybe_prepopulate(reservation, reservation_changeset)
 
     {:ok,
      socket
      |> assign(assigns)
      |> assign(:changeset, changeset)}
   end
+
+  defp maybe_prepopulate(_, %Ecto.Changeset{} = changeset), do: changeset
+  defp maybe_prepopulate(reservation, nil), do: Requests.change_reservation(reservation)
 
   @impl true
   def handle_event("validate", %{"reservation" => reservation_params}, socket) do
@@ -99,10 +108,7 @@ defmodule ShadowfallscampgroundWeb.ReservationLive.ReservationFormComponent do
       reservation_changeset: socket.assigns.changeset
     )
 
-    # send_update(ShadowfallscampgroundWeb.Pages.Reserve,
-    #   id: "reservation-page",
-    #   type_of_request: Ecto.Changeset.get_change(socket.assigns.changeset, :type_of_request)
-    # )
+    send_update(Wizard, id: "reservation-wizard", command: :forward_step)
 
     {:noreply, socket}
   end

@@ -7,7 +7,7 @@ defmodule ShadowfallscampgroundWeb.ReservationLive.TentFormComponent do
 
   alias Shadowfallscampground.Requests
   alias ShadowfallscampgroundWeb.Forms
-  alias ShadowfallscampgroundWeb.ReservationLive.ReservationContainer
+  alias ShadowfallscampgroundWeb.ReservationLive.{ReservationContainer, Wizard}
 
   @doc "Display title for the form"
   prop title, :string, default: "Details about your Tenting Request"
@@ -20,6 +20,9 @@ defmodule ShadowfallscampgroundWeb.ReservationLive.TentFormComponent do
 
   @doc "Route to redirect to after form submission"
   prop return_to, :string, required: true
+
+  @doc "External changeset to prepopulate form"
+  prop tent_changeset, :any
 
   @doc "Form changeset"
   data changeset, :map
@@ -46,7 +49,7 @@ defmodule ShadowfallscampgroundWeb.ReservationLive.TentFormComponent do
         />
       {#else}
         <Components.CallToAction type="submit" opts={phx_disable_with: "Saving..."}>
-          Submit Request
+          Continue
         </Components.CallToAction>
       {/if}
     </Forms.Form>
@@ -54,14 +57,17 @@ defmodule ShadowfallscampgroundWeb.ReservationLive.TentFormComponent do
   end
 
   @impl true
-  def update(%{tent_details: tent_details} = assigns, socket) do
-    changeset = Requests.TentDetails.changeset(tent_details, %{})
+  def update(%{tent_details: tent_details, tent_changeset: tent_changeset} = assigns, socket) do
+    changeset = maybe_prepopulate(tent_details, tent_changeset)
 
     {:ok,
      socket
      |> assign(assigns)
      |> assign(:changeset, changeset)}
   end
+
+  defp maybe_prepopulate(_tent_details, %Ecto.Changeset{} = changeset), do: changeset
+  defp maybe_prepopulate(tent_details, nil), do: Requests.TentDetails.changeset(tent_details, %{})
 
   @impl true
   def handle_event("validate", %{"tent_details" => tent_details_params}, socket) do
@@ -78,6 +84,8 @@ defmodule ShadowfallscampgroundWeb.ReservationLive.TentFormComponent do
       id: "reservation-container",
       tenting_details_changeset: socket.assigns.changeset
     )
+
+    send_update(Wizard, id: "reservation-wizard", command: :forward_step)
 
     {:noreply, socket}
   end

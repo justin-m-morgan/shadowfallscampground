@@ -6,7 +6,7 @@ defmodule ShadowfallscampgroundWeb.ReservationLive.RvFormComponent do
 
   alias Shadowfallscampground.Requests
   alias ShadowfallscampgroundWeb.Forms
-  alias ShadowfallscampgroundWeb.ReservationLive.ReservationContainer
+  alias ShadowfallscampgroundWeb.ReservationLive.{ReservationContainer, Wizard}
 
   @doc "Display title for the form"
   prop title, :string, default: "Details about your Rving Request"
@@ -19,6 +19,9 @@ defmodule ShadowfallscampgroundWeb.ReservationLive.RvFormComponent do
 
   @doc "Route to redirect to after form submission"
   prop return_to, :string, required: true
+
+  @doc "External changeset to prepopulate form"
+  prop rv_changeset, :any
 
   @doc "Form changeset"
   data changeset, :map
@@ -49,7 +52,7 @@ defmodule ShadowfallscampgroundWeb.ReservationLive.RvFormComponent do
         />
       {#else}
         <Components.CallToAction type="submit" opts={phx_disable_with: "Saving..."}>
-          Submit Request
+          Continue
         </Components.CallToAction>
       {/if}
     </Forms.Form>
@@ -57,14 +60,17 @@ defmodule ShadowfallscampgroundWeb.ReservationLive.RvFormComponent do
   end
 
   @impl true
-  def update(%{rv_details: rv_details} = assigns, socket) do
-    changeset = Requests.RvDetails.changeset(rv_details, %{})
+  def update(%{rv_details: rv_details, rv_changeset: rv_changeset} = assigns, socket) do
+    changeset = maybe_prepopulate(rv_details, rv_changeset)
 
     {:ok,
      socket
      |> assign(assigns)
      |> assign(:changeset, changeset)}
   end
+
+  defp maybe_prepopulate(_rv_details, %Ecto.Changeset{} = changeset), do: changeset
+  defp maybe_prepopulate(rv_details, nil), do: Requests.RvDetails.changeset(rv_details, %{})
 
   @impl true
   def handle_event("validate", %{"rv_details" => rv_details_params}, socket) do
@@ -81,6 +87,8 @@ defmodule ShadowfallscampgroundWeb.ReservationLive.RvFormComponent do
       id: "reservation-container",
       rv_details_changeset: socket.assigns.changeset
     )
+
+    send_update(Wizard, id: "reservation-wizard", command: :forward_step)
 
     {:noreply, socket}
   end

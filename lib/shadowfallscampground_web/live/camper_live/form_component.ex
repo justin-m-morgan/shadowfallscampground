@@ -6,7 +6,7 @@ defmodule ShadowfallscampgroundWeb.CamperLive.FormComponent do
 
   alias Shadowfallscampground.Identities
   alias ShadowfallscampgroundWeb.Forms
-  alias ShadowfallscampgroundWeb.ReservationLive.ReservationContainer
+  alias ShadowfallscampgroundWeb.ReservationLive.{ReservationContainer, Wizard}
 
   @doc "Display title for the form"
   prop title, :string, default: "Contact Details"
@@ -19,6 +19,9 @@ defmodule ShadowfallscampgroundWeb.CamperLive.FormComponent do
 
   @doc "Route to redirect to after form submission"
   prop return_to, :string, required: true
+
+  @doc "External changeset to prepopulate form"
+  prop camper_changeset, :any
 
   @doc "Form changeset"
   data changeset, :map
@@ -46,7 +49,7 @@ defmodule ShadowfallscampgroundWeb.CamperLive.FormComponent do
         />
       {#else}
         <Components.CallToAction type="submit" opts={phx_disable_with: "Saving..."}>
-          Submit Request
+          Continue
         </Components.CallToAction>
       {/if}
     </Forms.Form>
@@ -54,14 +57,17 @@ defmodule ShadowfallscampgroundWeb.CamperLive.FormComponent do
   end
 
   @impl true
-  def update(%{camper: camper} = assigns, socket) do
-    changeset = Identities.change_camper(camper)
+  def update(%{camper: camper, camper_changeset: camper_changeset} = assigns, socket) do
+    changeset = maybe_prepopulate(camper, camper_changeset)
 
     {:ok,
      socket
      |> assign(assigns)
      |> assign(:changeset, changeset)}
   end
+
+  defp maybe_prepopulate(_camper, %Ecto.Changeset{} = changeset), do: changeset
+  defp maybe_prepopulate(camper, nil), do: Identities.change_camper(camper)
 
   @impl true
   def handle_event("validate", %{"camper" => camper_params}, socket) do
@@ -83,6 +89,8 @@ defmodule ShadowfallscampgroundWeb.CamperLive.FormComponent do
       camper_changeset: socket.assigns.changeset
     )
 
-    {:noreply, socket}
+    send_update(Wizard, id: "reservation-wizard", command: :forward_step)
+
+    {:noreply, assign(socket, :changeset, socket.assigns.changeset)}
   end
 end
