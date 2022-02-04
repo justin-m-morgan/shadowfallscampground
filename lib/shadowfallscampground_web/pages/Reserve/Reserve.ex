@@ -4,10 +4,9 @@ defmodule ShadowfallscampgroundWeb.Pages.Reserve do
   """
   use ShadowfallscampgroundWeb, :component
 
-  alias ShadowfallscampgroundWeb.Endpoint
   alias Shadowfallscampground.Requests.{Reservation, TentDetails, RvDetails}
   alias Shadowfallscampground.Identities.Camper
-  alias ShadowfallscampgroundWeb.{CamperLive, ReservationLive}
+  alias ShadowfallscampgroundWeb.ReservationLive
 
   def render(assigns) do
     ~F"""
@@ -25,11 +24,9 @@ defmodule ShadowfallscampgroundWeb.Pages.Reserve do
       >
         <ReservationLive.Wizard id="reservation-wizard">
           <ReservationLive.WizardStep>
-            <CamperLive.FormComponent
+            <ReservationLive.CamperFormComponent
               id="camper-form"
               camper={%Camper{}}
-              action={:new}
-              return_to={Routes.reserve_path(Endpoint, :new)}
               camper_changeset={camper_changeset}
             />
           </ReservationLive.WizardStep>
@@ -37,8 +34,6 @@ defmodule ShadowfallscampgroundWeb.Pages.Reserve do
             <ReservationLive.ReservationFormComponent
               id="reservation-form"
               reservation={%Reservation{}}
-              action={:new}
-              return_to={Routes.reserve_path(Endpoint, :new)}
               reservation_changeset={reservation_changeset}
             />
           </ReservationLive.WizardStep>
@@ -48,16 +43,12 @@ defmodule ShadowfallscampgroundWeb.Pages.Reserve do
                 <ReservationLive.TentFormComponent
                   id="tent-details-form"
                   tent_details={%TentDetails{}}
-                  action={:new}
-                  return_to={Routes.reserve_path(Endpoint, :new)}
                   tent_changeset={tenting_details_changeset}
                 />
               {#match :rv}
                 <ReservationLive.RvFormComponent
                   id="rv-details-form"
                   rv_details={%RvDetails{}}
-                  action={:new}
-                  return_to={Routes.reserve_path(Endpoint, :new)}
                   rv_changeset={rv_details_changeset}
                 />
               {#match _}

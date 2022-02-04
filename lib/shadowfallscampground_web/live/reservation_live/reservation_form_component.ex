@@ -6,19 +6,13 @@ defmodule ShadowfallscampgroundWeb.ReservationLive.ReservationFormComponent do
 
   alias Shadowfallscampground.Requests
   alias ShadowfallscampgroundWeb.Forms
-  alias ShadowfallscampgroundWeb.ReservationLive.{ReservationContainer, Wizard}
+  alias ShadowfallscampgroundWeb.ReservationLive.{FormStepComponent, ReservationContainer, Wizard}
 
   @doc "Display title for the form"
   prop title, :string, default: "Make a Reservation"
 
   @doc "Reservation struct"
   prop reservation, :map, required: true
-
-  @doc "Action for form"
-  prop action, :atom, values: [:new]
-
-  @doc "Route to redirect to after form submission"
-  prop return_to, :string, required: true
 
   @doc "External changeset to prepopulate form"
   prop reservation_changeset, :any
@@ -54,20 +48,7 @@ defmodule ShadowfallscampgroundWeb.ReservationLive.ReservationFormComponent do
         schema_module={Requests.Reservation}
       />
 
-      {#if length(@changeset.errors) > 0}
-        <Forms.ErrorSummary
-          changeset={@changeset}
-          error_key_list={[
-            arrival: "Arrival",
-            departure: "Departure",
-            type_of_request: "Type of Request"
-          ]}
-        />
-      {#else}
-        <Components.CallToAction type="submit" opts={phx_disable_with: "Saving..."}>
-          Continue
-        </Components.CallToAction>
-      {/if}
+      <Forms.WizardButtonPairs back_action="back" valid={@changeset.valid?} />
     </Forms.Form>
     """
   end
@@ -77,40 +58,41 @@ defmodule ShadowfallscampgroundWeb.ReservationLive.ReservationFormComponent do
         %{reservation: reservation, reservation_changeset: reservation_changeset} = assigns,
         socket
       ) do
-    changeset = maybe_prepopulate(reservation, reservation_changeset)
+    FormStepComponent.update(
+      socket,
+      assigns,
+      reservation,
+      reservation_changeset,
+      &Requests.change_reservation/1
+    )
 
-    {:ok,
-     socket
-     |> assign(assigns)
-     |> assign(:changeset, changeset)}
+    # changeset = maybe_prepopulate(reservation, reservation_changeset)
+
+    # {:ok,
+    #  socket
+    #  |> assign(assigns)
+    #  |> assign(:changeset, changeset)}
   end
 
-  defp maybe_prepopulate(_, %Ecto.Changeset{} = changeset), do: changeset
-  defp maybe_prepopulate(reservation, nil), do: Requests.change_reservation(reservation)
+  # defp maybe_prepopulate(_, %Ecto.Changeset{} = changeset), do: changeset
+  # defp maybe_prepopulate(reservation, nil), do: Requests.change_reservation(reservation)
 
   @impl true
   def handle_event("validate", %{"reservation" => reservation_params}, socket) do
-    changeset =
-      socket.assigns.reservation
-      |> Requests.change_reservation(reservation_params)
-      |> Map.put(:action, :validate)
-
-    {:noreply, assign(socket, :changeset, changeset)}
-  end
-
-  def handle_event("save", %{"reservation" => reservation_params}, socket) do
-    save_reservation(socket, socket.assigns.action, reservation_params)
-  end
-
-  defp save_reservation(socket, :new, _reservation_params) do
-    send_update(ReservationContainer,
-      id: "reservation-container",
-      reservation_changeset: socket.assigns.changeset
+    FormStepComponent.handle_validate_event(
+      socket,
+      :reservation,
+      reservation_params,
+      &Requests.change_reservation/2
     )
+  end
 
-    send_update(Wizard, id: "reservation-wizard", command: :forward_step)
+  def handle_event("save", _params, socket) do
+    FormStepComponent.handle_save_event(socket, :reservation_changeset, socket.assigns.changeset)
+  end
 
-    {:noreply, socket}
+  def handle_event("back", _params, socket) do
+    FormStepComponent.handle_back_event(socket)
   end
 
   defp update_focused_date(changeset, key) do

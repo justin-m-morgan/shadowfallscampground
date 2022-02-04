@@ -14,6 +14,8 @@ defmodule Shadowfallscampground.Requests.RvDetails do
   end
 
   @doc false
+  def changeset(rv_details), do: changeset(rv_details, %{})
+
   def changeset(rv_details, attrs) do
     rv_details
     |> cast(attrs, [:number_of_people, :length_of_unit, :type_of_unit, :sewer_required])

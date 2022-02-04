@@ -38,7 +38,7 @@ defmodule ShadowfallscampgroundWeb.Forms.RadioInput do
               for={"#{@name}-#{value}"}
               class={
                 "flex flex-col items-center justify-center flex-grow",
-                "bg-accent-500 text-gray-50 font-bold text-center",
+                "bg-accent-400 text-gray-50 font-bold text-center",
                 "py-3 px-4",
                 "hover:bg-accent-600",
                 "cursor-pointer",

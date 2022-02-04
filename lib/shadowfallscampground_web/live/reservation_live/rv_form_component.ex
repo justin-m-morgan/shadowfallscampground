@@ -6,19 +6,13 @@ defmodule ShadowfallscampgroundWeb.ReservationLive.RvFormComponent do
 
   alias Shadowfallscampground.Requests
   alias ShadowfallscampgroundWeb.Forms
-  alias ShadowfallscampgroundWeb.ReservationLive.{ReservationContainer, Wizard}
+  alias ShadowfallscampgroundWeb.ReservationLive.FormStepComponent
 
   @doc "Display title for the form"
   prop title, :string, default: "Details about your Rving Request"
 
   @doc "RvDetails struct"
   prop rv_details, :map, required: true
-
-  @doc "Action for form"
-  prop action, :atom, values: [:new]
-
-  @doc "Route to redirect to after form submission"
-  prop return_to, :string, required: true
 
   @doc "External changeset to prepopulate form"
   prop rv_changeset, :any
@@ -41,55 +35,37 @@ defmodule ShadowfallscampgroundWeb.ReservationLive.RvFormComponent do
 
       <Forms.NumberInput name={:number_of_people} />
 
-      {#if length(@changeset.errors) > 0}
-        <Forms.ErrorSummary
-          changeset={@changeset}
-          error_key_list={[
-            number_of_people: "Number of People",
-            length_of_unit: "Length of Unit",
-            type_of_unit: "Type of Unit"
-          ]}
-        />
-      {#else}
-        <Components.CallToAction type="submit" opts={phx_disable_with: "Saving..."}>
-          Continue
-        </Components.CallToAction>
-      {/if}
+      <Forms.WizardButtonPairs back_action="back" valid={@changeset.valid?} />
     </Forms.Form>
     """
   end
 
   @impl true
   def update(%{rv_details: rv_details, rv_changeset: rv_changeset} = assigns, socket) do
-    changeset = maybe_prepopulate(rv_details, rv_changeset)
-
-    {:ok,
-     socket
-     |> assign(assigns)
-     |> assign(:changeset, changeset)}
+    FormStepComponent.update(
+      socket,
+      assigns,
+      rv_details,
+      rv_changeset,
+      &Requests.RvDetails.changeset/1
+    )
   end
-
-  defp maybe_prepopulate(_rv_details, %Ecto.Changeset{} = changeset), do: changeset
-  defp maybe_prepopulate(rv_details, nil), do: Requests.RvDetails.changeset(rv_details, %{})
 
   @impl true
   def handle_event("validate", %{"rv_details" => rv_details_params}, socket) do
-    changeset =
-      socket.assigns.rv_details
-      |> Requests.RvDetails.changeset(rv_details_params)
-      |> Map.put(:action, :validate)
-
-    {:noreply, assign(socket, :changeset, changeset)}
+    FormStepComponent.handle_validate_event(
+      socket,
+      :rv_details,
+      rv_details_params,
+      &Requests.RvDetails.changeset/2
+    )
   end
 
   def handle_event("save", _, socket) do
-    send_update(ReservationContainer,
-      id: "reservation-container",
-      rv_details_changeset: socket.assigns.changeset
-    )
+    FormStepComponent.handle_save_event(socket, :rv_details_changeset, socket.assigns.changeset)
+  end
 
-    send_update(Wizard, id: "reservation-wizard", command: :forward_step)
-
-    {:noreply, socket}
+  def handle_event("back", _params, socket) do
+    FormStepComponent.handle_back_event(socket)
   end
 end

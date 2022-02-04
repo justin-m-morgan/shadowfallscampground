@@ -19,14 +19,16 @@ defmodule ShadowfallscampgroundWeb.Forms.FormInput do
     ~F"""
     <Form.Field name={@name}>
       {#if @label}
-        <Form.Label>{@label}</Form.Label>
+        <Form.Label class="font-bold text-primary-900">{@label}</Form.Label>
       {#else}
-        <Form.Label />
+        <Form.Label class="font-bold text-primary-900" />
       {/if}
       <div class="col-span-3">
         <#slot />
       </div>
-      <Form.ErrorTag />
+      <div class="h-4 text-red-600">
+        <Form.ErrorTag />
+      </div>
     </Form.Field>
     """
   end

@@ -7,19 +7,13 @@ defmodule ShadowfallscampgroundWeb.ReservationLive.TentFormComponent do
 
   alias Shadowfallscampground.Requests
   alias ShadowfallscampgroundWeb.Forms
-  alias ShadowfallscampgroundWeb.ReservationLive.{ReservationContainer, Wizard}
+  alias ShadowfallscampgroundWeb.ReservationLive.FormStepComponent
 
   @doc "Display title for the form"
   prop title, :string, default: "Details about your Tenting Request"
 
   @doc "TentDetails struct"
   prop tent_details, :map, required: true
-
-  @doc "Action for form"
-  prop action, :atom, values: [:new]
-
-  @doc "Route to redirect to after form submission"
-  prop return_to, :string, required: true
 
   @doc "External changeset to prepopulate form"
   prop tent_changeset, :any
@@ -39,54 +33,41 @@ defmodule ShadowfallscampgroundWeb.ReservationLive.TentFormComponent do
       <Forms.NumberInput name={:number_of_people} />
       <Forms.NumberInput name={:number_of_tents} />
 
-      {#if length(@changeset.errors) > 0}
-        <Forms.ErrorSummary
-          changeset={@changeset}
-          error_key_list={[
-            number_of_people: "Number of People",
-            number_of_tents: "Number of Tents"
-          ]}
-        />
-      {#else}
-        <Components.CallToAction type="submit" opts={phx_disable_with: "Saving..."}>
-          Continue
-        </Components.CallToAction>
-      {/if}
+      <Forms.WizardButtonPairs back_action="back" valid={@changeset.valid?} />
     </Forms.Form>
     """
   end
 
   @impl true
   def update(%{tent_details: tent_details, tent_changeset: tent_changeset} = assigns, socket) do
-    changeset = maybe_prepopulate(tent_details, tent_changeset)
-
-    {:ok,
-     socket
-     |> assign(assigns)
-     |> assign(:changeset, changeset)}
+    FormStepComponent.update(
+      socket,
+      assigns,
+      tent_details,
+      tent_changeset,
+      &Requests.TentDetails.changeset/1
+    )
   end
-
-  defp maybe_prepopulate(_tent_details, %Ecto.Changeset{} = changeset), do: changeset
-  defp maybe_prepopulate(tent_details, nil), do: Requests.TentDetails.changeset(tent_details, %{})
 
   @impl true
   def handle_event("validate", %{"tent_details" => tent_details_params}, socket) do
-    changeset =
-      socket.assigns.tent_details
-      |> Requests.TentDetails.changeset(tent_details_params)
-      |> Map.put(:action, :validate)
-
-    {:noreply, assign(socket, :changeset, changeset)}
+    FormStepComponent.handle_validate_event(
+      socket,
+      :tent_details,
+      tent_details_params,
+      &Requests.TentDetails.changeset/2
+    )
   end
 
   def handle_event("save", _, socket) do
-    send_update(ReservationContainer,
-      id: "reservation-container",
-      tenting_details_changeset: socket.assigns.changeset
+    FormStepComponent.handle_save_event(
+      socket,
+      :tenting_details_changeset,
+      socket.assigns.changeset
     )
+  end
 
-    send_update(Wizard, id: "reservation-wizard", command: :forward_step)
-
-    {:noreply, socket}
+  def handle_event("back", _params, socket) do
+    FormStepComponent.handle_back_event(socket)
   end
 end

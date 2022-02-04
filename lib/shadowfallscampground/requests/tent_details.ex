@@ -12,7 +12,8 @@ defmodule Shadowfallscampground.Requests.TentDetails do
   end
 
   @doc false
-  def changeset(tent_details, attrs) do
+  def changeset(tent_details), do: changeset(tent_details, %{})
+  def changeset(tent_details, attrs ) do
     tent_details
     |> cast(attrs, [:number_of_people, :number_of_tents, :power_requested])
     |> validate_required([:number_of_people, :number_of_tents])
