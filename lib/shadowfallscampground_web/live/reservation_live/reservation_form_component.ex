@@ -6,7 +6,7 @@ defmodule ShadowfallscampgroundWeb.ReservationLive.ReservationFormComponent do
 
   alias Shadowfallscampground.Requests
   alias ShadowfallscampgroundWeb.Forms
-  alias ShadowfallscampgroundWeb.ReservationLive.{FormStepComponent, ReservationContainer, Wizard}
+  alias ShadowfallscampgroundWeb.ReservationLive.FormStepComponent
 
   @doc "Display title for the form"
   prop title, :string, default: "Make a Reservation"
@@ -42,11 +42,11 @@ defmodule ShadowfallscampgroundWeb.ReservationLive.ReservationFormComponent do
         />
       </Surface.Components.Context>
 
-      <Forms.RadioInput
-        name={:type_of_request}
-        label="Type of Request"
-        schema_module={Requests.Reservation}
-      />
+        <Forms.RadioInput
+          name={:type_of_request}
+          label="Type of Request"
+          schema_module={Requests.Reservation}
+        />
 
       <Forms.WizardButtonPairs back_action="back" valid={@changeset.valid?} />
     </Forms.Form>

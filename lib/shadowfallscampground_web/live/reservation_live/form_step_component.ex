@@ -19,7 +19,7 @@ defmodule ShadowfallscampgroundWeb.ReservationLive.FormStepComponent do
   end
 
   defp maybe_prepopulate(_chng_fn, _base_struct, %Ecto.Changeset{} = changeset), do: changeset
-  defp maybe_prepopulate(changeset_fn, base_struct, nil), do: changeset_fn.(base_struct)
+  defp maybe_prepopulate(changeset_fn, base_struct, nil), do: changeset_fn.(base_struct, %{})
 
   def handle_validate_event(socket, base_struct_key, params, changeset_fn) do
     changeset =

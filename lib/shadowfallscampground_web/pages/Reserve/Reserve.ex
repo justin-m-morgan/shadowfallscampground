@@ -18,11 +18,20 @@ defmodule ShadowfallscampgroundWeb.Pages.Reserve do
           type_of_request: type_of_request,
           camper_changeset: camper_changeset,
           reservation_changeset: reservation_changeset,
-          tenting_details_changeset: tenting_details_changeset,
+          tent_details_changeset: tent_details_changeset,
           rv_details_changeset: rv_details_changeset
         }
       >
         <ReservationLive.Wizard id="reservation-wizard">
+          <ReservationLive.WizardStep>
+            <ReservationLive.Summary
+              type_of_request={type_of_request}
+              camper_changeset={camper_changeset}
+              reservation_changeset={reservation_changeset}
+              tent_details_changeset={tent_details_changeset}
+              rv_details_changeset={rv_details_changeset}
+            />
+          </ReservationLive.WizardStep>
           <ReservationLive.WizardStep>
             <ReservationLive.CamperFormComponent
               id="camper-form"
@@ -38,12 +47,19 @@ defmodule ShadowfallscampgroundWeb.Pages.Reserve do
             />
           </ReservationLive.WizardStep>
           <ReservationLive.WizardStep>
+            <ReservationLive.ReservationCampersFormComponent
+              id="reservation-form"
+              camper={%Reservation.Guests{}}
+              reservation_changeset={reservation_changeset}
+            />
+          </ReservationLive.WizardStep>
+          <ReservationLive.WizardStep>
             {#case type_of_request}
               {#match :tent}
                 <ReservationLive.TentFormComponent
                   id="tent-details-form"
                   tent_details={%TentDetails{}}
-                  tent_changeset={tenting_details_changeset}
+                  tent_changeset={tent_details_changeset}
                 />
               {#match :rv}
                 <ReservationLive.RvFormComponent

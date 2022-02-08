@@ -3,6 +3,11 @@ defmodule Shadowfallscampground.Data.Prices do
   Functions for dealing with currency numbers
   """
   def person_night(), do: 17.5
+  def person_night(:tent), do: 17.5
+  def person_night("tent"), do: 17.5
+  def person_night(:rv), do: 17.5
+  def person_night("rv"), do: 17.5
+
   def tent_night(), do: person_night()
   def tent_power(), do: 5
 
@@ -31,6 +36,10 @@ defmodule Shadowfallscampground.Data.Prices do
     |> people_price()
     |> Kernel.*(people)
     |> Kernel.*(nights)
+  end
+
+  def power_price(type_of_request) when is_atom(type_of_request) do
+    type_of_request |> Atom.to_string() |> power_price()
   end
 
   def power_price("tent"), do: tent_power()

@@ -6,6 +6,8 @@ defmodule Shadowfallscampground.Requests.Reservation do
 
   import Ecto.Changeset
 
+  # alias Shadowfallscampground.ReservationCampers
+  alias Shadowfallscampground.Identities.Camper
   alias Shadowfallscampground.Requests.{TentDetails, RvDetails}
 
   schema "reservations" do
@@ -14,6 +16,10 @@ defmodule Shadowfallscampground.Requests.Reservation do
     field :type_of_request, Ecto.Enum, values: [:tent, :rv]
     embeds_one :rv_details, RvDetails
     embeds_one :tent_details, TentDetails
+
+    belongs_to :booker, Camper, foreign_key: :booker_id
+
+    many_to_many :campers, Camper, join_through: "reservation_campers", on_replace: :delete
 
     timestamps()
   end
@@ -26,8 +32,22 @@ defmodule Shadowfallscampground.Requests.Reservation do
     |> maybe_bump_arrival()
     |> validate_departure_after_arrival()
     |> validate_type_of_request()
-    |> cast_details()
   end
+
+  def wizard_changeset(reservation, attrs) do
+    reservation
+    |> changeset(attrs)
+    |> cast_details()
+    |> cast_assoc(:booker)
+    |> cast_assoc(:campers)
+  end
+
+  # def put_camper_changeset(reservation_changeset, %{} = camper_attrs),
+  #   do: put_camper_changeset(reservation_changeset, [camper_attrs])
+
+  # def put_camper_changeset(reservation_changeset, camper_attrs) do
+  #   put_embed(reservation_changeset, :campers, camper_attrs)
+  # end
 
   defp cast_details(%{changes: %{type_of_request: :tent}} = changeset) do
     cast_embed(changeset, :tent_details)

@@ -5,9 +5,14 @@ defmodule Shadowfallscampground.Identities.Camper do
   use Ecto.Schema
   import Ecto.Changeset
 
+  alias Shadowfallscampground.Requests.Reservation
+
   schema "campers" do
     field :email, :string
     field :name, :string
+
+    has_many :bookings, Reservation, foreign_key: :booker_id
+    many_to_many :trips, Camper, join_through: "reservation_campers"
 
     timestamps()
   end

@@ -62,7 +62,7 @@ defmodule ShadowfallscampgroundWeb.ReservationLive.TentFormComponent do
   def handle_event("save", _, socket) do
     FormStepComponent.handle_save_event(
       socket,
-      :tenting_details_changeset,
+      :tent_details_changeset,
       socket.assigns.changeset
     )
   end

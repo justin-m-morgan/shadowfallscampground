@@ -25,30 +25,63 @@ defmodule Shadowfallscampground.ReservationTest do
       assert change_departure == Date.add(arrival, 1)
     end
 
-    test "should accept tenting details" do
-      tent_details = build(:tent_details)
+    # test "should accept tenting details" do
+    #   tent_details = build(:tent_details)
 
-      reservation_attrs =
-        build(:reservation_params, type_of_request: "tenting", tent_details: tent_details)
+    #   reservation_attrs =
+    #     build(:reservation_params, type_of_request: "tenting", tent_details: tent_details)
 
-      changeset = Reservation.changeset(%Reservation{}, reservation_attrs)
-      tent_details_changeset = Ecto.Changeset.get_change(changeset, :tent_details)
+    #   changeset = Reservation.changeset(%Reservation{}, reservation_attrs)
+    #   tent_details_changeset = Ecto.Changeset.get_change(changeset, :tent_details)
 
-      assert changeset.valid?
-      assert tent_details_changeset.valid?
+    #   assert changeset.valid?
+    #   assert tent_details_changeset.valid?
+    # end
+
+    # test "should accept rv details" do
+    #   rv_details = build(:rv_details)
+
+    #   reservation_attrs =
+    #     build(:reservation_params, type_of_request: "rv", rv_details: rv_details)
+
+    #   changeset = Reservation.changeset(%Reservation{}, reservation_attrs)
+    #   rv_details_changeset = Ecto.Changeset.get_change(changeset, :rv_details)
+
+    #   assert changeset.valid?
+    #   assert rv_details_changeset.valid?
+    # end
+  end
+
+  describe "associating a camper as booker" do
+    test "should allow a new camper's details to be associated" do
+      camper_details = build(:camper_params)
+      attrs = build(:reservation_params, booker: camper_details)
+      changeset = Reservation.wizard_changeset(%Reservation{}, attrs)
+
+      assert %Ecto.Changeset{} = changeset.changes.booker
+      assert changeset.changes.booker.valid?
+    end
+  end
+
+  describe "associating several campers as guests" do
+    test "should accept a single camper as a 'guest'" do
+      camper_details = build(:camper_params)
+      attrs = build(:reservation_params, campers: [camper_details])
+      changeset = Reservation.wizard_changeset(%Reservation{}, attrs)
+
+      assert is_list(changeset.changes.campers)
+      Enum.each(changeset.changes.campers, &assert(%Ecto.Changeset{} = &1))
+      Enum.each(changeset.changes.campers, &assert(&1.valid?))
     end
 
-    test "should accept rv details" do
-      rv_details = build(:rv_details)
+    test "should accept multiple campers as a 'guests'" do
+      camper_details = build(:camper_params)
+      attrs = build(:reservation_params, campers: [camper_details])
+      changeset = Reservation.wizard_changeset(%Reservation{}, attrs)
 
-      reservation_attrs =
-        build(:reservation_params, type_of_request: "rv", rv_details: rv_details)
-
-      changeset = Reservation.changeset(%Reservation{}, reservation_attrs)
-      rv_details_changeset = Ecto.Changeset.get_change(changeset, :rv_details)
-
-      assert changeset.valid?
-      assert rv_details_changeset.valid?
+      assert is_list(changeset.changes.campers)
+      Enum.each(changeset.changes.campers, &assert(%Ecto.Changeset{} = &1))
+      Enum.each(changeset.changes.campers, &assert(&1.valid?))
     end
   end
 

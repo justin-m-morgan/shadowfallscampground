@@ -9,7 +9,7 @@ defmodule ShadowfallscampgroundWeb.Pages.Reserve.Playground do
 
   def render(assigns) do
     ~F"""
-    <Reserve {...@props} />
+    {!-- <Reserve {...@props} /> --}
     """
   end
 end

@@ -3,10 +3,11 @@ defmodule Shadowfallscampground.Repo.Migrations.CreateReservations do
 
   def change do
     create table(:reservations) do
-      add :arrival, :date
-      add :departure, :date
-      add :type_of_request, :string
-      add :camper_id, references(:campers)
+      add(:arrival, :date)
+      add(:departure, :date)
+      add(:type_of_request, :string)
+      add(:booker_id, references(:campers))
+      add(:guests, :jsonb)
 
       timestamps()
     end

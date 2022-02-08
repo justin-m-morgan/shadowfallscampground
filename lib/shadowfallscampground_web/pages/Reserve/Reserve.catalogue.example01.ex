@@ -11,7 +11,9 @@ defmodule ShadowfallscampgroundWeb.Pages.Reserve.Example01 do
 
   def render(assigns) do
     ~F"""
-    <Reserve />
+    <div>
+      {!-- <Reserve /> --}
+    </div>
     """
   end
 end

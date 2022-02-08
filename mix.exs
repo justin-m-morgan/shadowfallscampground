@@ -27,7 +27,7 @@ defmodule Shadowfallscampground.MixProject do
 
   # Specifies which paths to compile per environment.
   defp elixirc_paths(:test), do: ["lib", "test/support"]
-  defp elixirc_paths(:dev), do: ["lib"] ++ catalogues()
+  defp elixirc_paths(:dev), do: ["lib", "test/support"] ++ catalogues()
   defp elixirc_paths(_), do: ["lib"]
 
   # Specifies your project dependencies.
@@ -63,8 +63,8 @@ defmodule Shadowfallscampground.MixProject do
       # Testing
       {:mix_test_interactive, "~> 1.1", only: :dev, runtime: false},
       {:floki, ">= 0.32.0", only: :test},
-      {:ex_machina, "~> 2.7", only: :test},
-      {:faker, "~> 0.17", only: :test},
+      {:ex_machina, "~> 2.7", only: [:test, :dev]},
+      {:faker, "~> 0.17", only: [:test, :dev]},
       {:stream_data, "~> 0.5", only: :test},
       {:credo, "~> 1.6", only: :dev}
     ]
