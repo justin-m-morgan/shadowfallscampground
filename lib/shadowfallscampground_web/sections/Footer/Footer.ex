@@ -19,7 +19,7 @@ defmodule ShadowfallscampgroundWeb.Sections.Footer do
         <div>
           <ul>
             {#for %{icon: icon, label: label, link_target: link_target} <- footer_links()}
-              <a href={link_target}>
+              <a href={link_target} target="_blank">
                 <li class="space-x-4 flex items-center">
                   <Svg.IconSymbol name={icon} size={:sm} />
                   <span>{label}</span>
@@ -36,14 +36,9 @@ defmodule ShadowfallscampgroundWeb.Sections.Footer do
   defp footer_links() do
     [
       %{
-        icon: "envelope",
-        label: "Contact Us",
-        link_target: "#"
-      },
-      %{
         icon: "facebook",
         label: "Facebook (Community Group)",
-        link_target: "#"
+        link_target: "https://www.facebook.com/groups/2406513779"
       }
     ]
   end
