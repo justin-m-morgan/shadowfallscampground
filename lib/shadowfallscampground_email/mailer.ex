@@ -1,4 +1,4 @@
-defmodule Shadowfallscampground.Mailer do
+defmodule ShadowfallscampgroundEmail.Mailer do
   @moduledoc """
   Module for configuring system mailer
   """

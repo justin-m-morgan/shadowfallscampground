@@ -60,6 +60,8 @@ defmodule Shadowfallscampground.MixProject do
       {:petal_components, "~> 0.9.0"},
       # Email
       {:swoosh, "~> 1.6"},
+      {:phoenix_swoosh, "~> 1.0"},
+      {:gen_smtp, "~> 1.1"},
       # Testing
       {:mix_test_interactive, "~> 1.1", only: :dev, runtime: false},
       {:floki, ">= 0.32.0", only: :test},

@@ -1,0 +1,6 @@
+======This is the tempalte========
+    <%= @inner_content %>
+
++++++++++++++++
+End of template
++++++++++++++++
