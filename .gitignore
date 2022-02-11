@@ -44,3 +44,6 @@ assets/js/_hooks/
 
 # Local Environment Variables 
 .envrc
+
+# IEx preload script 
+.iex.exs
