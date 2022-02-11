@@ -85,3 +85,7 @@ config :phoenix, :plug_init_mode, :runtime
 #   base_path: "lib/shadowfallscampground_web/components",
 #   module_path: "ShadowfallscampgroundWeb.Components",
 #   project_name: "Shadowfallscampground"
+
+config :shadowfallscampground, ShadowfallscampgroundEmail.Mailer,
+  username: "test@test.com",
+  password: "passwordpassword"

@@ -1,3 +1,11 @@
-<div>
-  <h1>Welcome to Sample, <%= @name %>!</h1>
-</div>
+<mj-section>
+    <mj-column>
+
+        <mj-text>
+            <h1>Hi <%= @name %>,</h1>
+        </mj-text>
+
+
+    </mj-column>
+
+    </mj-section>
