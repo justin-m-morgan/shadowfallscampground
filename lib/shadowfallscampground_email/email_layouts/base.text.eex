@@ -1,6 +1,6 @@
-======This is the tempalte========
-    <%= @inner_content %>
+===============================
+    Shadow Falls Campground
+===============================
 
-+++++++++++++++
-End of template
-+++++++++++++++
+<%= @inner_content %>
+

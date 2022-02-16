@@ -4,18 +4,20 @@ defmodule ShadowfallscampgroundEmail.EmailsView do
   import Swoosh.Email
   import Phoenix.Swoosh
 
-  alias ShadowfallscampgroundEmail.EmailLayoutsView
+  alias ShadowfallscampgroundEmail.{EmailLayoutsView, Recipient}
 
   @theme_color "#14532d"
 
-  def new_email(recipient, subject, template, assigns \\ %{}) do
+  def new_email(%Recipient{} = recipient, opts \\ []) do
+    assigns = Map.put(opts[:assigns] || %{}, :theme_color, @theme_color)
+
     new()
     |> put_view(__MODULE__)
     |> put_layout({EmailLayoutsView, :base})
-    |> to(recipient)
-    |> from({"Bryan - Shadow Falls", config_email()})
-    |> subject(subject)
-    |> render_body(template, Map.put(assigns, :theme_color, @theme_color))
+    |> to({recipient.name, recipient.email})
+    |> from(opts[:sender] || {"Bryan - Shadow Falls", fetch_system_sender_email()})
+    |> subject(opts[:subject] || "Shadow Falls - Correspondence")
+    |> render_body(opts[:template], assigns)
     |> transform_mjml()
   end
 
@@ -24,12 +26,21 @@ defmodule ShadowfallscampgroundEmail.EmailsView do
       email
       |> Map.get(:html_body)
       |> Mjml.to_html()
-      |> IO.inspect()
 
     Map.put(email, :html_body, mjml_compiled)
   end
 
-  defp config_email() do
+  def get_layout(struct) do
+    struct
+    |> Phoenix.Swoosh.layout()
+    |> elem(1)
+  end
+
+  def get_template(struct) do
+    struct.private.phoenix_template
+  end
+
+  def fetch_system_sender_email() do
     :shadowfallscampground
     |> Application.fetch_env!(ShadowfallscampgroundEmail.Mailer)
     |> Keyword.get(:username)

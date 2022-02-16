@@ -1,0 +1,10 @@
+<mj-wrapper css-class="message-submission-template-container">
+    <mj-section>
+    <mj-text>
+        <h1>General Inquiry</h1>
+        <h2>From <%= @name %> </h2>
+        <h3>Message Body:</h3>
+        <p><%= @message %></p>
+    </mj-text>
+    </mj-section>
+</mj-wrapper>

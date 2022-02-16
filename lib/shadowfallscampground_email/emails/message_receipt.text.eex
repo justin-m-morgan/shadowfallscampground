@@ -1,0 +1,9 @@
++++ Automated Message Receipt +++
+
+<%= @auto_response_message %>
+
+``` Quoted Message ```
+
+<%= @message %>
+
+``````````````````````

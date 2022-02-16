@@ -1,0 +1,9 @@
++++ General Inquiry +++
+
+From: <%= @name %>
+
+``` Message Body ```
+
+<%= @message %>
+
+````````````````````

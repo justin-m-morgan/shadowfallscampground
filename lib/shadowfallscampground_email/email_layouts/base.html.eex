@@ -7,7 +7,7 @@
         </mj-attributes>
 
     </mj-head>
-    <mj-body background-color="<%= @theme_color %>" >
+    <mj-body background-color="<%= @theme_color %>" css-class="base-layout-container">
         <mj-section>
             <mj-column>
                 <mj-spacer height="20px" />
@@ -19,8 +19,12 @@
 
             </mj-hero>
             <mj-section>
-                <mj-column>
-                    <mj-image width="60px" height="60px" src="https://team-think.herokuapp.com/images/logo_sm.png" />
+                <mj-column width="100%">
+                    <mj-image
+                        width="180px"
+                        src="https://res.cloudinary.com/dwuyw1sdq/image/upload/v1644865738/shadowfalls/solid_logo_zufule.png"
+                        alt="Hummingbird Logo"
+                    />
 
                     <mj-text
                         vertical-align="middle"
@@ -28,7 +32,7 @@
                         font-size="48px"
                         font-weight="bold"
                     >
-                            TeamThink
+                        Shadow Falls Campground
                     </mj-text>
                 </mj-column>
             </mj-section>

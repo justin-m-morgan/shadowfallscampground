@@ -67,7 +67,8 @@ config :shadowfallscampground, ShadowfallscampgroundWeb.Endpoint,
       ~r"priv/gettext/.*(po)$",
       ~r"lib/shadowfallscampground_web/(live|views|components|forms|pages|sections|svg)/.*(ex|sface|js)$",
       ~r"lib/shadowfallscampground_web/templates/.*(eex)$",
-      ~r"priv/catalogue/.*(ex)$"
+      ~r"priv/catalogue/.*(ex)$",
+      ~r"lib/shadowfallscampground_email/"
     ]
   ]
 
