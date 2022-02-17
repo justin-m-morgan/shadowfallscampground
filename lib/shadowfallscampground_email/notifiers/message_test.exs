@@ -11,6 +11,12 @@ defmodule ShadowfallscampgroundWeb.Notifiers.MessageTest do
 
   alias ShadowfallscampgroundEmail.Notifiers
 
+  defp set_system_email(_context) do
+    Application.put_env(:shadowfallscampground, ShadowfallscampgroundEmail.Mailer,
+      username: "test@test.com"
+    )
+  end
+
   defp craft_message_receipt_email(_context) do
     submitter = %{name: Faker.Person.name(), email: Faker.Internet.email()}
     message = Faker.Lorem.sentence()
@@ -44,7 +50,7 @@ defmodule ShadowfallscampgroundWeb.Notifiers.MessageTest do
   end
 
   describe "Message Receipt" do
-    setup :craft_message_receipt_email
+    setup [:set_system_email, :craft_message_receipt_email]
 
     test "should use the base layout", %{email_struct: email_struct} do
       assert get_layout(email_struct) == :base
@@ -71,7 +77,7 @@ defmodule ShadowfallscampgroundWeb.Notifiers.MessageTest do
   end
 
   describe "Message Receipt (HTML)" do
-    setup :craft_message_receipt_email
+    setup [:set_system_email, :craft_message_receipt_email]
 
     test "should contain the base layout container", %{email_struct: email_struct} do
       assert email_struct.html_body =~ ~s/class="base-layout-container"/
@@ -87,7 +93,7 @@ defmodule ShadowfallscampgroundWeb.Notifiers.MessageTest do
   end
 
   describe "Message Receipt (Text)" do
-    setup :craft_message_receipt_email
+    setup [:set_system_email, :craft_message_receipt_email]
 
     test "should contain the base layout", %{email_struct: email_struct} do
       assert email_struct.text_body =~ "Shadow Falls Campground"
@@ -103,14 +109,14 @@ defmodule ShadowfallscampgroundWeb.Notifiers.MessageTest do
   end
 
   describe "Message Submission" do
-    setup :craft_message_submission_email
+    setup [:set_system_email, :craft_message_submission_email]
 
     test "should use the base layout", %{email_struct: email_struct} do
       assert get_layout(email_struct) == :base
     end
 
-    test "should use the general inquiry template", %{email_struct: email_struct} do
-      assert get_template(email_struct) =~ "general_inquiry"
+    test "should use the message inquiry template", %{email_struct: email_struct} do
+      assert get_template(email_struct) =~ "message_inquiry"
     end
 
     test "should contain the proper subject", %{email_struct: email_struct} do
@@ -133,7 +139,7 @@ defmodule ShadowfallscampgroundWeb.Notifiers.MessageTest do
   end
 
   describe "Message Submission (HTML)" do
-    setup :craft_message_submission_email
+    setup [:set_system_email, :craft_message_submission_email]
 
     test "should contain the base layout container", %{email_struct: email_struct} do
       assert email_struct.html_body =~ ~s/class="base-layout-container"/
@@ -149,7 +155,7 @@ defmodule ShadowfallscampgroundWeb.Notifiers.MessageTest do
   end
 
   describe "Message Submission (Text)" do
-    setup :craft_message_submission_email
+    setup [:set_system_email, :craft_message_submission_email]
 
     test "should contain the base layout", %{email_struct: email_struct} do
       assert email_struct.text_body =~ "Shadow Falls Campground"
