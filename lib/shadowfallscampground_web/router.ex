@@ -20,6 +20,7 @@ defmodule ShadowfallscampgroundWeb.Router do
     pipe_through :browser
 
     live "/", PageLive, :index
+    live "/inquiry", PageLive, :inquiry
     live "/reserve", ReserveLive, :new
   end
 

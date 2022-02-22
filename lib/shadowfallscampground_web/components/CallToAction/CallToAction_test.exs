@@ -7,7 +7,7 @@ defmodule ShadowfallscampgroundWeb.Components.CallToActionTest do
     html =
       render_surface do
         ~F"""
-        <CallToAction>
+        <CallToAction opts={data_test: "call-to-action"}>
           Test Button
         </CallToAction>
         """

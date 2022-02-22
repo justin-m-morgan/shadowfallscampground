@@ -55,7 +55,7 @@ defmodule ShadowfallscampgroundWeb.LiveHelpers do
 
   defp hide_modal(js \\ %JS{}) do
     js
-    |> JS.hide(to: "#modal", transition: "fade-out")
-    |> JS.hide(to: "#modal-content", transition: "fade-out-scale")
+    |> JS.hide(to: "#modal", transition: "fade-out", time: 1000)
+    |> JS.hide(to: "#modal-content", transition: "fade-out-scale", time: 1000)
   end
 end

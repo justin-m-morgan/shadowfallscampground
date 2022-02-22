@@ -10,7 +10,7 @@ defmodule ShadowfallscampgroundWeb.Sections.MainHero do
   def render(assigns) do
     ~F"""
     <section
-      class="flex flex-col justify-center items-center lg:py-64"
+      class="flex flex-col justify-center items-center lg:py-64 space-y-12"
       data-test="section__main-hero"
     >
       <div class={
@@ -26,10 +26,20 @@ defmodule ShadowfallscampgroundWeb.Sections.MainHero do
         </div>
       </div>
       <div class="space-x-4 space-y-4">
-        <CallToAction type="redirect" to={Routes.reserve_path(Endpoint, :new)} size={:lg}>
+        <CallToAction
+          type="redirect"
+          to={Routes.reserve_path(Endpoint, :new)}
+          size={:lg}
+          opts={data_test: "make_booking_button"}
+        >
           Book Now!
         </CallToAction>
-        <CallToAction to="#" size={:lg}>
+        <CallToAction
+          type="patch"
+          to={Routes.page_path(Endpoint, :inquiry)}
+          size={:lg}
+          opts={data_test: "send_inquiry_button"}
+        >
           Contact Us
         </CallToAction>
       </div>

@@ -25,7 +25,8 @@ config :logger, level: :warn
 # Initialize plugs at runtime for faster test compilation
 config :phoenix, :plug_init_mode, :runtime
 
-# Config for testing mail struct params drawn from system
-config :shadowfallscampground, ShadowfallscampgroundEmail.Mailer,
-  username: "test@test.com",
-  password: "passwordpassword"
+# # Config for testing mail struct params drawn from system
+# config :shadowfallscampground, ShadowfallscampgroundEmail.Mailer,
+#   username: "test@test.com",
+#   password: "passwordpassword",
+#   adapter: Swoosh.Adapters.Local

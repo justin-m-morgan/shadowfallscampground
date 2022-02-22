@@ -13,7 +13,8 @@ defmodule ShadowfallscampgroundWeb.Notifiers.MessageTest do
 
   defp set_system_email(_context) do
     Application.put_env(:shadowfallscampground, ShadowfallscampgroundEmail.Mailer,
-      username: "test@test.com"
+      username: "test2@test.com",
+      adapter: Swoosh.Adapters.Local
     )
   end
 

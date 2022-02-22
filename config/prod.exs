@@ -53,3 +53,11 @@ config :logger, level: :info
 #       force_ssl: [hsts: true]
 #
 # Check `Plug.SSL` for all available options in `force_ssl`.
+
+config :shadowfallscampground, ShadowfallscampgroundEmail.Mailer,
+  adapter: Swoosh.Adapters.SMTP,
+  ssl: true,
+  tls: :if_available,
+  auth: :always,
+  port: 465,
+  retries: 2

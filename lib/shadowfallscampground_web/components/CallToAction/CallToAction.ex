@@ -58,7 +58,7 @@ defmodule ShadowfallscampgroundWeb.Components.CallToAction do
       phx_disable_with={@disable_with}
       type={@type}
       class={classes(@size, @variant), @class}
-      data-test="call-to-action"
+      data-test={@opts[:data_test]}
     >
       <#slot />
     </button>

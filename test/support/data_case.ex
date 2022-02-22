@@ -53,22 +53,38 @@ defmodule Shadowfallscampground.DataCase do
   end
 
   @doc """
-  Checks whether all of the keys/values in the first argument are in the second.
+  Checks whether all of the keys/values match in two maps/structs.
   """
-  def is_subset(subset, total)
+  def match_keys(map1, map2, keys, opts \\ [])
 
-  def is_subset(subset, total) when is_struct(total) do
-    is_subset(subset, Map.from_struct(total))
+  def match_keys(map1, map2, keys, opts) when is_struct(map1),
+    do: match_keys(Map.from_struct(map1), map2, keys, opts)
+
+  def match_keys(map1, map2, keys, opts) when is_struct(map2),
+    do: match_keys(map1, Map.from_struct(map2), keys, opts)
+
+  def match_keys(map1, map2, keys, opts) do
+    cast_string_values = opts[:cast_keys_to_strings] || []
+
+    keys
+    |> Enum.all?(maybe_cast_string_values(map1, map2, cast_string_values))
   end
 
-  def is_subset(subset, total) do
-    total
-    |> Map.split(Map.keys(subset))
-    |> elem(0)
-    |> Kernel.==(subset)
+  defp maybe_cast_string_values(map1, map2, to_cast_keys) do
+    fn key ->
+      maybe_cast_atom_to_string(map1[key], key, to_cast_keys) ==
+        maybe_cast_atom_to_string(map2[key], key, to_cast_keys)
+    end
   end
 
-  def report_args(args) do
-    Enum.each(args, fn {key, value} -> IO.inspect(value, label: key) end)
+  defp maybe_cast_atom_to_string(value, key, to_cast_keys)
+
+  defp maybe_cast_atom_to_string(value, key, to_cast_keys) when is_atom(value) do
+    case key in to_cast_keys do
+      true -> Atom.to_string(value)
+      false -> value
+    end
   end
+
+  defp maybe_cast_atom_to_string(value, _key, _to_cast_keys), do: value
 end

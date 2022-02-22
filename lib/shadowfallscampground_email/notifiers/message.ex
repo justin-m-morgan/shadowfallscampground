@@ -5,6 +5,10 @@ defmodule ShadowfallscampgroundEmail.Notifiers.Message do
 
   alias ShadowfallscampgroundEmail.{EmailsView, Recipient}
 
+  def receipt(%{"name" => name, "email" => email, "message" => message}),
+    do: receipt(name, email, message)
+
+  def receipt(%{name: name, email: email, message: message}), do: receipt(name, email, message)
   def receipt(%{name: name, email: email}, message), do: receipt(name, email, message)
   def receipt({name, email}, message), do: receipt(name, email, message)
 
@@ -18,6 +22,10 @@ defmodule ShadowfallscampgroundEmail.Notifiers.Message do
     )
   end
 
+  def message(%{"name" => name, "email" => email, "message" => message}),
+    do: message(name, email, message)
+
+  def message(%{name: name, email: email, message: message}), do: message(name, email, message)
   def message(%{name: name, email: email}, message), do: message(name, email, message)
   def message({name, email}, message), do: message(name, email, message)
 

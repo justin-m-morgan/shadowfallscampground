@@ -67,15 +67,9 @@ config :shadowfallscampground, ShadowfallscampgroundWeb.Endpoint,
 # are not using SMTP. Here is an example of the configuration:
 #
 config :shadowfallscampground, ShadowfallscampgroundEmail.Mailer,
-  adapter: Swoosh.Adapters.SMTP,
   relay: System.get_env("SMTP_RELAY"),
   username: System.get_env("SMTP_USERNAME"),
-  password: System.get_env("SMTP_PASSWORD"),
-  ssl: true,
-  tls: :if_available,
-  auth: :always,
-  port: 465,
-  retries: 2
+  password: System.get_env("SMTP_PASSWORD")
 
 # For this example you need include a HTTP client required by Swoosh API client.
 # Swoosh supports Hackney and Finch out of the box:
