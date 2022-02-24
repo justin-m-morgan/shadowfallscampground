@@ -25,6 +25,9 @@ config :logger, level: :warn
 # Initialize plugs at runtime for faster test compilation
 config :phoenix, :plug_init_mode, :runtime
 
+# Oban background job test overrides per library docs
+config :shadowfallscampground, Oban, queues: false, plugins: false
+
 # # Config for testing mail struct params drawn from system
 # config :shadowfallscampground, ShadowfallscampgroundEmail.Mailer,
 #   username: "test@test.com",

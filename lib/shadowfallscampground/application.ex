@@ -15,7 +15,9 @@ defmodule Shadowfallscampground.Application do
       # Start the PubSub system
       {Phoenix.PubSub, name: Shadowfallscampground.PubSub},
       # Start the Endpoint (http/https)
-      ShadowfallscampgroundWeb.Endpoint
+      ShadowfallscampgroundWeb.Endpoint,
+      # Start Oban (background jobs)
+      {Oban, oban_config()}
       # Start a worker by calling: Shadowfallscampground.Worker.start_link(arg)
       # {Shadowfallscampground.Worker, arg}
     ]
@@ -32,5 +34,9 @@ defmodule Shadowfallscampground.Application do
   def config_change(changed, _new, removed) do
     ShadowfallscampgroundWeb.Endpoint.config_change(changed, removed)
     :ok
+  end
+
+  defp oban_config() do
+    Application.fetch_env!(:shadowfallscampground, Oban)
   end
 end

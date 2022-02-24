@@ -6,5 +6,5 @@ defmodule Shadowfallscampground.Factories.Factory do
   use ExMachina.Ecto, repo: Shadowfallscampground.Repo
 
   use Shadowfallscampground.Factories.InquiryFactory
-
+  use Shadowfallscampground.Factories.MailerJobFactory
 end

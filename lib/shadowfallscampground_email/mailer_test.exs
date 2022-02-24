@@ -1,17 +1,21 @@
 defmodule ShadowfallscampgroundWeb.MailerTest do
   @moduledoc false
-  use ExUnit.Case, async: true
+  # use ExUnit.Case, async: false
 
-  # import Swoosh.TestAssertions
+  # import Swoosh.{Email, TestAssertions}
 
-  # alias ShadowfallscampgroundEmail.{EmailsView, Mailer, Notifiers, Recipient}
+  # alias ShadowfallscampgroundEmail.Mailer
+
+  # setup :set_swoosh_global
 
   # test "send a sample email" do
-  #   person = %Recipient{email: Faker.Internet.email(), name: Faker.Person.name()}
-  #   email = EmailsView.new_email(person, template: :test)
+  #   email =
+  #     new()
+  #     |> to({"Testy McTesterface", "test@test.com"})
+  #     |> from({"Sendy the Sender", "sender@sender.com"})
 
-  #   {:ok, _} = Mailer.deliver(email )
+  #   {:ok, _} = Mailer.deliver(email)
 
-  #   assert_email_sent(email)
+  #   assert_email_sent()
   # end
 end

@@ -19,6 +19,7 @@ defmodule Shadowfallscampground.DataCase do
   using do
     quote do
       use ExUnitProperties
+      use Oban.Testing, repo: Shadowfallscampground.Repo
       alias Shadowfallscampground.Repo
 
       import Ecto

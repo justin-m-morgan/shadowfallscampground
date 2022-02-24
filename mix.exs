@@ -38,8 +38,8 @@ defmodule Shadowfallscampground.MixProject do
       {:phoenix, "~> 1.6.6"},
       {:phoenix_ecto, "~> 4.4"},
       {:postgrex, ">= 0.0.0"},
-      {:ecto_sql, "~> 3.7"},
-      {:ecto_sqlite3, ">= 0.0.0"},
+      {:ecto_sql, "~> 3.6"},
+      # {:ecto_sqlite3, ">= 0.0.0"},
       {:phoenix_html, "~> 3.2"},
       {:phoenix_live_reload, "~> 1.3", only: :dev},
       {:phoenix_live_view, "~> 0.17"},
@@ -59,6 +59,8 @@ defmodule Shadowfallscampground.MixProject do
       {:surface_catalogue, "~> 0.3"},
       {:tailwind, "~> 0.1", runtime: Mix.env() == :dev},
       {:petal_components, "~> 0.9.0"},
+      # Jobs
+      {:oban, "~> 2.11"},
       # Email
       {:swoosh, "~> 1.6"},
       {:phoenix_swoosh, "~> 1.0"},

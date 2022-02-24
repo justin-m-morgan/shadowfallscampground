@@ -1,18 +1,13 @@
 defmodule Shadowfallscampground.InquiriesTest do
+  @moduledoc false
   use Shadowfallscampground.DataCase
 
   import Shadowfallscampground.Factories.Factory
 
-  alias Shadowfallscampground.DataCase
   alias Shadowfallscampground.Inquiries
+  alias Shadowfallscampground.Inquiries.Inquiry
 
   describe "inquiries" do
-    alias Shadowfallscampground.Inquiries.Inquiry
-
-    import Shadowfallscampground.InquiriesFixtures
-
-    @invalid_attrs %{email: nil, message: nil, name: nil}
-
     test "list_inquiries/0 returns all inquiries" do
       inquiry = insert(:inquiry)
       assert Inquiries.list_inquiries() == [inquiry]

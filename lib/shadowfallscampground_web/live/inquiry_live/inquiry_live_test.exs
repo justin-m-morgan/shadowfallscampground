@@ -3,11 +3,10 @@ defmodule ShadowfallscampgroundWeb.InquiryLiveTest do
   use ShadowfallscampgroundWeb.ConnCase, async: true
 
   import Phoenix.LiveViewTest
-  import Swoosh.TestAssertions
   import Shadowfallscampground.Factories.Factory
 
   alias ShadowfallscampgroundWeb.InquiryLive.FormComponent
-  alias ShadowfallscampgroundEmail.Notifiers.Message
+  # alias ShadowfallscampgroundEmail.Notifiers.Message
 
   defp create_inquiry(_) do
     inquiry = insert(:inquiry)

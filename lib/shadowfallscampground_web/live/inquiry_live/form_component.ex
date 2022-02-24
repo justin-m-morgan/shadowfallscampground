@@ -5,7 +5,7 @@ defmodule ShadowfallscampgroundWeb.InquiryLive.FormComponent do
 
   use ShadowfallscampgroundWeb, :live_component
 
-  alias Shadowfallscampground.Inquiries
+  alias Shadowfallscampground.{Inquiries, Workers.MailerWorker}
   alias ShadowfallscampgroundEmail.{Mailer, Notifiers}
   alias ShadowfallscampgroundWeb.Forms
 
@@ -51,10 +51,11 @@ defmodule ShadowfallscampgroundWeb.InquiryLive.FormComponent do
 
   defp save_inquiry(socket, :new, inquiry_params) do
     with {:ok, _inquiry} <- Inquiries.create_inquiry(inquiry_params),
-         submission_email <- Notifiers.Message.message(inquiry_params),
-         receipt_email <- Notifiers.Message.receipt(inquiry_params) do
-      Mailer.deliver!(submission_email)
-      Mailer.deliver!(receipt_email)
+         [%_{}, %_{}] <- MailerWorker.mail_inquiry_submission_and_receipt(inquiry_params) do
+      #   #  submission_email <- Notifiers.Message.message(inquiry_params),
+      #   #  receipt_email <- Notifiers.Message.receipt(inquiry_params) do
+      # Mailer.deliver!(submission_email)
+      # Mailer.deliver!(receipt_email)
 
       {:noreply,
        socket
@@ -63,6 +64,9 @@ defmodule ShadowfallscampgroundWeb.InquiryLive.FormComponent do
     else
       {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply, assign(socket, changeset: changeset)}
+
+      _ ->
+        {:noreply, socket}
     end
 
     # case Inquiries.create_inquiry(inquiry_params) do
