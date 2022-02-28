@@ -9,14 +9,15 @@ defmodule Shadowfallscampground.Data.Events do
       %__MODULE__{
         name: "Easter",
         theme: "Unofficial Season Opening",
-        date: NaiveDateTime.new!(2022, 4, 14, 21, 0, 0),
-        description: "Just an early opportunity to air out the camping gear. Potluck dinner.",
+        date: NaiveDateTime.new!(2022, 4, 15, 21, 0, 0),
+        description:
+          "Just an early opportunity to air out the camping gear. The campground will only be open on weekends until May 13th",
         icon: "easter"
       },
       %__MODULE__{
         name: "Victoria Day",
         theme: "Welcome Back BBQ",
-        date: NaiveDateTime.new!(2022, 5, 24, 21, 0, 0),
+        date: NaiveDateTime.new!(2022, 5, 21, 21, 0, 0),
         description:
           "Join your fellow campers for a burger and smokey at the clubhouse on Saturday afternoon.",
         icon: "burger"
@@ -24,7 +25,7 @@ defmodule Shadowfallscampground.Data.Events do
       %__MODULE__{
         name: "Canada Day",
         theme: "Disco Dance",
-        date: NaiveDateTime.new!(2022, 7, 1, 21, 0, 0),
+        date: NaiveDateTime.new!(2022, 7, 2, 21, 0, 0),
         description:
           "Dust off your dancing shoes and iron your bell-bottoms. And don't miss out on the 'More Fun' Punch",
         icon: "disco"
@@ -32,7 +33,7 @@ defmodule Shadowfallscampground.Data.Events do
       %__MODULE__{
         name: "BC Day",
         theme: "Chilli Cookoff",
-        date: NaiveDateTime.new!(2022, 8, 4, 21, 0, 0),
+        date: NaiveDateTime.new!(2022, 7, 30, 21, 0, 0),
         description:
           "All campers are invited to join the competition for a spot on the coveted 'Plaque of Chilli Champions'.",
         icon: "cookpot"
@@ -40,7 +41,7 @@ defmodule Shadowfallscampground.Data.Events do
       %__MODULE__{
         name: "Labour Day",
         theme: "Pig Roast",
-        date: NaiveDateTime.new!(2022, 9, 5, 21, 0, 0),
+        date: NaiveDateTime.new!(2022, 9, 3, 21, 0, 0),
         description: "Watch the pig go round and round all day until dinner time.",
         icon: "pig"
       },
