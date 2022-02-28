@@ -12,7 +12,7 @@ defmodule ShadowfallscampgroundWeb.Sections.Calendar do
     ~F"""
     <div class="grid md:grid-cols-3 gap-8" data-test="section__event-calendar">
       <Components.Card label="Events 2022" padding={:lg} class="md:col-span-3">
-        <p class="max-w-2xl mx-auto py-4"><span class="font-bold">NOTE:</span> While cannot know what the COVID situation will be throughout the situation, we are anticipating that we can hold events this season. Please be aware that safety precautions (including checking of vaccination status) may be necessary in accordance with provincial regulations and our best judgement.</p>
+        <p class="max-w-2xl mx-auto py-4 text-lg"><span class="font-bold">NOTE:</span> While cannot know what the COVID situation will be throughout the situation, we are anticipating that we can hold events this season. Please be aware that safety precautions (including checking of vaccination status) may be necessary in accordance with provincial regulations and our best judgement.</p>
       </Components.Card>
       {#for %{
           name: name,
@@ -27,7 +27,7 @@ defmodule ShadowfallscampgroundWeb.Sections.Calendar do
 
           <div class="">
             <p class="">{theme}</p>
-            <p class="font-light text-lg lg:text-xl pt-4">{Timex.format!(date, "{WDshort}, {Mshort} {D}, {kitchen}")}</p>
+            <p class="font-light text-xl lg:text-3xl py-4">{Timex.format!(date, "{WDshort}, {Mshort} {D}")}</p>
             <p class="text-center lg:text-xl border">{description}</p>
           </div>
         </Components.Card>

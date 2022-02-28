@@ -25,7 +25,7 @@ defmodule ShadowfallscampgroundWeb.Components.CallToAction do
   prop size, :atom, default: :md, values: [:xs, :sm, :md, :lg, :xl]
 
   @doc "Button variant"
-  prop variant, :atom, default: :solid, values: [:solid, :outline, :ghost]
+  prop variant, :atom, default: :solid, values: [:solid, :outline, :outline_light, :ghost]
 
   @doc "Additional attributes to add onto the generated element"
   prop opts, :keyword, default: []
@@ -79,13 +79,23 @@ defmodule ShadowfallscampgroundWeb.Components.CallToAction do
   defp size(:sm), do: ["py-2 px-3"]
   defp size(:md), do: ["py-3 px-4 text-lg"]
   defp size(:lg), do: ["py-4 px-6 text-xl lg:py-6 lg:px-8 lg:text-2xl"]
-  defp size(:xl), do: ["py-6 px-8 text-2xl"]
+  defp size(:xl), do: ["py-6 px-8 text-2xl lg:py-8 lg:px-12 lg:text-3xl"]
   defp size(_), do: size(:md)
 
   defp variant(:solid), do: ["bg-accent-900", "text-accent-100", "hover:bg-accent-800"]
 
   defp variant(:outline),
     do: ["bg-transparent", "text-accent-800", "border-2", "border-accent-800"]
+
+  defp variant(:outline_light),
+    do: [
+      "bg-transparent",
+      "text-accent-50",
+      "border-4",
+      "border-accent-400",
+      "hover:scale-110",
+      "hover:bg-accent-400"
+    ]
 
   defp variant(:ghost), do: ["bg-transparent", "text-accent-800"]
   defp variant(_), do: variant(:solid)
