@@ -25,7 +25,7 @@ defmodule ShadowfallscampgroundWeb.Forms.Form do
     ~F"""
     <div class="w-full flex flex-col items-center pb-8">
       {#if @title}
-        <h2 class="text-center text-4xl text-primary-900 font-bold pb-8">{@title}</h2>
+        <h2 class="text-center text-4xl text-primary-900 font-bold pb-2 md:pb-8">{@title}</h2>
       {/if}
 
       <Surface.Components.Form
@@ -33,9 +33,9 @@ defmodule ShadowfallscampgroundWeb.Forms.Form do
         change={@change}
         submit={@submit}
         class={
-          "min-w-[45ch] w-full max-w-2xl",
+          "md:min-w-[45ch] w-full max-w-2xl",
           "flex flex-col space-y-3",
-          "px-8 py-4"
+          "md:px-8 py-4 pb-0"
         }
         opts={data_test: @data_test}
       >

@@ -13,9 +13,9 @@ defmodule ShadowfallscampgroundWeb.Sections.Location do
   def render(assigns) do
     ~F"""
     <div data-test="section__location">
-      <div class="grid md:grid-cols-6 items-center justify-center pb-8">
+      <div class="flex flex-col md:grid grid-cols-1 md:grid-cols-6 items-center justify-center pb-8 space-y-8 md:space-y-0">
         <div class={
-          "col-span-3 col-start-1 row-start-1 ",
+          "md:col-span-3 md:col-start-1 md:row-start-1 ",
           "bg-primary-50/70 rounded filter backdrop-blur-md",
           "px-2 py-4 md:p-8",
           "z-20"

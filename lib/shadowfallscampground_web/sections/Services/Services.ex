@@ -9,7 +9,7 @@ defmodule ShadowfallscampgroundWeb.Sections.Services do
 
   def render(assigns) do
     ~F"""
-    <div class="grid md:grid-cols-3 gap-8" data-test="section__services">
+    <div class="grid md:grid-cols-3 gap-2 md:gap-8" data-test="section__services">
       {#for %{icon: icon, label: label, description: description} <- services()}
         <Components.Card label={label} padding={:xl}>
           <Svg.IconSymbol name={icon} size={:md} />

@@ -13,7 +13,7 @@ defmodule ShadowfallscampgroundWeb.Sections.Sites do
 
   def render(assigns) do
     ~F"""
-    <div class="grid md:grid-cols-3 gap-8" data-test="section__sites">
+    <div class="grid md:grid-cols-3 gap-2 md:gap-8" data-test="section__sites">
       {#for %__MODULE__{icon: icon, label: label, copy: copy, prices: prices} <- [
           rv_copy(),
           tent_copy(),

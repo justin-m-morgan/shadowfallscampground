@@ -141,15 +141,14 @@ g[class^="logo__wing"]:nth-of-type(6) {
 
 .phx-modal-content {
   background-color: #fefefe;
-  margin: 15vh auto;
-  padding: 20px;
-  border: 1px solid #888;
-  width: 80%;
+  @apply mt-4 md:mt-32 mx-auto p-3 rounded-md w-[90%] md:w-1/2;
+  /* border: 1px solid #888; */
+  /* width: 90%; */
 }
 
 .phx-modal-content input,
 .phx-modal-content textarea {
-  @apply bg-gray-200;
+  @apply bg-gray-100 ring-primary-600 focus:bg-primary-200 focus:text-primary-900;
 }
 
 .phx-modal-close {

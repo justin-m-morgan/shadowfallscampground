@@ -10,7 +10,7 @@ defmodule ShadowfallscampgroundWeb.Sections.Calendar do
 
   def render(assigns) do
     ~F"""
-    <div class="grid md:grid-cols-3 gap-8" data-test="section__event-calendar">
+    <div class="grid md:grid-cols-3 gap-2 md:gap-8" data-test="section__event-calendar">
       <Components.Card label="Events 2022" padding={:lg} class="md:col-span-3">
         <p class="max-w-2xl mx-auto py-4 text-lg"><span class="font-bold">NOTE:</span> While cannot know what the COVID situation will be throughout the situation, we are anticipating that we can hold events this season. Please be aware that safety precautions (including checking of vaccination status) may be necessary in accordance with provincial regulations and our best judgement.</p>
       </Components.Card>

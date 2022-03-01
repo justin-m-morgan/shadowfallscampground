@@ -10,7 +10,7 @@ defmodule ShadowfallscampgroundWeb.Sections.Footer do
   def render(assigns) do
     ~F"""
     <footer class="bg-accent-800 py-16 text-gray-50 text-lg" data-test="section__footer">
-      <div class="container mx-auto grid md:grid-cols-2 items-center">
+      <div class="container mx-auto px-2 md:px-0 flex flex-col-reverse md:grid md:grid-cols-2 items-center">
         <div class="">
           <h2 class="font-bold text-3xl lg:text-5xl pb-2">Shadow Falls</h2>
           <h3 class="text-xl">LGBTQ Campground</h3>
@@ -26,13 +26,19 @@ defmodule ShadowfallscampgroundWeb.Sections.Footer do
             {/for}
           </ul>
         </div>
-        <div class="space-x-4 lg:space-x-8 flex justify-end items-center">
+        <div class={
+          "w-full",
+          "flex flex-col md:flex-row justify-end items-center",
+          "md:space-x-4 lg:space-x-8 space-y-4 md:space-y-0",
+          "pb-4 md:pb-0"
+        }>
           <CallToAction
             type="redirect"
             to={Routes.reserve_path(Endpoint, :new)}
             size={:xl}
             variant={:outline_light}
             opts={data_test: "make_booking_button"}
+            class="w-full"
           >
             Book Now!
           </CallToAction>
@@ -42,6 +48,7 @@ defmodule ShadowfallscampgroundWeb.Sections.Footer do
             size={:xl}
             variant={:outline_light}
             opts={data_test: "send_inquiry_button"}
+            class="w-full"
           >
             Contact Us
           </CallToAction>

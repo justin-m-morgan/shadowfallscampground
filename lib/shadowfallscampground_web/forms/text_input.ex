@@ -16,7 +16,7 @@ defmodule ShadowfallscampgroundWeb.Forms.TextInput do
   def render(assigns) do
     ~F"""
     <FormInput name={@name} label={@label}>
-      <Form.TextInput class="w-full rounded-md" />
+      <Form.TextInput class="w-full rounded-md ring-red-500" />
     </FormInput>
     """
   end

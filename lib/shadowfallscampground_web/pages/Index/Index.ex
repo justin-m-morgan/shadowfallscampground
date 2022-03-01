@@ -23,12 +23,13 @@ defmodule ShadowfallscampgroundWeb.Pages.Index do
         </Components.Section>
         <Components.ImageBanner banner_number={2} />
         <Components.Section>
-          <Sections.Services />
+          <Sections.Calendar />
         </Components.Section>
         <Components.ImageBanner banner_number={3} />
         <Components.Section>
-          <Sections.Calendar />
+          <Sections.Services />
         </Components.Section>
+
         <Components.ImageBanner banner_number={4} />
       </main>
     </div>

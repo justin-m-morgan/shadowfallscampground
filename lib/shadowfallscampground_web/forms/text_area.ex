@@ -16,7 +16,7 @@ defmodule ShadowfallscampgroundWeb.Forms.TextArea do
   def render(assigns) do
     ~F"""
     <FormInput name={@name} label={@label}>
-      <Form.TextArea rows={10} class="w-full rounded-md border-0" />
+      <Form.TextArea rows={6} class="w-full rounded-md border-0" />
     </FormInput>
     """
   end
