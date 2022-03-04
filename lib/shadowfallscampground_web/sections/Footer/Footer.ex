@@ -10,7 +10,7 @@ defmodule ShadowfallscampgroundWeb.Sections.Footer do
   def render(assigns) do
     ~F"""
     <footer class="bg-accent-800 py-16 text-gray-50 text-lg" data-test="section__footer">
-      <div class="container mx-auto px-2 md:px-0 flex flex-col-reverse md:grid md:grid-cols-2 items-center">
+      <div class="container mx-auto px-2 flex flex-col-reverse md:grid md:grid-cols-2 items-center">
         <div class="">
           <h2 class="font-bold text-3xl lg:text-5xl pb-2">Shadow Falls</h2>
           <h3 class="text-xl">LGBTQ Campground</h3>

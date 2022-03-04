@@ -78,8 +78,8 @@ defmodule ShadowfallscampgroundWeb.Components.CallToAction do
   defp size(:xs), do: ["py-2 px-2 text-sm"]
   defp size(:sm), do: ["py-2 px-3"]
   defp size(:md), do: ["py-3 px-4 text-lg"]
-  defp size(:lg), do: ["py-4 px-6 text-xl lg:py-6 lg:px-8 lg:text-2xl"]
-  defp size(:xl), do: ["py-6 px-8 text-2xl lg:py-8 lg:px-12 lg:text-3xl"]
+  defp size(:lg), do: ["py-4 px-6 text-xl lg:py-6 lg:px-8 xl:text-2xl"]
+  defp size(:xl), do: ["py-6 px-8 text-2xl lg:py-8 lg:px-12 xl:text-3xl"]
   defp size(_), do: size(:md)
 
   defp variant(:solid), do: ["bg-accent-900", "text-accent-100", "hover:bg-accent-800"]

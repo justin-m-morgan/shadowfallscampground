@@ -10,7 +10,7 @@ defmodule ShadowfallscampgroundWeb.Sections.MainHero do
   def render(assigns) do
     ~F"""
     <section
-      class="flex flex-col justify-center items-center lg:py-64 space-y-12"
+      class="flex flex-col justify-center items-center px-2 lg:py-18 xl:py-32 space-y-12 h-screen"
       data-test="section__main-hero"
     >
       <div class={
@@ -20,12 +20,12 @@ defmodule ShadowfallscampgroundWeb.Sections.MainHero do
       }>
         <AnimatedLogo class="h-48 lg:h-64" />
         <div class="px-8 md:px-24">
-          <h1 class="text-4xl md:text-5xl font-bold">Shadow Falls</h1>
-          <h2 class="text-xl md:text-2xl font-bold">LGBTQ Campground</h2>
-          <h2 class="text-md">Harrison Mills, BC</h2>
+          <h1 class="text-2xl md:text-5xl font-bold">Shadow Falls</h1>
+          <h3 class="text-lg md:text-2xl font-bold">LGBTQ Campground</h3>
+          <p class="text-md md:text-lg">Harrison Mills, BC</p>
         </div>
       </div>
-      <div class="w-full md:w-auto md:space-x-4 space-y-4 flex flex-col md:flex-row">
+      <div class="w-full md:w-auto md:space-x-4 space-y-4 md:space-y-0 flex flex-col md:flex-row">
         <CallToAction
           type="redirect"
           to={Routes.reserve_path(Endpoint, :new)}

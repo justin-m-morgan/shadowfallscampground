@@ -27,7 +27,12 @@ defmodule ShadowfallscampgroundWeb.Sections.Calendar do
 
           <div class="">
             <p class="">{theme}</p>
-            <p class="font-light text-xl lg:text-3xl py-4">{Timex.format!(date, "{WDshort}, {Mshort} {D}")}</p>
+            <time
+              datetime={Timex.format!(date, "{YYYY}-{M}-{D}")}
+              class="font-light text-xl lg:text-3xl py-4"
+            >
+              {Timex.format!(date, "{WDshort}, {Mshort} {D}")}
+            </time>
             <p class="text-center lg:text-xl border">{description}</p>
           </div>
         </Components.Card>
