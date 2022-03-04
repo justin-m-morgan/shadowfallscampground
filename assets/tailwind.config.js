@@ -19,6 +19,9 @@ module.exports = {
       backgroundImage: {
         trees: "url(/images/pexels-brandon-montrone-1179229--narrow_1200.jpg)",
       },
+      ringColor: {
+        DEFAULT: colors.green[500],
+      },
     },
   },
   variants: {

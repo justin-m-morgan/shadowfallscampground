@@ -10,9 +10,38 @@
 }
 
 @layer base {
-  input,
-  select {
-    border: 0;
+  textarea {
+    @apply border;
+  }
+
+  [type="text"]:focus,
+  [type="email"]:focus,
+  [type="url"]:focus,
+  [type="password"]:focus,
+  [type="number"]:focus,
+  [type="date"]:focus,
+  [type="datetime-local"]:focus,
+  [type="month"]:focus,
+  [type="search"]:focus,
+  [type="tel"]:focus,
+  [type="time"]:focus,
+  [type="week"]:focus,
+  [multiple]:focus,
+  textarea:focus,
+  select:focus {
+    --tw-ring-color: #009900;
+    border-color: var(--tw-ring-color);
+    @apply bg-primary-100;
+  }
+
+  [type="checkbox"],
+  [type="radio"] {
+    color: #3b82f6;
+  }
+
+  [type="checkbox"]:focus,
+  [type="radio"]:focus {
+    --tw-ring-color: #009900;
   }
 }
 
@@ -144,11 +173,6 @@ g[class^="logo__wing"]:nth-of-type(6) {
   @apply mt-4 md:mt-32 mx-auto p-3 rounded-md w-[90%] md:w-1/2;
   /* border: 1px solid #888; */
   /* width: 90%; */
-}
-
-.phx-modal-content input,
-.phx-modal-content textarea {
-  @apply bg-gray-100 ring-primary-600 focus:bg-primary-200 focus:text-primary-900;
 }
 
 .phx-modal-close {
