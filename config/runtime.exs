@@ -32,7 +32,11 @@ database_url =
   config_env()
   |> set_db_url.(System.get_env("DATABASE_URL"))
 
-config :shadowfallscampground, Shadowfallscampground.Repo, url: database_url
+config :shadowfallscampground, Shadowfallscampground.Repo,
+  url: database_url
+  ssl: true,
+  # socket_options: [:inet6],
+  pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10")
 
 # The secret key base is used to sign/encrypt cookies and other secrets.
 # A default value is used in config/dev.exs and config/test.exs but you
