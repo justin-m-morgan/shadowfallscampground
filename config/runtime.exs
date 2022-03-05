@@ -6,6 +6,13 @@ import Config
 # and secrets from environment variables or elsewhere. Do not define
 # any compile-time configuration in here, as it won't be applied.
 # The block below contains prod specific runtime configuration.
+env_var_lookup = fn key ->
+  System.get_env(key) ||
+    raise """
+    environment variable #{key} is missing.
+    Remeber to set this in your runtime's environment variables/secrets
+    """
+end
 
 # DB Settings
 
@@ -67,18 +74,10 @@ config :shadowfallscampground, ShadowfallscampgroundWeb.Endpoint,
 # are not using SMTP. Here is an example of the configuration:
 #
 
-smtp_env_var = fn key ->
-  System.get_env(key) ||
-    raise """
-    environment variable #{key} is missing.
-    Remeber to set this in your runtime's environment variables/secrets
-    """
-end
-
 config :shadowfallscampground, ShadowfallscampgroundEmail.Mailer,
-  relay: smtp_env_var("SMTP_RELAY"),
-  username: smtp_env_var("SMTP_USERNAME"),
-  password: smtp_env_var("SMTP_PASSWORD")
+  relay: env_var_lookup.("SMTP_RELAY"),
+  username: env_var_lookup.("SMTP_USERNAME"),
+  password: env_var_lookup.("SMTP_PASSWORD")
 
 # For this example you need include a HTTP client required by Swoosh API client.
 # Swoosh supports Hackney and Finch out of the box:
