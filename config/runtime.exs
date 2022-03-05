@@ -66,10 +66,19 @@ config :shadowfallscampground, ShadowfallscampgroundWeb.Endpoint,
 # Also, you may need to configure the Swoosh API client of your choice if you
 # are not using SMTP. Here is an example of the configuration:
 #
+
+smtp_env_var = fn key ->
+  System.get_env(key) ||
+    raise """
+    environment variable #{key} is missing.
+    Remeber to set this in your runtime's environment variables/secrets
+    """
+end
+
 config :shadowfallscampground, ShadowfallscampgroundEmail.Mailer,
-  relay: System.get_env("SMTP_RELAY"),
-  username: System.get_env("SMTP_USERNAME"),
-  password: System.get_env("SMTP_PASSWORD")
+  relay: smtp_env_var("SMTP_RELAY"),
+  username: smtp_env_var("SMTP_USERNAME"),
+  password: smtp_env_var("SMTP_PASSWORD")
 
 # For this example you need include a HTTP client required by Swoosh API client.
 # Swoosh supports Hackney and Finch out of the box:
