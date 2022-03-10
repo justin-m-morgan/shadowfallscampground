@@ -45,4 +45,11 @@ defmodule ShadowfallscampgroundEmail.EmailsView do
     |> Application.fetch_env!(ShadowfallscampgroundEmail.Mailer)
     |> Keyword.get(:username)
   end
+
+  def email_url(email \\ nil, subject) do
+    "mailto:"
+    |> Kernel.<>(email || System.get_env("SMTP_USERNAME"))
+    |> Kernel.<>("?")
+    |> Kernel.<>(URI.encode_query([subject: subject], :rfc3986))
+  end
 end

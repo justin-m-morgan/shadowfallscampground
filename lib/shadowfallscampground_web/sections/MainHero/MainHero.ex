@@ -4,6 +4,7 @@ defmodule ShadowfallscampgroundWeb.Sections.MainHero do
   """
   use ShadowfallscampgroundWeb, :component
 
+  alias ShadowfallscampgroundEmail.EmailsView
   alias ShadowfallscampgroundWeb.Endpoint
   alias ShadowfallscampgroundWeb.Components.{AnimatedLogo, CallToAction}
 
@@ -25,24 +26,37 @@ defmodule ShadowfallscampgroundWeb.Sections.MainHero do
           <p class="text-md md:text-lg">Harrison Mills, BC</p>
         </div>
       </div>
-      <div class="w-full md:w-auto md:space-x-4 space-y-4 md:space-y-0 flex flex-col md:flex-row">
+      <div class="w-full md:w-auto grid md:grid-cols-2 gap-4">
         <CallToAction
           type="redirect"
           to={Routes.reserve_path(Endpoint, :new)}
           size={:xl}
           opts={data_test: "make_booking_button"}
-          class="w-full md:w-auto"
+          class="w-full md:w-auto md:col-span-2"
         >
           Book Now!
         </CallToAction>
+
         <CallToAction
           type="patch"
           to={Routes.page_path(Endpoint, :inquiry)}
-          size={:xl}
+          size={:lg}
+          variant={:outline_light}
           opts={data_test: "send_inquiry_button"}
           class="w-full md:w-auto"
         >
-          Contact Us
+          Contact Form
+        </CallToAction>
+
+        <CallToAction
+          type="link"
+          to={EmailsView.email_url("General Inquiry")}
+          size={:lg}
+          variant={:outline_light}
+          opts={data_test: "send_inquiry_button"}
+          class="w-full md:w-auto"
+        >
+          Send Email
         </CallToAction>
       </div>
     </section>

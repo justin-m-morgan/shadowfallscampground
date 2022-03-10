@@ -10,7 +10,7 @@ defmodule ShadowfallscampgroundWeb.Components.CallToAction do
   prop to, :string
 
   @doc "Type of link"
-  prop type, :string, values: ["button", "submit", "patch", "redirect"], default: "button"
+  prop type, :string, values: ["button", "link", "submit", "patch", "redirect"], default: "button"
 
   @doc "A click event"
   prop click, :event
@@ -48,6 +48,14 @@ defmodule ShadowfallscampgroundWeb.Components.CallToAction do
     <LiveRedirect to={@to} class={classes(@size, @variant), @class} opts={@opts}>
       <#slot />
     </LiveRedirect>
+    """
+  end
+
+  def render(%{type: "link"} = assigns) do
+    ~F"""
+    <a href={@to} class={classes(@size, @variant), @class} data-test={@opts[:data_test]}>
+      <#slot />
+    </a>
     """
   end
 
@@ -89,7 +97,7 @@ defmodule ShadowfallscampgroundWeb.Components.CallToAction do
 
   defp variant(:outline_light),
     do: [
-      "bg-transparent",
+      "bg-accent-900/30",
       "text-accent-50",
       "border-4",
       "border-accent-400",

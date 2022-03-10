@@ -4,6 +4,7 @@ defmodule ShadowfallscampgroundWeb.Sections.Footer do
   """
   use ShadowfallscampgroundWeb, :component
 
+  alias ShadowfallscampgroundEmail.EmailsView
   alias ShadowfallscampgroundWeb.Endpoint
   alias ShadowfallscampgroundWeb.Components.CallToAction
 
@@ -28,29 +29,38 @@ defmodule ShadowfallscampgroundWeb.Sections.Footer do
         </div>
         <div class={
           "w-full",
-          "flex flex-col md:flex-row justify-end items-center",
-          "md:space-x-4 lg:space-x-8 space-y-4 md:space-y-0",
+          "grid md:grid-cols-2 justify-end items-center gap-4",
           "pb-4 md:pb-0"
         }>
           <CallToAction
             type="redirect"
             to={Routes.reserve_path(Endpoint, :new)}
-            size={:xl}
+            size={:lg}
             variant={:outline_light}
             opts={data_test: "make_booking_button"}
-            class="w-full"
+            class="w-full md:col-span-2"
           >
             Book Now!
           </CallToAction>
           <CallToAction
             type="patch"
             to={Routes.page_path(Endpoint, :inquiry)}
-            size={:xl}
+            size={:lg}
             variant={:outline_light}
             opts={data_test: "send_inquiry_button"}
             class="w-full"
           >
-            Contact Us
+            Contact Form
+          </CallToAction>
+          <CallToAction
+            type="link"
+            to={EmailsView.email_url("General Inquiry")}
+            size={:lg}
+            variant={:outline_light}
+            opts={data_test: "send_inquiry_button"}
+            class="w-full"
+          >
+            Send Email
           </CallToAction>
         </div>
       </div>

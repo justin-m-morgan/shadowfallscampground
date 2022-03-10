@@ -7,7 +7,7 @@ defmodule ShadowfallscampgroundWeb.Svg.Symbols.Hand do
 
   def render(assigns) do
     ~F"""
-    <SymbolTemplate id="hand" viewBox="-25 -25 560 550">
+    <SymbolTemplate id="hand" viewBox="-25 -25 680 550">
       <path
         class="transform rotate-45 origin-center"
         fill="currentColor"
