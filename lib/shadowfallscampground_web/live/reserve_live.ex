@@ -6,6 +6,16 @@ defmodule ShadowfallscampgroundWeb.ReserveLive do
 
   alias ShadowfallscampgroundWeb.Endpoint
 
+  @impl true
+  def handle_params(params, _url, socket) do
+    {:noreply, apply_action(socket, socket.assigns.live_action, params)}
+  end
+
+  defp apply_action(socket, :new, _params) do
+    socket
+    |> assign(:page_title, "Reserve")
+  end
+
   def render(assigns) do
     ~F"""
     <div class="bg-trees min-h-screen">
