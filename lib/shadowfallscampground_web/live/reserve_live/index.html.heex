@@ -1,0 +1,43 @@
+<h1>Listing Reservations</h1>
+
+<%= if @live_action in [:new, :edit] do %>
+  <.modal return_to={Routes.reservation_index_path(@socket, :index)}>
+    <.live_component
+      module={ShadowfallscampgroundWeb.ReservationLive.FormComponent}
+      id={@reservation.id || :new}
+      title={@page_title}
+      action={@live_action}
+      reservation={@reservation}
+      return_to={Routes.reservation_index_path(@socket, :index)}
+    />
+  </.modal>
+<% end %>
+
+<table>
+  <thead>
+    <tr>
+      <th>Arrival</th>
+      <th>Departure</th>
+      <th>Type of request</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody id="reservations">
+    <%= for reservation <- @reservations do %>
+      <tr id={"reservation-#{reservation.id}"}>
+        <td><%= reservation.arrival %></td>
+        <td><%= reservation.departure %></td>
+        <td><%= reservation.type_of_request %></td>
+
+        <td>
+          <span><%= live_redirect "Show", to: Routes.reservation_show_path(@socket, :show, reservation) %></span>
+          <span><%= live_patch "Edit", to: Routes.reservation_index_path(@socket, :edit, reservation) %></span>
+          <span><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: reservation.id, data: [confirm: "Are you sure?"] %></span>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<span><%= live_patch "New Reservation", to: Routes.reservation_index_path(@socket, :new) %></span>

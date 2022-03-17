@@ -22,6 +22,15 @@ defmodule ShadowfallscampgroundWeb.Router do
     live "/", PageLive, :index
     live "/inquiry", PageLive, :inquiry
     live "/reserve", ReserveLive, :new
+
+    # Suggested Routes
+
+    # live "/reservations", ReservationLive.Index, :index
+    # live "/reservations/new", ReservationLive.Index, :new
+    # live "/reservations/:id/edit", ReservationLive.Index, :edit
+
+    # live "/reservations/:id", ReservationLive.Show, :show
+    # live "/reservations/:id/show/edit", ReservationLive.Show, :edit
   end
 
   # Other scopes may use custom stacks.

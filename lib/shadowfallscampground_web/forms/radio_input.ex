@@ -14,23 +14,25 @@ defmodule ShadowfallscampgroundWeb.Forms.RadioInput do
   prop label, :string, required: true
 
   @doc "Mappings for options"
-  prop mappings, :keyword, default: nil
+  prop mappings, :list, default: nil
 
   @doc "Module enum mappings are declared in"
-  prop schema_module, :atom, required: true
+  prop schema_module, :atom
 
   @doc "Toggle for displaying icons"
   prop display_icon, :boolean, default: true
 
+  @doc "CSS classes for grid container"
+  prop class, :css_class
+
   def render(assigns) do
     ~F"""
     <FormInput name={@name} label={@label}>
-      <div class="flex w-full">
+      <div class={"grid grid-cols-2 gap-1 overflow-hidden rounded-md", @class}>
         {#for {value, label} <- @mappings || humanized_options(@schema_module, @name)}
           <div class={
             "overflow-hidden",
-            "first:rounded-l-lg last:rounded-r-lg",
-            "border-l-2 first:border-0 border-gray-50",
+            "",
             "w-full flex"
           }>
             <Form.RadioButton id={"#{@name}-#{value}"} value={value} class="sr-only peer" />

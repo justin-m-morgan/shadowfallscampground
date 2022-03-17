@@ -1,0 +1,36 @@
+<h1>Show Reservation</h1>
+
+<%= if @live_action in [:edit] do %>
+  <.modal return_to={Routes.reservation_show_path(@socket, :show, @reservation)}>
+    <.live_component
+      module={ShadowfallscampgroundWeb.ReservationLive.FormComponent}
+      id={@reservation.id}
+      title={@page_title}
+      action={@live_action}
+      reservation={@reservation}
+      return_to={Routes.reservation_show_path(@socket, :show, @reservation)}
+    />
+  </.modal>
+<% end %>
+
+<ul>
+
+  <li>
+    <strong>Arrival:</strong>
+    <%= @reservation.arrival %>
+  </li>
+
+  <li>
+    <strong>Departure:</strong>
+    <%= @reservation.departure %>
+  </li>
+
+  <li>
+    <strong>Type of request:</strong>
+    <%= @reservation.type_of_request %>
+  </li>
+
+</ul>
+
+<span><%= live_patch "Edit", to: Routes.reservation_show_path(@socket, :edit, @reservation), class: "button" %></span> |
+<span><%= live_redirect "Back", to: Routes.reservation_index_path(@socket, :index) %></span>

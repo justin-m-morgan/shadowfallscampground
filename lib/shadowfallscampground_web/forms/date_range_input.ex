@@ -7,8 +7,8 @@ defmodule ShadowfallscampgroundWeb.Forms.DateRangeInput do
   alias ShadowfallscampgroundWeb.Forms
   alias Shadowfallscampground.Data.Dates.DatePicker
 
-  @doc "Field name"
-  prop form, :map, required: true
+  @doc "Form key for creating field names"
+  prop form, :atom, required: true
 
   @doc "Start Date field name"
   prop start_date_field, :atom, required: true
@@ -29,7 +29,7 @@ defmodule ShadowfallscampgroundWeb.Forms.DateRangeInput do
   prop focused_end_date, :date, required: true
 
   @doc "Year provided from controlling component logic"
-  prop year, :keyword
+  prop year, :integer
 
   @doc "Computed start_month options"
   data start_month_options, :keyword
@@ -44,7 +44,7 @@ defmodule ShadowfallscampgroundWeb.Forms.DateRangeInput do
   data end_day_options, :keyword
 
   @doc "Computed year from options"
-  data computed_year, :date
+  data computed_year, :integer
 
   def render(assigns) do
     ~F"""
@@ -95,6 +95,13 @@ defmodule ShadowfallscampgroundWeb.Forms.DateRangeInput do
   end
 
   defp maybe_bump_focus_day(nil, _), do: nil
+
+  defp maybe_bump_focus_day(%NaiveDateTime{} = start_date, end_date),
+    do: maybe_bump_focus_day(NaiveDateTime.to_date(start_date), end_date)
+
+  defp maybe_bump_focus_day(start_date, %NaiveDateTime{} = end_date),
+    do: maybe_bump_focus_day(start_date, NaiveDateTime.to_date(end_date))
+
   defp maybe_bump_focus_day(start_date, nil), do: Date.add(start_date, 1)
 
   defp maybe_bump_focus_day(start_date, end_date) do
