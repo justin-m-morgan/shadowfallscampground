@@ -50,8 +50,6 @@ defmodule ShadowfallscampgroundWeb.ReserveLive.Steps.StepHandler do
   def handle_event("validate", payload, socket) do
     params = extract_payload(payload)
 
-    IO.inspect(params)
-
     changeset =
       socket.assigns.base_struct
       |> socket.assigns.changeset_fn.(params)
