@@ -65,14 +65,12 @@ defmodule ShadowfallscampgroundWeb.ReserveLive.Steps.Attendees do
     @moduledoc """
     Form component for step one
     """
-    use ShadowfallscampgroundWeb, :live_component
+    use ShadowfallscampgroundWeb, :component
 
     alias ShadowfallscampgroundWeb.Forms
     alias ShadowfallscampgroundWeb.ReserveLive.Steps
 
     prop base_struct, :struct, required: true
-
-    prop changeset, :map
 
     def render(assigns) do
       ~F"""
