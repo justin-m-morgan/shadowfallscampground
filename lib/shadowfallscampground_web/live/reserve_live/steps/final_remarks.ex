@@ -11,8 +11,10 @@ defmodule ShadowfallscampgroundWeb.ReserveLive.Steps.FinalRemarks do
   end
 
   @doc false
-  def changeset(contact_info, attrs) do
-    contact_info
+  def changeset(), do: changeset(%__MODULE__{}, %{})
+
+  def changeset(final_remarks \\ %__MODULE__{}, attrs) do
+    final_remarks
     |> cast(attrs, [:remarks])
     |> validate_required([])
   end
@@ -28,6 +30,8 @@ defmodule ShadowfallscampgroundWeb.ReserveLive.Steps.FinalRemarks do
 
     prop base_struct, :struct, required: true
 
+    prop changeset, :struct, required: true
+
     def render(assigns) do
       ~F"""
       <div>
@@ -37,8 +41,9 @@ defmodule ShadowfallscampgroundWeb.ReserveLive.Steps.FinalRemarks do
           title="Questions/Comments"
           changeset_fn={&Steps.FinalRemarks.changeset/2}
           base_struct={@base_struct}
+          changeset={@changeset}
         >
-          <Forms.TextArea name={:remarks} label="Message" />
+          <Forms.TextArea name={:remarks} label="Message (Optional)" />
         </Steps.StepHandler>
       </div>
       """

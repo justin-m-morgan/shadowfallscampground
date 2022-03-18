@@ -16,7 +16,9 @@ defmodule ShadowfallscampgroundWeb.ReserveLive.Steps.BasicDetails do
   end
 
   @doc false
-  def changeset(basic_details, attrs) do
+  def changeset(), do: changeset(%__MODULE__{}, %{})
+
+  def changeset(basic_details \\ %__MODULE__{}, attrs) do
     basic_details
     |> cast(add_times_to_dates(attrs), [:arrival, :departure, :type_of_request])
     |> maybe_bump_departure()
@@ -85,6 +87,8 @@ defmodule ShadowfallscampgroundWeb.ReserveLive.Steps.BasicDetails do
 
     prop base_struct, :struct, required: true
 
+    prop changeset, :struct, required: true
+
     def render(assigns) do
       ~F"""
       <div>
@@ -94,7 +98,6 @@ defmodule ShadowfallscampgroundWeb.ReserveLive.Steps.BasicDetails do
           title="Basic Details"
           changeset_fn={&Steps.BasicDetails.changeset/2}
           base_struct={@base_struct}
-          :let={changeset: changeset}
         >
           <Forms.DateRangeInput
             id="basic_details_date_range_input"
@@ -103,14 +106,15 @@ defmodule ShadowfallscampgroundWeb.ReserveLive.Steps.BasicDetails do
             end_date_field={:departure}
             min_date={~D[2022-05-15]}
             max_date={~D[2022-09-15]}
-            focused_start_date={changeset.changes[:arrival]}
-            focused_end_date={changeset.changes[:departure]}
+            focused_start_date={@changeset.changes[:arrival]}
+            focused_end_date={@changeset.changes[:departure]}
             year={2022}
           />
           <Forms.RadioInput
             name={:type_of_request}
             label="Type of Request"
-            schema_module={Requests.Reservation}
+            schema_module={Steps.BasicDetails}
+            checked_override={@changeset.changes[:type_of_request]}
           />
         </Steps.StepHandler>
       </div>

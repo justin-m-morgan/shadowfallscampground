@@ -13,6 +13,9 @@ defmodule ShadowfallscampgroundWeb.Forms.RadioInput do
   @doc "Fieldset Label text"
   prop label, :string, required: true
 
+  @doc "Bug fix for misbehaving checked values"
+  prop checked_override, :atom, default: false
+
   @doc "Mappings for options"
   prop mappings, :list, default: nil
 
@@ -35,7 +38,16 @@ defmodule ShadowfallscampgroundWeb.Forms.RadioInput do
             "",
             "w-full flex"
           }>
-            <Form.RadioButton id={"#{@name}-#{value}"} value={value} class="sr-only peer" />
+            {#if @checked_override}
+              <Form.RadioButton
+                id={"#{@name}-#{value}"}
+                value={value}
+                checked={value == @checked_override}
+                class="sr-only peer"
+              />
+            {#else}
+              <Form.RadioButton id={"#{@name}-#{value}"} value={value} class="sr-only peer" />
+            {/if}
             <label
               for={"#{@name}-#{value}"}
               class={
@@ -60,6 +72,10 @@ defmodule ShadowfallscampgroundWeb.Forms.RadioInput do
   defp humanized_options(module, key) do
     module
     |> Ecto.Enum.mappings(key)
-    |> Enum.map(fn {key, value} -> {key, Phoenix.Naming.humanize(value)} end)
+    |> Enum.map(fn {key, value} -> {key, humanize_value(value)} end)
   end
+
+  defp humanize_value("rv"), do: "RV"
+  defp humanize_value(:rv), do: "RV"
+  defp humanize_value(value), do: Phoenix.Naming.humanize(value)
 end

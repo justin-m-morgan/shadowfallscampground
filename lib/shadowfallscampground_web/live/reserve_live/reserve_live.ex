@@ -31,44 +31,81 @@ defmodule ShadowfallscampgroundWeb.ReserveLive do
     <Svg.IconSet />
     <div class="bg-trees min-h-screen">
       <div class="bg-primary-900/60 flex flex-col justify-center items-center min-h-screen">
-        {!--
-        <div class={
-          "p-4 md:p-8 lg:p-16 mb-12 max-w-2xl",
-          "space-y-4",
-          "bg-primary-900/90  rounded-lg",
-          "text-white text-md md:text-lg"
-        }>
-          <DateWindowListing />
-          <LotteryDefinition />
-        </div>
-        <Components.Card padding={:lg}>
-        <FormComponent id="reservation-form" step_one={@reservation} />
-        </Components.Card>
+        <Steps.StepContainer
+          id="reservation_form_step_container"
+          :let={
+            basic_details_changeset: basic_details_changeset,
+            contact_info_changeset: contact_info_changeset,
+            tenting_details_changeset: tenting_details_changeset,
+            rv_details_changeset: rv_details_changeset,
+            attendees_changeset: attendees_changeset,
+            final_remarks_changeset: final_remarks_changeset
+          }
+        >
+          <Components.Card padding={:lg} class="max-w-lg">
+            <DateWindowListing />
+          </Components.Card>
 
+          <Components.Card padding={:lg} class="max-w-lg">
+            <LotteryDefinition />
+          </Components.Card>
 
-        --}
-        <Components.Card padding={:lg}>
-          <Steps.FinalRemarks.FormComponent base_struct={%Steps.FinalRemarks{}} />
-        </Components.Card>
+          <Components.Card padding={:lg}>
+            <Steps.ContactInfo.FormComponent
+              base_struct={%Steps.ContactInfo{}}
+              changeset={contact_info_changeset}
+            />
+          </Components.Card>
 
-        <Components.Card padding={:lg}>
-          <Steps.Attendees.FormComponent base_struct={%Steps.Attendees{}} />
-        </Components.Card>
+          <Components.Card padding={:lg}>
+            <Steps.BasicDetails.FormComponent
+              changeset={basic_details_changeset}
+              base_struct={%Steps.BasicDetails{}}
+            />
+          </Components.Card>
 
-        <Components.Card padding={:lg}>
-          <Steps.RvDetails.FormComponent base_struct={%Steps.RvDetails{}} />
-        </Components.Card>
-        <Components.Card padding={:lg}>
-          <Steps.TentingDetails.FormComponent base_struct={%Steps.TentingDetails{}} />
-        </Components.Card>
+          {#case Ecto.Changeset.get_change(basic_details_changeset, :type_of_request)}
+            {#match :tent}
+              <Components.Card padding={:lg}>
+                <Steps.TentingDetails.FormComponent
+                  changeset={tenting_details_changeset}
+                  base_struct={%Steps.TentingDetails{}}
+                />
+              </Components.Card>
+            {#match :rv}
+              <Components.Card padding={:lg}>
+                <Steps.RvDetails.FormComponent
+                  changeset={rv_details_changeset}
+                  base_struct={%Steps.RvDetails{}}
+                />
+              </Components.Card>
+            {#match _}
+              <Components.Card padding={:lg}>
+                <p>Please select a type of request in the previous step</p>
+              </Components.Card>
+          {/case}
 
-        <Components.Card padding={:lg}>
-          <Steps.BasicDetails.FormComponent base_struct={%Steps.BasicDetails{}} />
-        </Components.Card>
+          <Components.Card padding={:lg}>
+            <Steps.Attendees.FormComponent changeset={attendees_changeset} base_struct={%Steps.Attendees{}} />
+          </Components.Card>
 
-        <Components.Card padding={:lg}>
-          <Steps.ContactInfo.FormComponent base_struct={%Steps.ContactInfo{}} />
-        </Components.Card>
+          <Components.Card padding={:lg}>
+            <Steps.FinalRemarks.FormComponent
+              changeset={final_remarks_changeset}
+              base_struct={%Steps.FinalRemarks{}}
+            />
+          </Components.Card>
+          <Components.Card padding={:lg} class="max-w-lg">
+            <Steps.Summary
+              basic_details_changeset={basic_details_changeset}
+              contact_info_changeset={contact_info_changeset}
+              tenting_details_changeset={tenting_details_changeset}
+              rv_details_changeset={rv_details_changeset}
+              attendees_changeset={attendees_changeset}
+              final_remarks_changeset={final_remarks_changeset}
+            />
+          </Components.Card>
+        </Steps.StepContainer>
 
         <Components.CallToAction type="redirect" to={Routes.page_path(Endpoint, :index)} size={:lg}>
           Back to Home Page

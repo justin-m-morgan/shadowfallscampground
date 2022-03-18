@@ -12,15 +12,14 @@ defmodule ShadowfallscampgroundWeb.ReserveLive.Steps.Attendees do
   end
 
   @doc false
-  def changeset(attendees, attrs) do
+  def changeset(), do: changeset(%__MODULE__{}, %{})
+
+  def changeset(attendees \\ %__MODULE__{}, attrs) do
     parsed_form_values = parse_array_form_values(attrs)
 
     attendees
     |> cast(attrs, [:number_of_people])
     |> put_embed(:attendees, parsed_form_values)
-    |> tap(&IO.inspect/1)
-
-    # |> put_embed(parsed_form_values)
   end
 
   defp parse_array_form_values(payload) do
@@ -31,11 +30,7 @@ defmodule ShadowfallscampgroundWeb.ReserveLive.Steps.Attendees do
     |> Enum.map(fn [{_, legal_name}, {_, preferred_name}] ->
       %{legal_name: legal_name, preferred_name: preferred_name}
     end)
-
-    # |> then(&Map.put(%{}, :attendees, &1))
   end
-
-  # defp group_people_fields({"number_of_people", _value}), do: "number_of_people"
 
   defp group_people_fields({key, _value}) do
     case String.split(key, ["[", "]"], trim: true) do
@@ -72,17 +67,22 @@ defmodule ShadowfallscampgroundWeb.ReserveLive.Steps.Attendees do
 
     prop base_struct, :struct, required: true
 
+    prop changeset, :struct, required: true
+
     def render(assigns) do
       ~F"""
       <div>
         <Steps.StepHandler
-          :let={changeset: changeset}
           id="attendees_form"
           data_test="attendees_form"
           title="Guest List"
           changeset_fn={&Steps.Attendees.changeset/2}
           base_struct={@base_struct}
+          changeset={@changeset}
         >
+          <p class="max-w-sm">
+            <strong>Other than yourself,</strong> how many people will be accompanying your on this trip?
+          </p>
           <Forms.RadioInput
             name={:number_of_people}
             mappings={number_of_people_mappings()}
@@ -90,8 +90,12 @@ defmodule ShadowfallscampgroundWeb.ReserveLive.Steps.Attendees do
             class="grid-cols-6"
           />
 
-          {#if number_of_guests(changeset) > 0}
-            {#for num <- number_of_people_generator(changeset)}
+          <p class="max-w-sm">
+            If you have more people in your group, please break up your reservation into multiple smaller groups.
+          </p>
+
+          {#if number_of_guests(@changeset) > 0}
+            {#for num <- number_of_people_generator(@changeset)}
               <fieldset class="border-2 border-gray-300 py-2 px-3">
                 <legend>Person {num + 1}</legend>
                 <Forms.TextInput name={:"#{num}[legal_name]"} label="Legal Name" />

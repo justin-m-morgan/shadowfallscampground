@@ -13,7 +13,9 @@ defmodule ShadowfallscampgroundWeb.ReserveLive.Steps.ContactInfo do
   end
 
   @doc false
-  def changeset(contact_info, attrs) do
+  def changeset(), do: changeset(%__MODULE__{}, %{})
+
+  def changeset(contact_info \\ %__MODULE__{}, attrs) do
     contact_info
     |> cast(attrs, [:legal_name, :preferred_name, :email])
     |> validate_required([:legal_name, :email])
@@ -30,6 +32,8 @@ defmodule ShadowfallscampgroundWeb.ReserveLive.Steps.ContactInfo do
 
     prop base_struct, :struct, required: true
 
+    prop changeset, :struct, required: true
+
     def render(assigns) do
       ~F"""
       <div>
@@ -39,6 +43,7 @@ defmodule ShadowfallscampgroundWeb.ReserveLive.Steps.ContactInfo do
           title="Contact Info"
           changeset_fn={&Steps.ContactInfo.changeset/2}
           base_struct={@base_struct}
+          changeset={@changeset}
         >
           <Forms.TextInput name={:legal_name} />
           <Forms.TextInput name={:preferred_name} label="Prerred Name (Optional)" />

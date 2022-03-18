@@ -11,11 +11,16 @@ defmodule ShadowfallscampgroundWeb.ReserveLive.Steps.StepHandler do
 
   prop changeset_fn, :fun, required: true
 
+  @doc "Key to send with changeset to step manager"
+  prop changeset_key, :atom, required: true
+
+  prop changeset, :struct, required: true
+
   prop title, :string, required: true
 
   prop data_test, :string, required: true
 
-  data changeset, :struct
+  # data changeset, :struct
 
   slot default, required: true, args: [:changeset]
 
@@ -37,7 +42,7 @@ defmodule ShadowfallscampgroundWeb.ReserveLive.Steps.StepHandler do
 
   @impl true
   def update(assigns, socket) do
-    changeset = Ecto.Changeset.change(assigns.base_struct)
+    changeset = assigns[:changeset] || assigns.changeset_fn.(assigns.base_struct, %{})
 
     {:ok,
      socket
@@ -55,7 +60,10 @@ defmodule ShadowfallscampgroundWeb.ReserveLive.Steps.StepHandler do
       |> socket.assigns.changeset_fn.(params)
       |> Map.put(:action, :validate)
 
-    {:noreply, assign(socket, :changeset, changeset)}
+    Steps.StepContainer.send_changeset_to_step_manager(changeset)
+
+    # {:noreply, assign(socket, :changeset, changeset)}
+    {:noreply, socket}
   end
 
   # def handle_save(params, socket) do

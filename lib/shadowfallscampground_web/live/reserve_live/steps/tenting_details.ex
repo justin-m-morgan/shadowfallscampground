@@ -12,7 +12,9 @@ defmodule ShadowfallscampgroundWeb.ReserveLive.Steps.TentingDetails do
   end
 
   @doc false
-  def changeset(tenting_details, attrs) do
+  def changeset(), do: changeset(%__MODULE__{}, %{})
+
+  def changeset(tenting_details \\ %__MODULE__{}, attrs) do
     tenting_details
     |> cast(attrs, [:number_of_tents, :power_requested])
     |> validate_required([:number_of_tents, :power_requested])
@@ -29,6 +31,8 @@ defmodule ShadowfallscampgroundWeb.ReserveLive.Steps.TentingDetails do
 
     prop base_struct, :struct, required: true
 
+    prop changeset, :struct, required: true
+
     def render(assigns) do
       ~F"""
       <div>
@@ -38,6 +42,7 @@ defmodule ShadowfallscampgroundWeb.ReserveLive.Steps.TentingDetails do
           title="Tenting Site Details"
           changeset_fn={&Steps.TentingDetails.changeset/2}
           base_struct={@base_struct}
+          changeset={@changeset}
         >
           <Forms.RadioInput
             name={:power_requested}
