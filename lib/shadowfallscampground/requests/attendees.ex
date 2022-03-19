@@ -9,6 +9,8 @@ defmodule Shadowfallscampground.Requests.Attendees do
   embedded_schema do
     field :number_of_people, :integer, default: 0
     embeds_many :attendees, __MODULE__.Attendee
+
+    timestamps()
   end
 
   @doc false
@@ -46,6 +48,8 @@ defmodule Shadowfallscampground.Requests.Attendees do
     embedded_schema do
       field :legal_name, :string
       field :preferred_name, :string
+
+      timestamps()
     end
 
     @doc false

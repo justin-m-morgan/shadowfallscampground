@@ -10,6 +10,8 @@ defmodule Shadowfallscampground.Requests.ContactInfo do
     field :legal_name, :string
     field :preferred_name, :string
     field :email, :string
+
+    timestamps()
   end
 
   @doc false

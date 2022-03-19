@@ -9,6 +9,8 @@ defmodule Shadowfallscampground.Requests.TentDetails do
   embedded_schema do
     field :number_of_tents, :integer
     field :power_requested, :boolean
+
+    timestamps()
   end
 
   @doc false

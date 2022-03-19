@@ -2,6 +2,14 @@ defmodule Shadowfallscampground.Requests.Reservation do
   use Ecto.Schema
   import Ecto.Changeset
 
+  alias Shadowfallscampground.Requests.{
+    Attendees,
+    ContactInfo,
+    FinalRemarks,
+    RvDetails,
+    TentDetails
+  }
+
   @arrival_time "16"
   @departure_time "11"
 
@@ -9,6 +17,14 @@ defmodule Shadowfallscampground.Requests.Reservation do
     field :arrival, :naive_datetime
     field :departure, :naive_datetime
     field :type_of_request, Ecto.Enum, values: [:rv, :tent]
+
+    embeds_one(:contact_info, ContactInfo)
+    embeds_one(:attendees, Attendees)
+    embeds_one(:rv_details, RvDetails)
+    embeds_one(:tent_details, TentDetails)
+    embeds_one(:final_remarks, FinalRemarks)
+
+    timestamps()
   end
 
   @doc false
@@ -22,6 +38,24 @@ defmodule Shadowfallscampground.Requests.Reservation do
     |> validate_departure_after_arrival()
   end
 
+  def merge_changesets(changesets) do
+    [
+      contact_info: :contact_info_changeset,
+      attendees: :attendees_changeset,
+      rv_details: :rv_details_changeset,
+      tent_details: :tent_details_changeset,
+      final_remarks: :final_remarks_changeset
+    ]
+    |> Enum.reduce(changesets.basic_details_changeset, merge_embedded_changeset(changesets))
+  end
+
+  defp merge_embedded_changeset(changesets) do
+    fn {embed_key, extraction_key}, changeset ->
+      changeset
+      |> put_embed(embed_key, Map.get(changesets, extraction_key))
+    end
+  end
+
   defp maybe_bump_departure(changeset) do
     arrival = get_field(changeset, :arrival)
     departure = get_change(changeset, :departure)
@@ -32,14 +66,21 @@ defmodule Shadowfallscampground.Requests.Reservation do
         changeset
 
       is_nil(departure) ->
-        put_change(changeset, :departure, Timex.add(arrival, one_day))
+        bump_date(changeset, arrival, one_day)
 
       not Timex.before?(arrival, departure) ->
-        put_change(changeset, :departure, Timex.add(arrival, one_day))
+        bump_date(changeset, arrival, one_day)
 
       true ->
         changeset
     end
+  end
+
+  defp bump_date(changeset, arrival, duration) do
+    bumped_date =
+      Timex.add(arrival, duration) |> Timex.set(hour: String.to_integer(@departure_time))
+
+    put_change(changeset, :departure, bumped_date)
   end
 
   defp add_times_to_dates(params) do

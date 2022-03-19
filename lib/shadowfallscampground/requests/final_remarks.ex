@@ -8,6 +8,8 @@ defmodule Shadowfallscampground.Requests.FinalRemarks do
 
   embedded_schema do
     field :remarks, :string
+
+    timestamps()
   end
 
   @doc false

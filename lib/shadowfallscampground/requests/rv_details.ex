@@ -10,6 +10,8 @@ defmodule Shadowfallscampground.Requests.RvDetails do
     field :type_of_unit, Ecto.Enum, values: [:rv, :trailer, :fifth_wheel]
     field :length_of_unit, :integer
     field :sewer_required, :boolean, default: true
+
+    timestamps()
   end
 
   @doc false
