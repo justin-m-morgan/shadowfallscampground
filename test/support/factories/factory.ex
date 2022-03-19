@@ -8,4 +8,5 @@ defmodule Shadowfallscampground.Factories.Factory do
   use Shadowfallscampground.Factories.InquiryFactory
   use Shadowfallscampground.Factories.ReservationFactory
   use Shadowfallscampground.Factories.MailerJobFactory
+  use Shadowfallscampground.Factories.PersonFactory
 end

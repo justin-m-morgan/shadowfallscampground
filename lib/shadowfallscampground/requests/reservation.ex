@@ -9,21 +9,17 @@ defmodule Shadowfallscampground.Requests.Reservation do
     field :arrival, :naive_datetime
     field :departure, :naive_datetime
     field :type_of_request, Ecto.Enum, values: [:rv, :tent]
-
-    timestamps()
   end
 
   @doc false
-  def changeset(reservation, attrs, opts \\ config()) do
-    reservation
+  def changeset(), do: changeset(%__MODULE__{}, %{})
+
+  def changeset(basic_details \\ %__MODULE__{}, attrs) do
+    basic_details
     |> cast(add_times_to_dates(attrs), [:arrival, :departure, :type_of_request])
     |> maybe_bump_departure()
-    # |> cast(attrs, [:arrival, :departure, :type_of_request])
     |> validate_required([:arrival, :departure, :type_of_request])
     |> validate_departure_after_arrival()
-
-    # |> validate_no_early_season_arrival(opts[:start_of_season])
-    # |> validate_no_late_season_arrival(opts[:end_of_season])
   end
 
   defp maybe_bump_departure(changeset) do
@@ -72,44 +68,8 @@ defmodule Shadowfallscampground.Requests.Reservation do
     end
   end
 
-  # defp validate_no_early_season_arrival(changeset, start_of_season) do
-  #   arrival =
-  #     get_change(changeset, :arrival)
-  #     |> maybe_convert_to_date()
-  #     |> date_on_or_after(start_of_season)
-
-  #   departure =
-  #     get_change(changeset, :departure)
-  #     |> maybe_convert_to_date()
-  #     |> tap(&IO.inspect(&1, label: "Departure"))
-  #     |> date_on_or_after(start_of_season)
-
-  #   case {arrival, departure} do
-  #     {false, _} -> add_error(changeset, :arrival, "Arrival is before the start of season")
-  #     {_, false} -> add_error(changeset, :departure, "Departure is before the start of season")
-  #     _ -> changeset
-  #   end
-  # end
-
-  # defp maybe_convert_to_date(%NaiveDateTime{} = date), do: NaiveDateTime.to_date(date)
-  # defp maybe_convert_to_date(any), do: any
-
-  # defp validate_no_late_season_arrival(changeset, end_of_season) do
-  #   arrival = get_change(changeset, :arrival) |> date_on_or_before(end_of_season)
-  #   departure = get_change(changeset, :departure) |> date_on_or_before(end_of_season)
-
-  #   case {arrival, departure} do
-  #     {false, _} -> add_error(changeset, :arrival, "Arrival is before the start of season")
-  #     {_, false} -> add_error(changeset, :departure, "Departure is before the start of season")
-  #     _ -> changeset
-  #   end
-  # end
-
   defp date_on_or_before(nil, _comparison), do: true
   defp date_on_or_before(date, comparison), do: not Timex.after?(date, comparison)
-
-  defp date_on_or_after(nil, _comparison), do: true
-  defp date_on_or_after(date, comparison), do: not Timex.before?(date, comparison)
 
   defp config() do
     [

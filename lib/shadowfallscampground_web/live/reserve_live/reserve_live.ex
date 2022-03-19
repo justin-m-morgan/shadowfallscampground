@@ -6,7 +6,7 @@ defmodule ShadowfallscampgroundWeb.ReserveLive do
 
   alias ShadowfallscampgroundWeb.Endpoint
 
-  alias Shadowfallscampground.Requests.Reservation
+  alias Shadowfallscampground.Requests.{Reservation, RvDetails}
 
   alias ShadowfallscampgroundWeb.ReserveLive.{
     DateWindowListing,
@@ -36,7 +36,7 @@ defmodule ShadowfallscampgroundWeb.ReserveLive do
           :let={
             basic_details_changeset: basic_details_changeset,
             contact_info_changeset: contact_info_changeset,
-            tenting_details_changeset: tenting_details_changeset,
+            tent_details_changeset: tent_details_changeset,
             rv_details_changeset: rv_details_changeset,
             attendees_changeset: attendees_changeset,
             final_remarks_changeset: final_remarks_changeset
@@ -51,33 +51,20 @@ defmodule ShadowfallscampgroundWeb.ReserveLive do
           </Components.Card>
 
           <Components.Card padding={:lg}>
-            <Steps.ContactInfo.FormComponent
-              base_struct={%Steps.ContactInfo{}}
-              changeset={contact_info_changeset}
-            />
+            <Steps.BasicDetails changeset={basic_details_changeset} />
           </Components.Card>
-
           <Components.Card padding={:lg}>
-            <Steps.BasicDetails.FormComponent
-              changeset={basic_details_changeset}
-              base_struct={%Steps.BasicDetails{}}
-            />
+            <Steps.ContactInfo changeset={contact_info_changeset} />
           </Components.Card>
 
           {#case Ecto.Changeset.get_change(basic_details_changeset, :type_of_request)}
             {#match :tent}
               <Components.Card padding={:lg}>
-                <Steps.TentingDetails.FormComponent
-                  changeset={tenting_details_changeset}
-                  base_struct={%Steps.TentingDetails{}}
-                />
+                <Steps.TentDetails changeset={tent_details_changeset} />
               </Components.Card>
             {#match :rv}
               <Components.Card padding={:lg}>
-                <Steps.RvDetails.FormComponent
-                  changeset={rv_details_changeset}
-                  base_struct={%Steps.RvDetails{}}
-                />
+                <Steps.RvDetails changeset={rv_details_changeset} />
               </Components.Card>
             {#match _}
               <Components.Card padding={:lg}>
@@ -86,20 +73,18 @@ defmodule ShadowfallscampgroundWeb.ReserveLive do
           {/case}
 
           <Components.Card padding={:lg}>
-            <Steps.Attendees.FormComponent changeset={attendees_changeset} base_struct={%Steps.Attendees{}} />
+            <Steps.Attendees changeset={attendees_changeset} />
           </Components.Card>
 
           <Components.Card padding={:lg}>
-            <Steps.FinalRemarks.FormComponent
-              changeset={final_remarks_changeset}
-              base_struct={%Steps.FinalRemarks{}}
-            />
+            <Steps.FinalRemarks changeset={final_remarks_changeset} />
           </Components.Card>
+
           <Components.Card padding={:lg} class="max-w-lg">
             <Steps.Summary
               basic_details_changeset={basic_details_changeset}
               contact_info_changeset={contact_info_changeset}
-              tenting_details_changeset={tenting_details_changeset}
+              tent_details_changeset={tent_details_changeset}
               rv_details_changeset={rv_details_changeset}
               attendees_changeset={attendees_changeset}
               final_remarks_changeset={final_remarks_changeset}
