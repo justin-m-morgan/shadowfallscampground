@@ -104,9 +104,11 @@ g[class^="logo__wing"]:nth-of-type(6) {
 
 /* Alerts and form errors used by phx.new */
 .alert {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
+  position: fixed;
+  top: 0;
+  width: 50%;
+  left: calc(22.5%);
+  z-index: 99;
   padding: 15px;
   border: 1px solid transparent;
   @apply rounded-md m-6 text-center text-xl;

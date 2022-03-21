@@ -7,7 +7,7 @@ defmodule Shadowfallscampground.Requests.Attendees do
   import Ecto.Changeset
 
   embedded_schema do
-    field :number_of_people, :integer, default: 0
+    field :number_of_people, :integer
     embeds_many :attendees, __MODULE__.Attendee
 
     timestamps()
@@ -21,6 +21,7 @@ defmodule Shadowfallscampground.Requests.Attendees do
 
     attendees
     |> cast(attrs, [:number_of_people])
+    |> validate_required([:number_of_people])
     |> put_embed(:attendees, parsed_form_values)
   end
 

@@ -18,6 +18,5 @@ defmodule Shadowfallscampground.Requests.FinalRemarks do
   def changeset(final_remarks \\ %__MODULE__{}, attrs) do
     final_remarks
     |> cast(attrs, [:remarks])
-    |> validate_required([])
   end
 end

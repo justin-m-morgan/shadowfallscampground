@@ -4,7 +4,7 @@ defmodule Shadowfallscampground.Repo.Migrations.AddEmbeddedSchemaFieldsToReserva
   def change do
     alter table(:reservations) do
       add(:contact_info, :map)
-      add(:attendees, {:array, :map})
+      add(:attendees, :map)
       add(:rv_details, :map)
       add(:tent_details, :map)
       add(:final_remarks, :map)

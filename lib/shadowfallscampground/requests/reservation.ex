@@ -16,7 +16,7 @@ defmodule Shadowfallscampground.Requests.Reservation do
   schema "reservations" do
     field :arrival, :naive_datetime
     field :departure, :naive_datetime
-    field :type_of_request, Ecto.Enum, values: [:rv, :tent]
+    field :type_of_request, Ecto.Enum, values: [:rv, :tent], default: :tent
 
     embeds_one(:contact_info, ContactInfo)
     embeds_one(:attendees, Attendees)
@@ -31,28 +31,33 @@ defmodule Shadowfallscampground.Requests.Reservation do
   def changeset(), do: changeset(%__MODULE__{}, %{})
 
   def changeset(basic_details \\ %__MODULE__{}, attrs) do
+    IO.inspect(attrs)
+
     basic_details
     |> cast(add_times_to_dates(attrs), [:arrival, :departure, :type_of_request])
+    |> maybe_add_default_dates(:arrival, "SEASON_START", "2022-05-15")
+    |> maybe_add_default_dates(:departure, "SEASON_START", "2022-05-15", 1)
+    |> cast_embed(:contact_info)
+    |> maybe_cast_embed(:attendees, attrs)
+    |> maybe_cast_embed(:final_remarks, attrs)
+    |> maybe_embed_site_details()
     |> maybe_bump_departure()
-    |> validate_required([:arrival, :departure, :type_of_request])
     |> validate_departure_after_arrival()
   end
 
-  def merge_changesets(changesets) do
-    [
-      contact_info: :contact_info_changeset,
-      attendees: :attendees_changeset,
-      rv_details: :rv_details_changeset,
-      tent_details: :tent_details_changeset,
-      final_remarks: :final_remarks_changeset
-    ]
-    |> Enum.reduce(changesets.basic_details_changeset, merge_embedded_changeset(changesets))
+  defp maybe_cast_embed(changeset, key, attrs) do
+    cond do
+      Ecto.Changeset.get_change(changeset, key) -> cast_embed(changeset, key)
+      Map.get(attrs, Atom.to_string(key)) -> cast_embed(changeset, key)
+      true -> changeset
+    end
   end
 
-  defp merge_embedded_changeset(changesets) do
-    fn {embed_key, extraction_key}, changeset ->
-      changeset
-      |> put_embed(embed_key, Map.get(changesets, extraction_key))
+  defp maybe_embed_site_details(changeset) do
+    case Ecto.Changeset.get_field(changeset, :type_of_request) do
+      :tent -> cast_embed(changeset, :tent_details)
+      :rv -> cast_embed(changeset, :rv_details)
+      _ -> changeset
     end
   end
 
@@ -100,8 +105,8 @@ defmodule Shadowfallscampground.Requests.Reservation do
   end
 
   defp validate_departure_after_arrival(changeset) do
-    arrival = get_change(changeset, :arrival)
-    departure = get_change(changeset, :departure)
+    arrival = get_field(changeset, :arrival)
+    departure = get_field(changeset, :departure)
 
     case date_on_or_before(departure, arrival) do
       true -> add_error(changeset, :departure, "Departure must be after arrival")
@@ -112,16 +117,23 @@ defmodule Shadowfallscampground.Requests.Reservation do
   defp date_on_or_before(nil, _comparison), do: true
   defp date_on_or_before(date, comparison), do: not Timex.after?(date, comparison)
 
-  defp config() do
+  def config() do
     [
       start_of_season: date_env("SEASON_START"),
       end_of_season: date_env("SEASON_END")
     ]
   end
 
-  defp date_env(key) do
-    System.get_env(key) ||
-      "2022-05-15"
-      |> Timex.parse!("{YYYY}-{0M}-{0D}")
+  defp maybe_add_default_dates(changeset, key, sys_key, default, shift_days \\ 0) do
+    case get_field(changeset, key, nil) do
+      nil -> put_change(changeset, key, date_env(sys_key, default, shift_days))
+      _ -> changeset
+    end
+  end
+
+  defp date_env(key, default \\ "2022-05-15", shift_days \\ 0) do
+    System.get_env(key, default)
+    |> Timex.parse!("{YYYY}-{0M}-{0D}")
+    |> Timex.add(Timex.Duration.from_days(shift_days))
   end
 end

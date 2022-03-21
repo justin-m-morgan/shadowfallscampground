@@ -38,7 +38,7 @@ defmodule Shadowfallscampground.Requests do
   def get_reservation!(id), do: Repo.get!(Reservation, id)
 
   @doc """
-  Creates a reservation.
+  Creates a reservation. Accepts bare params or a changeset
 
   ## Examples
 
@@ -49,7 +49,16 @@ defmodule Shadowfallscampground.Requests do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_reservation(attrs \\ %{}) do
+
+  def create_reservation(changeset_or_attrs \\ %{})
+
+  def create_reservation(%Ecto.Changeset{} = changeset) do
+    changeset
+    |> Map.put(:action, :insert)
+    |> Repo.insert()
+  end
+
+  def create_reservation(attrs) do
     %Reservation{}
     |> Reservation.changeset(attrs)
     |> Repo.insert()
