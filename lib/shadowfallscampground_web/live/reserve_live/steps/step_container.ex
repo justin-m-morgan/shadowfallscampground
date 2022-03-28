@@ -3,6 +3,7 @@ defmodule ShadowfallscampgroundWeb.ReserveLive.Steps.StepContainer do
 
   alias Shadowfallscampground.Requests
   alias Shadowfallscampground.Requests.Reservation
+  alias Shadowfallscampground.Workers.MailerWorker
 
   data reservation_params, :map
   data changeset, :map
@@ -30,9 +31,10 @@ defmodule ShadowfallscampgroundWeb.ReserveLive.Steps.StepContainer do
     error_msg = "Oops, something went wrong. Please try submitting again after a few seconds."
 
     case Requests.create_reservation(socket.assigns.changeset) do
-      {:ok, _reservation} ->
+      {:ok, reservation} ->
         socket
         |> tap(fn _ -> send(self(), :successful_submission) end)
+        |> tap(fn _ -> MailerWorker.mail_reservation_submission_and_receipt(reservation) end)
         |> then(&{:ok, &1})
 
       {:error, _changeset} ->

@@ -26,6 +26,8 @@ defmodule Shadowfallscampground.Requests.Attendees do
   end
 
   defp parse_array_form_values(payload) do
+    number_of_people_claimed = (payload["number_of_people"] || "0") |> String.to_integer()
+
     payload
     |> Map.delete("number_of_people")
     |> Enum.group_by(&group_people_fields/1)
@@ -33,6 +35,12 @@ defmodule Shadowfallscampground.Requests.Attendees do
     |> Enum.map(fn [{_, legal_name}, {_, preferred_name}] ->
       %{legal_name: legal_name, preferred_name: preferred_name}
     end)
+    |> Enum.filter(&non_empty_person/1)
+    |> Enum.take(number_of_people_claimed)
+  end
+
+  defp non_empty_person(person) do
+    String.length(person.legal_name) > 0 or String.length(person.preferred_name) > 0
   end
 
   defp group_people_fields({key, _value}) do

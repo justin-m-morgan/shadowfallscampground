@@ -1,0 +1,14 @@
++++ Reservation Request +++
+
+<%= @auto_response_message %>
+
+<%= Partials.Reservations.Text.contact_info_text(@form_submission) %>
+
+<%= Partials.Reservations.Text.reservation_basic_details_text(@form_submission) %>
+
+<%= Partials.Reservations.Text.type_of_request_details(@form_submission) %>
+
+<%= Partials.Reservations.Text.guest_list(@form_submission) %>
+
+<%= Partials.Reservations.Text.final_remarks(@form_submission) %>
+

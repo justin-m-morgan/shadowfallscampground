@@ -1,4 +1,8 @@
 defmodule ShadowfallscampgroundWeb.ReserveLive.Steps.Summary do
+  @moduledoc """
+  Summarization of form data pre-submission.
+  """
+
   use ShadowfallscampgroundWeb, :live_component
 
   alias ShadowfallscampgroundWeb.ReserveLive.Steps.StepContainer
@@ -9,7 +13,7 @@ defmodule ShadowfallscampgroundWeb.ReserveLive.Steps.Summary do
     ~F"""
     <div>
       {#if @changeset.valid?}
-        <p>Awesome! Looks like we've got all the info we need.</p>
+        <p class="pb-4 text-2xl font-bold">Awesome! Looks like we've got all the info we need.</p>
 
         <Components.CallToAction type="button" click="submit_form">
           Submit Form

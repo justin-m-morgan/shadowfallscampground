@@ -10,7 +10,6 @@ defmodule ShadowfallscampgroundWeb.ReserveLive.Steps.RvDetails do
 
   prop changeset, :struct, required: true
 
-
   def render(assigns) do
     ~F"""
     <div>

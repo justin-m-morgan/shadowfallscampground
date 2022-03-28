@@ -1,7 +1,6 @@
 <h1>Listing Inquiries</h1>
 
-{#if @live_action in [:new, :edit] }
-
+{#if @live_action in [:new, :edit]}
   <.modal return_to={Routes.inquiry_index_path(@socket, :index)}>
     <.live_component
       module={ShadowfallscampgroundWeb.InquiryLive.FormComponent}
@@ -12,7 +11,6 @@
       return_to={Routes.inquiry_index_path(@socket, :index)}
     />
   </.modal>
-
 {/if}
 
 <table>
@@ -22,24 +20,30 @@
       <th>Email</th>
       <th>Message</th>
 
-      <th></th>
+      <th />
     </tr>
   </thead>
   <tbody id="inquiries">
-    {#for inquiry <- @inquiries }
+    {#for inquiry <- @inquiries}
       <tr id={"inquiry-#{inquiry.id}"}>
-        <td>{ inquiry.name }</td>
-        <td>{ inquiry.email }</td>
-        <td>{ inquiry.message }</td>
+        <td>{inquiry.name}</td>
+        <td>{inquiry.email}</td>
+        <td>{inquiry.message}</td>
 
         <td>
-          <span>{ live_redirect "Show", to: Routes.inquiry_show_path(@socket, :show, inquiry) }</span>
-          <span>{ live_patch "Edit", to: Routes.inquiry_index_path(@socket, :edit, inquiry) }</span>
-          <span>{ link "Delete", to: "#", phx_click: "delete", phx_value_id: inquiry.id, data: [confirm: "Are you sure?"] }</span>
+          <span>{live_redirect("Show", to: Routes.inquiry_show_path(@socket, :show, inquiry))}</span>
+          <span>{live_patch("Edit", to: Routes.inquiry_index_path(@socket, :edit, inquiry))}</span>
+          <span>{link("Delete",
+              to: "#",
+              phx_click: "delete",
+              phx_value_id: inquiry.id,
+              data: [confirm: "Are you sure?"]
+            )}</span>
         </td>
       </tr>
     {/for}
   </tbody>
 </table>
 
-<span> {live_patch "New Inquiry", to: Routes.inquiry_index_path(@socket, :new) }</span>
+<span>
+  {live_patch("New Inquiry", to: Routes.inquiry_index_path(@socket, :new))}</span>

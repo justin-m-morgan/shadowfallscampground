@@ -5,6 +5,7 @@ defmodule ShadowfallscampgroundEmail.EmailsView do
   import Phoenix.Swoosh
 
   alias ShadowfallscampgroundEmail.{EmailLayoutsView, Recipient}
+  alias ShadowfallscampgroundEmail.EmailsView.Partials
 
   @theme_color "#14532d"
 

@@ -1,4 +1,4 @@
-defmodule ShadowfallscampgroundEmail.Notifiers.Message do
+defmodule ShadowfallscampgroundEmail.Notifiers.Inquiry do
   @moduledoc """
   Receipt emails generated for general inquiry type messages
   """
@@ -17,7 +17,7 @@ defmodule ShadowfallscampgroundEmail.Notifiers.Message do
     |> Recipient.new()
     |> EmailsView.new_email(
       subject: "Message Receipt",
-      template: :message_receipt,
+      template: :inquiry_receipt,
       assigns: %{message: message, auto_response_message: automated_response_message()}
     )
   end
@@ -34,7 +34,7 @@ defmodule ShadowfallscampgroundEmail.Notifiers.Message do
     |> Recipient.new()
     |> EmailsView.new_email(
       subject: "General Inquiry",
-      template: :message_inquiry,
+      template: :inquiry_submission,
       assigns: %{message: message, name: name, email: email},
       sender: {name, email}
     )

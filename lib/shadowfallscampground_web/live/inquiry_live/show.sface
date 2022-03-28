@@ -1,6 +1,6 @@
 <h1>Show Inquiry</h1>
 
-{#if @live_action in [:edit] }
+{#if @live_action in [:edit]}
   <.modal return_to={Routes.inquiry_show_path(@socket, :show, @inquiry)}>
     <.live_component
       module={ShadowfallscampgroundWeb.InquiryLive.FormComponent}
@@ -14,23 +14,21 @@
 {/if}
 
 <ul>
-
   <li>
     <strong>Name:</strong>
-    { @inquiry.name} 
+    {@inquiry.name}
   </li>
 
   <li>
     <strong>Email:</strong>
-    { @inquiry.email }
+    {@inquiry.email}
   </li>
 
   <li>
     <strong>Message:</strong>
-    { @inquiry.message }
+    {@inquiry.message}
   </li>
-
 </ul>
 
-<span>{ live_patch "Edit", to: Routes.inquiry_show_path(@socket, :edit, @inquiry), class: "button" }</span> |
-<span>{ live_redirect "Back", to: Routes.inquiry_index_path(@socket, :index) }</span>
+<span>{live_patch("Edit", to: Routes.inquiry_show_path(@socket, :edit, @inquiry), class: "button")}</span> |
+<span>{live_redirect("Back", to: Routes.inquiry_index_path(@socket, :index))}</span>

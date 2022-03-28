@@ -1,0 +1,18 @@
+<mj-wrapper css-class="message-reciept-template-container">
+    <mj-section background-color="#DDFFDD">
+        <mj-column>
+          <mj-text line-height="20px">
+            <p><%= @auto_response_message %></p>
+          </mj-text>
+        </mj-column>
+      </mj-section>
+      <mj-section>
+        <mj-column>
+          <mj-text line-height="20px">
+            <h2>Your Message:</h2>
+
+          </mj-text>
+        </mj-column>
+    </mj-section>
+
+</mj-wrapper>

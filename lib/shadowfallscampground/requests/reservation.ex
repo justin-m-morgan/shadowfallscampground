@@ -136,4 +136,25 @@ defmodule Shadowfallscampground.Requests.Reservation do
     |> Timex.parse!("{YYYY}-{0M}-{0D}")
     |> Timex.add(Timex.Duration.from_days(shift_days))
   end
+
+  def coerce_reservation_to_map(%__MODULE__{} = reservation) do
+    attendees = struct_to_map(reservation.attendees)
+    attendees = Map.put(attendees, :attendees, Enum.map(attendees.attendees, &struct_to_map/1))
+
+    reservation
+    |> struct_to_map()
+    |> Map.put(:contact_info, struct_to_map(reservation.contact_info))
+    |> Map.put(:attendees, attendees)
+    |> Map.put(:rv_details, struct_to_map(reservation.rv_details))
+    |> Map.put(:tent_details, struct_to_map(reservation.tent_details))
+    |> Map.put(:final_remarks, struct_to_map(reservation.final_remarks))
+  end
+
+  defp struct_to_map(nil), do: nil
+
+  defp struct_to_map(struct) when is_struct(struct) do
+    struct
+    |> Map.from_struct()
+    |> Map.drop([:__meta__, :inserted_at, :updated_at])
+  end
 end

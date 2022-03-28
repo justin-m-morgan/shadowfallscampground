@@ -22,6 +22,8 @@ defmodule Shadowfallscampground.Application do
       # {Shadowfallscampground.Worker, arg}
     ]
 
+    Oban.Telemetry.attach_default_logger(:info)
+
     # See https://hexdocs.pm/elixir/Supervisor.html
     # for other strategies and supported options
     opts = [strategy: :one_for_one, name: Shadowfallscampground.Supervisor]

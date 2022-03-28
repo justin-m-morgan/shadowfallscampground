@@ -24,9 +24,11 @@ defmodule Shadowfallscampground.Requests.RvDetails do
   end
 
   def rv_lengths() do
-    15..40//5
-    |> Enum.map(&{:"#{&1}", "#{&1} - #{&1 + 4}ft"})
-    |> then(&[{:"10", "Under 15ft"} | &1])
-    |> then(&(&1 ++ [{:"45", "45ft or more"}]))
+    10..45//5
+    |> Enum.map(&{:"#{&1}", rv_length_string_formatter(&1)})
   end
+
+  def rv_length_string_formatter(10), do: "Under 15ft"
+  def rv_length_string_formatter(45), do: "45ft or more"
+  def rv_length_string_formatter(num), do: "#{num} - #{num + 4}ft"
 end

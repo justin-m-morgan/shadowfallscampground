@@ -21,7 +21,11 @@ defmodule Shadowfallscampground.RequestsTest do
     end
 
     test "create_reservation/1 with valid data creates a reservation" do
-      valid_attrs = %{arrival: ~N[2022-03-09 22:16:00], departure: ~N[2022-03-09 22:16:00], type_of_request: :rv}
+      valid_attrs = %{
+        arrival: ~N[2022-03-09 22:16:00],
+        departure: ~N[2022-03-09 22:16:00],
+        type_of_request: :rv
+      }
 
       assert {:ok, %Reservation{} = reservation} = Requests.create_reservation(valid_attrs)
       assert reservation.arrival == ~N[2022-03-09 22:16:00]
@@ -35,9 +39,16 @@ defmodule Shadowfallscampground.RequestsTest do
 
     test "update_reservation/2 with valid data updates the reservation" do
       reservation = reservation_fixture()
-      update_attrs = %{arrival: ~N[2022-03-10 22:16:00], departure: ~N[2022-03-10 22:16:00], type_of_request: :tent}
 
-      assert {:ok, %Reservation{} = reservation} = Requests.update_reservation(reservation, update_attrs)
+      update_attrs = %{
+        arrival: ~N[2022-03-10 22:16:00],
+        departure: ~N[2022-03-10 22:16:00],
+        type_of_request: :tent
+      }
+
+      assert {:ok, %Reservation{} = reservation} =
+               Requests.update_reservation(reservation, update_attrs)
+
       assert reservation.arrival == ~N[2022-03-10 22:16:00]
       assert reservation.departure == ~N[2022-03-10 22:16:00]
       assert reservation.type_of_request == :tent
@@ -45,7 +56,10 @@ defmodule Shadowfallscampground.RequestsTest do
 
     test "update_reservation/2 with invalid data returns error changeset" do
       reservation = reservation_fixture()
-      assert {:error, %Ecto.Changeset{}} = Requests.update_reservation(reservation, @invalid_attrs)
+
+      assert {:error, %Ecto.Changeset{}} =
+               Requests.update_reservation(reservation, @invalid_attrs)
+
       assert reservation == Requests.get_reservation!(reservation.id)
     end
 

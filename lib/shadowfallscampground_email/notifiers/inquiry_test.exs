@@ -1,4 +1,4 @@
-defmodule ShadowfallscampgroundWeb.Notifiers.MessageTest do
+defmodule ShadowfallscampgroundWeb.Notifiers.InquiryTest do
   @moduledoc false
   use ExUnit.Case, async: true
 
@@ -22,7 +22,7 @@ defmodule ShadowfallscampgroundWeb.Notifiers.MessageTest do
     submitter = %{name: Faker.Person.name(), email: Faker.Internet.email()}
     message = Faker.Lorem.sentence()
 
-    email_struct = Notifiers.Message.receipt(submitter, message)
+    email_struct = Notifiers.Inquiry.receipt(submitter, message)
 
     sender = fetch_system_sender_email()
 
@@ -38,7 +38,7 @@ defmodule ShadowfallscampgroundWeb.Notifiers.MessageTest do
     submitter = %{name: Faker.Person.name(), email: Faker.Internet.email()}
     message = Faker.Lorem.sentence()
 
-    email_struct = Notifiers.Message.message(submitter, message)
+    email_struct = Notifiers.Inquiry.message(submitter, message)
 
     system_email = fetch_system_sender_email()
 
