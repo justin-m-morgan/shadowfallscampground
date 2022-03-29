@@ -26,11 +26,25 @@ defmodule Shadowfallscampground.Workers.MailerWorker do
   Public API for generating composite reservation submission and receipt emails
   """
   def mail_reservation_submission_and_receipt(reservation = %Reservation{}) do
+    # receipt_delay = Enum.random(0..10)
+    # submission_delay = Enum.random(11..60)
+    receipt_delay = 0
+    submission_delay = 0
+
     reservation_map = Reservation.coerce_reservation_to_map(reservation)
 
+    # reservation_map
+    # |> Notifiers.Reservation.message()
+    # |> attempt_mail_delivery()
+
     [
-      __MODULE__.new(Map.put(reservation_map, :type, :reservation_submission)),
-      __MODULE__.new(Map.put(reservation_map, :type, :reservation_receipt), schedule_in: 5)
+      __MODULE__.new(
+        Map.put(reservation_map, :type, :reservation_submission),
+        schedule_in: submission_delay
+      ),
+      __MODULE__.new(Map.put(reservation_map, :type, :reservation_receipt),
+        schedule_in: receipt_delay
+      )
     ]
     |> Oban.insert_all()
   end

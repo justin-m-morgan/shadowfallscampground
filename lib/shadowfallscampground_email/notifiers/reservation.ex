@@ -20,7 +20,7 @@ defmodule ShadowfallscampgroundEmail.Notifiers.Reservation do
     {name, email}
     |> Recipient.new()
     |> EmailsView.new_email(
-      subject: subject_line_generator(form_submission),
+      subject: "(Receipt)" <> subject_line_generator(form_submission),
       template: :reservation_receipt,
       assigns: %{
         form_submission: form_submission,
@@ -64,7 +64,11 @@ defmodule ShadowfallscampgroundEmail.Notifiers.Reservation do
   end
 
   defp automated_response_message() do
-    "This is an automated response to confirm your message. We are not always at the computer, especially during the offseason. Please allow up to 48 hours for a response before re-submitting your message."
+    ~s"""
+    This is an automated response to confirm your message. We are not always at the computer, especially during the offseason. Please allow up to 48 hours for a response before re-submitting your message.
+
+    A reminder that this message is NOT A CONFIRMATION OF A SITE. That will happen with a follow up email.
+    """
   end
 
   defp pretty_date(string_date) do
