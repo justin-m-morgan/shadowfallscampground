@@ -85,10 +85,11 @@ defmodule ShadowfallscampgroundWeb.ReserveLive do
           </Components.Card>
 
           <Components.Card padding={:lg}>
-            <Steps.BasicDetails changeset={changeset} />
-          </Components.Card>
-          <Components.Card padding={:lg}>
             <Steps.ContactInfo changeset={changeset.changes[:contact_info] || ContactInfo.changeset()} />
+          </Components.Card>
+
+          <Components.Card padding={:lg}>
+            <Steps.BasicDetails changeset={changeset} />
           </Components.Card>
 
           {#case Ecto.Changeset.get_field(changeset, :type_of_request)}

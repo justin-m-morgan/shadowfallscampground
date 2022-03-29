@@ -16,7 +16,7 @@ defmodule Shadowfallscampground.Requests.Reservation do
   schema "reservations" do
     field :arrival, :naive_datetime
     field :departure, :naive_datetime
-    field :type_of_request, Ecto.Enum, values: [:rv, :tent], default: :tent
+    field :type_of_request, Ecto.Enum, values: [:rv, :tent]
 
     embeds_one(:contact_info, ContactInfo)
     embeds_one(:attendees, Attendees)

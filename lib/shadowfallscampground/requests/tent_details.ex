@@ -7,8 +7,8 @@ defmodule Shadowfallscampground.Requests.TentDetails do
   import Ecto.Changeset
 
   embedded_schema do
-    field :number_of_tents, :integer, default: 1
-    field :power_requested, :boolean, default: false
+    field :number_of_tents, :integer
+    field :power_requested, :boolean
 
     timestamps()
   end

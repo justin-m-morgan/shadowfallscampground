@@ -3,8 +3,8 @@ defmodule ShadowfallscampgroundEmail.EmailsView.Utilities do
   alias Shadowfallscampground.Data.Dates
 
   def display_legal_and_preferred_name(person_details, format \\ :legal_first) do
-    legal_name = maybe_extract_name(person_details, "legal_name")
-    preferred_name = maybe_extract_name(person_details, "preferred_name")
+    legal_name = maybe_extract_name(person_details, :legal_name)
+    preferred_name = maybe_extract_name(person_details, :preferred_name)
 
     if preferred_name do
       case format do
@@ -17,7 +17,7 @@ defmodule ShadowfallscampgroundEmail.EmailsView.Utilities do
   end
 
   defp maybe_extract_name(params, key) do
-    case params[key] do
+    case Map.get(params, key) do
       "" -> nil
       name -> name
     end
@@ -26,9 +26,13 @@ defmodule ShadowfallscampgroundEmail.EmailsView.Utilities do
   def humanize_form_values(value) do
     case value do
       "tent" -> "Tenting"
+      :tent -> "Tenting"
       "rv" -> "RV"
+      :rv -> "RV"
       "fifth_wheel" -> "Fifth-Wheel"
+      :fifth_wheel -> "Fifth-Wheel"
       "trailer" -> "Trailer"
+      :trailer -> "Trailer"
       "true" -> "Yes"
       "false" -> "No"
       true -> "Yes"
@@ -39,12 +43,16 @@ defmodule ShadowfallscampgroundEmail.EmailsView.Utilities do
 
   def parse_and_pretty_date(nil), do: "Date Not Provided"
 
-  def parse_and_pretty_date(date_string) do
+  def parse_and_pretty_date(date_string) when is_binary(date_string) do
     date_string
     |> String.split("T")
     |> List.first()
     |> Timex.parse!("{YYYY}-{0M}-{D}")
-    |> Dates.Formatting.pretty_date(:short_w_day_of_week)
+    |> parse_and_pretty_date()
+  end
+
+  def parse_and_pretty_date(date) do
+    Dates.Formatting.pretty_date(date, :short_w_day_of_week)
   end
 
   def length_of_rv_formatter(value) when is_integer(value),

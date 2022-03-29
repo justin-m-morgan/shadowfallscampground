@@ -5,6 +5,10 @@ defmodule ShadowfallscampgroundEmail.Notifiers.Reservation do
 
   alias ShadowfallscampgroundEmail.{EmailsView, Recipient}
   alias ShadowfallscampgroundEmail.EmailsView.Utilities
+  alias Shadowfallscampground.Requests.Reservation
+
+  def receipt(%Reservation{} = reservation),
+    do: receipt(reservation.contact_info.legal_name, reservation.contact_info.email, reservation)
 
   def receipt(%{"contact_info" => %{"legal_name" => name, "email" => email}} = form_submission),
     do: receipt(name, email, form_submission)
@@ -32,6 +36,9 @@ defmodule ShadowfallscampgroundEmail.Notifiers.Reservation do
   # def message(%{"name" => name, "email" => email, "message" => message}),
   #   do: message(name, email, message)
 
+  def message(%Reservation{} = reservation),
+    do: message(reservation.contact_info.legal_name, reservation.contact_info.email, reservation)
+
   def message(%{"contact_info" => %{"legal_name" => name, "email" => email}} = form_submission),
     do: message(name, email, form_submission)
 
@@ -57,8 +64,8 @@ defmodule ShadowfallscampgroundEmail.Notifiers.Reservation do
   end
 
   defp subject_line_generator(form_submission) do
-    pretty_arrival = form_submission["arrival"] |> pretty_date()
-    pretty_departure = form_submission["departure"] |> pretty_date()
+    pretty_arrival = form_submission.arrival |> pretty_date()
+    pretty_departure = form_submission.departure |> pretty_date()
 
     "Reservation Request - #{pretty_arrival} - #{pretty_departure}"
   end

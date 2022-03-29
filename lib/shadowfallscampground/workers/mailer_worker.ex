@@ -7,7 +7,7 @@ defmodule Shadowfallscampground.Workers.MailerWorker do
   use Oban.Worker, queue: :emails, max_attempts: 2
 
   alias ShadowfallscampgroundEmail.{Mailer, Notifiers}
-  alias Shadowfallscampground.Requests.Reservation
+  alias Shadowfallscampground.{Requests, Requests.Reservation}
 
   @doc """
   Public API for generating composite inquiry submission and receipt emails
@@ -31,22 +31,23 @@ defmodule Shadowfallscampground.Workers.MailerWorker do
     receipt_delay = 0
     submission_delay = 0
 
-    reservation_map = Reservation.coerce_reservation_to_map(reservation)
+    # reservation_map = Reservation.coerce_reservation_to_map(reservation)
 
-    # reservation_map
-    # |> Notifiers.Reservation.message()
-    # |> attempt_mail_delivery()
+    reservation.id
+    |> Requests.get_reservation!()
+    |> Notifiers.Reservation.message()
+    |> attempt_mail_delivery()
 
-    [
-      __MODULE__.new(
-        Map.put(reservation_map, :type, :reservation_submission),
-        schedule_in: submission_delay
-      ),
-      __MODULE__.new(Map.put(reservation_map, :type, :reservation_receipt),
-        schedule_in: receipt_delay
-      )
-    ]
-    |> Oban.insert_all()
+    # [
+    #   __MODULE__.new(
+    #     %{id: reservation.id, type: :reservation_submission},
+    #     schedule_in: submission_delay
+    #   ),
+    #   __MODULE__.new(%{id: reservation.id, type: :reservation_receipt},
+    #     schedule_in: receipt_delay
+    #   )
+    # ]
+    # |> Oban.insert_all()
   end
 
   @doc """
@@ -65,14 +66,16 @@ defmodule Shadowfallscampground.Workers.MailerWorker do
     |> attempt_mail_delivery()
   end
 
-  def perform(%{args: %{"type" => "reservation_receipt"} = args}) do
-    args
+  def perform(%{args: %{"type" => "reservation_receipt", "id" => id}}) do
+    id
+    |> Requests.get_reservation!()
     |> Notifiers.Reservation.receipt()
     |> attempt_mail_delivery()
   end
 
-  def perform(%{args: %{"type" => "reservation_submission"} = args}) do
-    args
+  def perform(%{args: %{"type" => "reservation_submission", "id" => id}}) do
+    id
+    |> Requests.get_reservation!()
     |> Notifiers.Reservation.message()
     |> attempt_mail_delivery()
   end

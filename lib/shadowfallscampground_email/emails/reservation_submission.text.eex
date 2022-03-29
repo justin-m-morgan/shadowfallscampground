@@ -6,7 +6,7 @@
 
 <%= Partials.Reservations.Text.type_of_request_details(@form_submission) %>
 
-<%#= Partials.Reservations.Text.guest_list(@form_submission) %>
+<%= Partials.Reservations.Text.guest_list(@form_submission) %>
 
 <%= Partials.Reservations.Text.final_remarks(@form_submission) %>
 

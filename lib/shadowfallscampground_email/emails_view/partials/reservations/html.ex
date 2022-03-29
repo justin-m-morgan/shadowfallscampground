@@ -13,15 +13,15 @@ defmodule ShadowfallscampgroundEmail.EmailsView.Partials.Reservations.Html do
   end
 
   def contact_info_text(assigns) do
-    contact_info = assigns["contact_info"]
+    contact_info = assigns.contact_info
 
     ~E"""
 
     <mj-text>
       <%= heading("Contact Info") %>
-      <p> Legal Name:  <%= contact_info["legal_name"] %></p>
-      <p>Prefered Name:  <%= contact_info["preferred_name"] || "None Provided" %></p>
-      <p>Email:  <%= contact_info["email"] %></p>
+      <p> Legal Name:  <%= contact_info.legal_name %></p>
+      <p>Prefered Name:  <%= contact_info.preferred_name || "None Provided" %></p>
+      <p>Email:  <%= contact_info.email %></p>
     </mj-text>
 
     """
@@ -32,25 +32,25 @@ defmodule ShadowfallscampgroundEmail.EmailsView.Partials.Reservations.Html do
 
     <mj-text>
       <%= heading("Basic Details") %>
-      <p>Scheduled Arrival: <%= Utilities.parse_and_pretty_date(assigns["arrival"]) %> </p>
-      <p>Scheduled Departure: <%= Utilities.parse_and_pretty_date(assigns["departure"]) %> </p>
-      <p>Type of Site: <%= Utilities.humanize_form_values(assigns["type_of_request"]) %> </p>
+      <p>Scheduled Arrival: <%= Utilities.parse_and_pretty_date(assigns.arrival) %> </p>
+      <p>Scheduled Departure: <%= Utilities.parse_and_pretty_date(assigns.departure) %> </p>
+      <p>Type of Site: <%= Utilities.humanize_form_values(assigns.type_of_request) %> </p>
     </mj-text>
 
     """
   end
 
   def type_of_request_details(assigns) do
-    case assigns["type_of_request"] do
-      "tent" -> reservation_tenting_text(assigns["tent_details"])
-      "rv" -> reservation_rv_text(assigns["rv_details"])
+    case assigns.type_of_request do
+      :tent -> reservation_tenting_text(assigns.tent_details)
+      :rv -> reservation_rv_text(assigns.rv_details)
       _ -> reservation_unknown_text(%{})
     end
   end
 
   def reservation_tenting_text(assigns) do
-    number_of_tents = assigns["number_of_tents"]
-    power_requested = assigns["power_requested"]
+    number_of_tents = assigns.number_of_tents
+    power_requested = assigns.power_requested
 
     ~E"""
 
@@ -64,9 +64,9 @@ defmodule ShadowfallscampgroundEmail.EmailsView.Partials.Reservations.Html do
   end
 
   def reservation_rv_text(assigns) do
-    type_of_unit = assigns["type_of_unit"]
-    length_of_unit = assigns["length_of_unit"]
-    sewer_required = assigns["sewer_required"]
+    type_of_unit = assigns.type_of_unit
+    length_of_unit = assigns.length_of_unit
+    sewer_required = assigns.sewer_required
 
     ~E"""
 
@@ -92,11 +92,12 @@ defmodule ShadowfallscampgroundEmail.EmailsView.Partials.Reservations.Html do
 
   def guest_list(assigns) do
     booking_person =
-      Utilities.display_legal_and_preferred_name(assigns["contact_info"], :preferred_first) <>
-        "(Primary Contact)"
+      assigns.contact_info
+      |> Utilities.display_legal_and_preferred_name(:preferred_first)
+      |> then(&"#{&1} (Primary Contact)")
 
     guests =
-      for attendee <- assigns["attendees"]["attendees"] do
+      for attendee <- assigns.attendees.attendees do
         Utilities.display_legal_and_preferred_name(attendee, :preferred_first)
       end
 
@@ -120,13 +121,13 @@ defmodule ShadowfallscampgroundEmail.EmailsView.Partials.Reservations.Html do
   defp people_person(num), do: "#{num} people"
 
   def final_remarks(assigns) do
-    final_remarks = assigns["final_remarks"]
+    remarks = Map.get(assigns.final_remarks || %{}, :remarks)
 
     ~E"""
 
     <mj-text>
         <%= heading("Questions/Comments") %>
-        <p><%= final_remarks["remarks"] %></p>
+        <p><%= remarks %></p>
     </mj-text>
 
     """
