@@ -9,23 +9,40 @@ import Config
 
 # DB Settings
 
-db_url_access_error = """
-environment variable DATABASE_URL is missing.
-For example: postgres://ecaqhciaingrji:adsfjadfa@ec2-3-228-222-169.compute-1.amazonaws.com:5432/d4v1jg
-"""
+if config_env() == :prod do
+  database_url =
+    System.get_env("DATABASE_URL") ||
+      raise """
+      environment variable DATABASE_URL is missing.
+      For example: ecto://USER:PASS@HOST/DATABASE
+      """
 
-set_db_url = fn
-  _, nil -> raise(db_url_access_error)
-  :prod, url -> url
-  :test, url -> url <> "_test"
-  :dev, url -> url <> "_dev"
-end
+  maybe_ipv6 = if System.get_env("ECTO_IPV6"), do: [:inet6], else: []
 
-database_url =
-  config_env()
-  |> set_db_url.(System.get_env("DATABASE_URL"))
+config :shadowfallscampground, Shadowfallscampground.Repo,
+# ssl: true,
+    url: database_url,
+    pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10"),
+    socket_options: maybe_ipv6
 
-config :shadowfallscampground, Shadowfallscampground.Repo, url: database_url
+
+# db_url_access_error = """
+# environment variable DATABASE_URL is missing.
+# For example: postgres://ecaqhciaingrji:adsfjadfa@ec2-3-228-222-169.compute-1.amazonaws.com:5432/d4v1jg
+# """
+
+# set_db_url = fn
+#   _, nil -> raise(db_url_access_error)
+#   :prod, url -> url
+#   :test, url -> url <> "_test"
+#   :dev, url -> url <> "_dev"
+# end
+
+# database_url =
+#   config_env()
+#   |> set_db_url.(System.get_env("DATABASE_URL"))
+
+# config :shadowfallscampground, Shadowfallscampground.Repo, url: database_url
 
 # The secret key base is used to sign/encrypt cookies and other secrets.
 # A default value is used in config/dev.exs and config/test.exs but you

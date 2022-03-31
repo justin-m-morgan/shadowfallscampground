@@ -1,2 +1,3 @@
-web: mix ecto.setup
+web: mix ecto.drop
+web: mix ecto.create
 web: mix phx.server
