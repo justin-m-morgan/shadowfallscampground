@@ -65,7 +65,7 @@ defmodule Shadowfallscampground.MixProject do
       {:swoosh, "~> 1.6"},
       {:phoenix_swoosh, "~> 1.0"},
       {:gen_smtp, "~> 1.1"},
-      {:mjml, "~> 1.1"},
+      {:mjml, "~> 1.3.2"},
       # Testing
       {:mix_test_interactive, "~> 1.1", only: :dev, runtime: false},
       {:floki, ">= 0.32.0", only: :test},
