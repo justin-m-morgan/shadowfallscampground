@@ -12,17 +12,29 @@ defmodule ShadowfallscampgroundWeb.ReserveLive.Steps.Summary do
   def render(assigns) do
     ~F"""
     <div>
-      {#if @changeset.valid?}
+      {#if form_valid?(@changeset)}
         <p class="pb-4 text-2xl font-bold">Awesome! Looks like we've got all the info we need.</p>
 
         <Components.CallToAction type="button" click="submit_form">
           Submit Form
         </Components.CallToAction>
       {#else}
-        <p>It looks like we still have some errors in the following sections. Please review these sections. The outstanding sections should be clearly marked.</p>
+        <p>It looks like we still have some incomplete fields above. Please review these sections</p>
       {/if}
     </div>
     """
+  end
+
+  defp form_valid?(changeset) do
+    subs_valid =
+      Enum.all?([:contact_info, :attendees], fn key ->
+        case Map.get(changeset.changes, key) do
+          nil -> false
+          %Ecto.Changeset{} = sub_changeset -> sub_changeset.valid?
+        end
+      end)
+
+    subs_valid and changeset.valid?
   end
 
   def handle_event("submit_form", _, socket) do

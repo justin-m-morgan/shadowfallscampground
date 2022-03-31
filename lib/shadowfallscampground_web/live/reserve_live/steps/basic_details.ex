@@ -12,6 +12,10 @@ defmodule ShadowfallscampgroundWeb.ReserveLive.Steps.BasicDetails do
 
   prop changeset, :struct, required: true
 
+  prop min_date, :struct, default: ~D[2022-05-17]
+
+  prop max_date, :struct, default: ~D[2022-09-15]
+
   def render(assigns) do
     ~F"""
     <div>
@@ -26,8 +30,8 @@ defmodule ShadowfallscampgroundWeb.ReserveLive.Steps.BasicDetails do
           form={:reservation}
           start_date_field={:arrival}
           end_date_field={:departure}
-          min_date={~D[2022-05-15]}
-          max_date={~D[2022-09-15]}
+          min_date={@min_date}
+          max_date={@max_date}
           focused_start_date={@changeset.changes[:arrival]}
           focused_end_date={@changeset.changes[:departure]}
           year={2022}

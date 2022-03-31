@@ -52,11 +52,11 @@ defmodule ShadowfallscampgroundWeb.Forms.RadioInput do
               for={"#{@name}-#{value}"}
               class={
                 "flex flex-col items-center justify-center flex-grow",
-                "bg-accent-400 text-gray-50 font-bold text-center",
+                "bg-primary-500 text-gray-50 font-bold text-center",
                 "py-3 px-4",
-                "hover:bg-accent-600",
+                "hover:bg-primary-600",
                 "cursor-pointer",
-                "peer-checked:bg-accent-800"
+                "peer-checked:bg-primary-800"
               }
             >
               <Svg.IconSymbol :if={@display_icon} size={:sm} name={Atom.to_string(value)} />

@@ -87,3 +87,10 @@ google_maps_api_key =
 
 config :shadowfallscampground,
   google_maps_api_key: google_maps_api_key
+
+config :shadowfallscampground,
+  lottery_start: System.get_env("LOTTERY_START"),
+  lottery_close: System.get_env("LOTTERY_CLOSE"),
+  lottery_period_end_date: System.get_env("LOTTERY_PERIOD_END_DATE"),
+  season_start: System.get_env("SEASON_START"),
+  season_end: System.get_env("SEASON_END")
