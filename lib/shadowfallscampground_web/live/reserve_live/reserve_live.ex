@@ -40,9 +40,9 @@ defmodule ShadowfallscampgroundWeb.ReserveLive do
       Application.get_env(:shadowfallscampground, :season_end, ~D[2022-09-14])
       |> stringdate_to_date()
 
-    lottery_open =
-      Application.get_env(:shadowfallscampground, :lottery_open, ~D[2022-04-01])
-      |> stringdate_to_date()
+    lottery_open = ~D[2022-03-31]
+    # Application.get_env(:shadowfallscampground, :lottery_open, ~D[2022-04-01])
+    # |> stringdate_to_date()
 
     lottery_close =
       Application.get_env(:shadowfallscampground, :lottery_close, ~D[2022-04-02])
