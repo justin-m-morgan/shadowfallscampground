@@ -31,8 +31,6 @@ defmodule Shadowfallscampground.Requests.Reservation do
   def changeset(), do: changeset(%__MODULE__{}, %{})
 
   def changeset(basic_details \\ %__MODULE__{}, attrs) do
-    IO.inspect(attrs)
-
     basic_details
     |> cast(add_times_to_dates(attrs), [:arrival, :departure, :type_of_request])
     |> maybe_add_default_dates(:arrival, "SEASON_START", "2022-05-15")
