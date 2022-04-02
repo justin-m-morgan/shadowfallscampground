@@ -193,6 +193,7 @@ defmodule ShadowfallscampgroundWeb.ReserveLive do
         </Components.Card>
 
         {#else}
+          {#if Timex.before?(@now, @lottery_clse) }
            <Components.Card padding={:lg} class="max-w-lg space-y-3">
             <h3 class="text-xl font-bold">Lottery System in Effect</h3>
 
@@ -205,6 +206,7 @@ defmodule ShadowfallscampgroundWeb.ReserveLive do
             <p class="text-xl font-bold">{ humanized_duration(@now, @lottery_close) }</p>
 
           </Components.Card>
+          {/if}
 
           <Components.Card padding={:lg}>
             <Steps.ContactInfo changeset={changeset.changes[:contact_info] || ContactInfo.changeset()} />
