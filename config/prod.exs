@@ -10,8 +10,11 @@ import Config
 # which you should run after static files are built and
 # before starting your production server.
 config :shadowfallscampground, ShadowfallscampgroundWeb.Endpoint,
-  url: [scheme: "https", host: "shadowfallscampground2.herokuapp.com", port: 443],
-  force_ssl: [rewrite_on: [:x_forwarded_host, :x_forwarded_port, :x_forwarded_proto]],
+  url: [scheme: "https", port: 443],
+  force_ssl: [
+    host: nil,
+    rewrite_on: [:x_forwarded_host, :x_forwarded_port, :x_forwarded_proto]
+  ],
   cache_static_manifest: "priv/static/cache_manifest.json"
 
 # Configure your database

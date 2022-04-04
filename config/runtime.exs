@@ -37,6 +37,12 @@ if config_env() == :prod do
       You can generate one by calling: mix phx.gen.secret
       """
 
+  host_name =
+    System.get_env("HOST_NAME") ||
+      raise """
+      environment variable HOST_NAME is missing.
+      """
+
   config :shadowfallscampground, ShadowfallscampgroundWeb.Endpoint,
     check_origin: :conn,
     http: [
@@ -47,7 +53,8 @@ if config_env() == :prod do
       ip: {0, 0, 0, 0, 0, 0, 0, 0},
       port: String.to_integer(System.get_env("PORT") || "4000")
     ],
-    secret_key_base: secret_key_base
+    secret_key_base: secret_key_base,
+    url: [host: host_name]
 
   # ## Using releases
   #
