@@ -1,7 +1,9 @@
 import Config
 
 # Configure your database
-config :shadowfallscampground, Shadowfallscampground.Repo, pool_size: 5
+config :shadowfallscampground, Shadowfallscampground.Repo,
+  pool_size: 5,
+  database: "shadowfallscampground_dev"
 
 # For development, we disable any cache and enable
 # debugging and code reloading.

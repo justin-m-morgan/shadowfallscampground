@@ -25,24 +25,6 @@ if config_env() == :prod do
     pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10"),
     socket_options: maybe_ipv6
 
-  # db_url_access_error = """
-  # environment variable DATABASE_URL is missing.
-  # For example: postgres://ecaqhciaingrji:adsfjadfa@ec2-3-228-222-169.compute-1.amazonaws.com:5432/d4v1jg
-  # """
-
-  # set_db_url = fn
-  #   _, nil -> raise(db_url_access_error)
-  #   :prod, url -> url
-  #   :test, url -> url <> "_test"
-  #   :dev, url -> url <> "_dev"
-  # end
-
-  # database_url =
-  #   config_env()
-  #   |> set_db_url.(System.get_env("DATABASE_URL"))
-
-  # config :shadowfallscampground, Shadowfallscampground.Repo, url: database_url
-
   # The secret key base is used to sign/encrypt cookies and other secrets.
   # A default value is used in config/dev.exs and config/test.exs but you
   # want to use a different value for prod and you most likely don't want
