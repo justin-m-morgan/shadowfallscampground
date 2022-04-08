@@ -12,7 +12,13 @@ defmodule Shadowfallscampground.Data.Dates.DatePicker do
   *focused_end_date* -  Date to focus end_day options
   """
   def generate_dates(min_date, max_date, focused_start_date \\ nil, focused_end_date \\ nil) do
-    focused_start_date = focused_start_date || min_date
+    focused_start_date =
+      cond do
+        is_nil(focused_start_date) -> min_date
+        Timex.before?(focused_start_date, max_date) -> focused_start_date
+        true -> max_date
+      end
+
     focused_end_date = focused_end_date || Date.add(focused_start_date, 1)
 
     start_max_date = Date.add(max_date, -1)
@@ -21,7 +27,7 @@ defmodule Shadowfallscampground.Data.Dates.DatePicker do
 
     %{
       start_month_range: start_month_range(min_date, start_max_date),
-      start_day_range: start_day_range(min_date, focused_start_date),
+      start_day_range: start_day_range(min_date, max_date, focused_start_date),
       end_month_range: end_month_range(end_min_date, max_date),
       end_day_range: end_day_range(end_min_date, end_max_date, focused_end_date)
     }
@@ -29,9 +35,11 @@ defmodule Shadowfallscampground.Data.Dates.DatePicker do
 
   defp start_month_range(min, max), do: Date.range(min, max)
 
-  defp start_day_range(min, focused_start_date) do
-    start = later_of(min, Date.beginning_of_month(focused_start_date))
-    Date.range(start, Date.end_of_month(start))
+  defp start_day_range(min, max, focused_start_date) do
+    start_range = later_of(min, Date.beginning_of_month(focused_start_date))
+    end_range = earlier_of(Date.end_of_month(start_range), max)
+
+    Date.range(start_range, end_range)
   end
 
   defp end_month_range(min, max), do: Date.range(min, max)

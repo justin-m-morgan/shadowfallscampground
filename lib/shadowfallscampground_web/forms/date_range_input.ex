@@ -88,6 +88,8 @@ defmodule ShadowfallscampgroundWeb.Forms.DateRangeInput do
       |> assign(assigns)
       |> assign(:start_month_options, options.start_month_range)
       |> assign(:start_day_options, options.start_day_range)
+      # |> assign(:start_month_options, options.end_month_range)
+      # |> assign(:start_day_options, options.end_day_range)
       |> assign(:end_month_options, options.end_month_range)
       |> assign(:end_day_options, options.end_day_range)
       |> assign(:computed_year, year)

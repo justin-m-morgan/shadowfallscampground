@@ -49,7 +49,6 @@ defmodule ShadowfallscampgroundWeb.ReserveLive.Steps.StepContainer do
     |> assign(assigns)
     |> apply_changes(payload)
     |> update_changeset()
-    |> tap(&IO.inspect(&1.assigns.changeset, label: "Update"))
     |> then(&{:ok, &1})
   end
 
