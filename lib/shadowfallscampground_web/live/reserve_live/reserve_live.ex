@@ -138,7 +138,7 @@ defmodule ShadowfallscampgroundWeb.ReserveLive do
 
             <p>All bookings made before midnight of April 8 will have an equal chance of securing a site. Their order of submission will be randomized after the close of the lottery period</p>
 
-            <p>The lottery system applies to bookings for dates falling in June 2nd - June 22</p>
+            <p>The lottery system applies to bookings for dates falling in June 23rd - July 13th</p>
     <!--
             <p class="text-lg font-semibold">Lottery system in effect for:</p>
 
