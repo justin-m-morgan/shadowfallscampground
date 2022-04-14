@@ -136,7 +136,7 @@ defmodule ShadowfallscampgroundWeb.ReserveLive do
            <Components.Card padding={:lg} class="max-w-lg space-y-3">
             <h3 class="text-xl font-bold">Lottery System in Effect</h3>
 
-            <p>All bookings made before midnight of April 8 will have an equal chance of securing a site. Their order of submission will be randomized after the close of the lottery period</p>
+            <p>All bookings made before midnight of April 15th will have an equal chance of securing a site. Their order of submission will be randomized after the close of the lottery period</p>
 
             <p>The lottery system applies to bookings for dates falling in June 23rd - July 13th</p>
     <!--
