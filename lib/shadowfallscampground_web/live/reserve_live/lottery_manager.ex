@@ -8,9 +8,9 @@ defmodule ShadowfallscampgroundWeb.ReserveLive.LotteryManager do
   prop now, :struct
   prop season_start, :struct, default: ~D[2022-05-12]
   prop season_end, :struct, default: ~D[2022-09-14]
-  prop lottery_open, :struct, default: ~D[2022-04-14]
-  prop lottery_close, :struct, default: ~N[2022-04-15 23:59:00]
-  prop lottery_period_end_date, :struct, default: ~D[2022-07-13]
+  prop lottery_open, :struct, default: ~D[2022-04-21]
+  prop lottery_close, :struct, default: ~N[2022-04-22 23:59:00]
+  prop lottery_period_end_date, :struct, default: ~D[2022-08-03]
 
   # prop lottery_dates,
   #      :list,
