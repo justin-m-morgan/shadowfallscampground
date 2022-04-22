@@ -23,7 +23,7 @@ This project is built with a component based architecture leveraging [Phoenix Li
 
 ### Contexts/Domains
 
-Phoenix encourages code organization by "contexts", distinct from the UI layer of the application. This encourages decoupling of data (contexts) from application logic (components/controllers). 
+Phoenix encourages code organization by "contexts", distinct from the UI layer of the application. This encourages decoupling of data (contexts) from application logic (components/controllers).
 
 ## Application Concerns
 
